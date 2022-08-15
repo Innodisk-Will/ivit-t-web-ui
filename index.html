@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>iVIT-Training tool</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Icon css -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <!-- import jquery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- Socket.IO 的 CDN 連結 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js" integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- Load css component. -->
+        <link href="css/index.css" rel="stylesheet" />
+        <link href="css/dataset.css" rel="stylesheet" />
+        <link href="css/model.css" rel="stylesheet" />
+        <link href="css/project.css" rel="stylesheet" />
+        <link href="css/container.css" rel="stylesheet" />
+        <!-- Import all javascript-->
+        <script src="js/utils.js"></script>
+        <script src="js/project.js"></script>
+        <script src="js/dataset.js"></script>
+        <script src="js/model.js"></script>
+        <script src="js/iter_control.js"></script>
+        <script src="js/chart.js"></script>
+        <script src="js/upload.js"></script>
+        <script src="js/labeling.js"></script>
+        <script src="js/draw.js"></script>
+        <script src="js/webapi.js"></script>
+        <!--chart-->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- Initial -->
+        <script language="JavaScript">
+            var URL_VAL = window.location.href.split("?")
+            var SERVER_LOC = URL_VAL[0]
+            var LOC_VAL = URL_VAL[1]
+            $( document ).ready(function() {
+                init_prj_api();
+                loading_html(LOC_VAL);
+            });
+        </script>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar">
+            <div class="container">
+                <div class="head_left">
+                    <a class="navbar-brand" href="">iVIT-T</a>
+                    <div class="head_container prj_name_container">
+                        <div id="prj_name" class="prj_name text-truncate text-capitalize user-select-none">Project Name</div>
+                    </div>
+                    <div class="head_container">
+                        <div id="dataset_btn_container" class="dataset_model_div dataset_div">
+                            <a id="dataset_href" class="dataset_model_text" href="">Dataset</a>
+                        </div>
+                        <div id="model_btn_container" class="dataset_model_div model_div">
+                            <a id="model_href" class="dataset_model_text" href="">Model</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="head_container">
+                    <input id="train_action" type="button" class="all_button train_btn_color" value="Train" onclick="open_train_mkpopup()">
+                </div>
+            </div>
+        </nav>
+        <main>
+            <div id="main_container">
+            </div>
+        </main>
+        <!-- Create train -->
+        <Train>
+            <div id="train_mkpopup" class="mkpopup">
+                <!-- Modal content -->
+                <div id ="train_param_containter" class="mkpopup_content_outside mkpopup_content_container">
+                    <div class="mkpopup_main_container">
+                        <div class="mkpopup_title_container">
+                            <label class="mkpopup_text">Train</label>
+                        </div>
+                        <div class="mkpopup_form_container">
+                            <form method="post" name="form_project"  action="#">
+                                <div class="form_item_position">
+                                    <lable class="form_item_font">Method Of Training</lable>
+                                </div>
+                                <div class="margin_bottom_20">
+                                    <select id="method_list"  class="form_obj_style text-capitalize" onchange="option_show_hide()"></select>
+                                </div>
+                                <div id="model_div" class="form_item_position display_none">
+                                    <lable class="form_item_font">Model</lable>
+                                </div>
+                                <div id="model_list_div" class="margin_bottom_20 display_none">
+                                    <select id="model_list"  class="form_obj_style text-capitalize"></select>
+                                </div>
+                                <div id="batch_size_div" class="form_item_position display_none">
+                                    <lable class="form_item_font">Batch Size</lable>
+                                </div>
+                                <div id="batch_size_list_div" class="margin_bottom_20 display_none">
+                                    <select id="batch_size_list"  class="form_obj_style text-capitalize"></select>
+                                </div>
+                                <div id="shape_div" class="form_item_position display_none">
+                                    <lable class="form_item_font">Input Shape</lable>
+                                    <span class="material-symbols-outlined tooltip_info">
+                                        info
+                                        <span class="tooltiptext standard_font_txt">Input multiples of 32 </span>
+                                    </span>
+                                </div>
+                                <div id="shape_text_div" class="margin_bottom_20 display_none">
+                                    <input type="text" id="h_shape" class="form_obj_style input_shape_margin" placeholder="Height">
+                                    <input type="text" id="w_shape" class="form_obj_style input_shape_margin" placeholder="Width">
+                                    <input type="text" id="c_shape" class="form_obj_style" placeholder="Channel">
+                                </div>
+                                <div id="step_div" class="form_item_position display_none">
+                                    <lable class="form_item_font">Step</lable>
+                                </div>
+                                <div id="step_text_div" class="margin_bottom_20 display_none">
+                                    <input type="text" id="input_step" class="form_obj_style">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="create_btn_div" class="mkpopup_btn_container">
+                        <button id="cancel_btn" type="button" class="form_cancel_btn_style margin_right_12" onclick="close_train_mkpopup()">Cancel</button>
+                        <button id="create_btn" type="button" class="form_button_style" onclick="create_training()">Training</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </Train>
+    </body>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</html>

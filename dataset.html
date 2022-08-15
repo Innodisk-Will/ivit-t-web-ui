@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Load our component. -->
+        <!-- <link href="css/dataset.css" rel="stylesheet" /> -->
+        <!-- <link href="css/container.css" rel="stylesheet" /> -->
+        <!-- Initial -->
+        <script language="JavaScript">
+            var HREF = window.location.href.split("&");
+            var MAIN_PAGE = HREF[0].split("?")[1];
+            var MAIN_UUID = HREF[1];
+            var PRJ_NAME = HREF[2];
+            var TYPE_NAME = HREF[3];
+            var ITER_NAME = HREF[4];
+            var MAIN_HREF = HREF[0] + "&" + HREF[1] + "&" + HREF[2]+ "&" + HREF[3];
+            var FOlDER_LIST = "";
+            var PRJ_INFO = "";
+            var ALL_CLASSES = {"keys":[],"values":[]};
+            var UPLOAD_COUNT = 0;
+            var TOTAL_UPLOAD = 0;
+            var IMAGE_SIZE = {};
+            var COLOR_BAR = null;
+            $( document ).ready(function() {
+                hover_marquee("prj_name");
+                load_exist_iter(MAIN_UUID);
+                give_title_text("allproject", "prjname_label", PRJ_NAME);
+                PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
+                setting_dataset();
+                get_all_image();
+                init_preview_img();
+                onclick_listener_btn();
+                check_preview_expand();
+                check_type_class_form();
+                check_training_stats();
+                check_dataset();
+            });
+        </script>
+    </head>
+    <body>
+        <Maindiv id="main_div" class="outside_1_container">
+            <div class="left_iter_container">
+                <div class="left_iter_center_container">
+                    <div class="expand_icon_container">
+                        <span id="expand_less" class="material-symbols-outlined expand_icon_css" onclick="expand_btn('less')">
+                            expand_less
+                        </span>
+                    </div>
+                    <div id="iter_container" class="iter_btn_outside_container">
+                        <!-- <div id="iter_0" class="iter_btn_container">
+                            <a id="iteration0" class="iter_btn_main_txt" href="">W</a>
+                        </div> -->
+                    </div>
+                    <div class="expand_icon_container">
+                        <span id="expand_more" class="material-symbols-outlined expand_icon_css" onclick="expand_btn('more')">
+                            expand_more
+                        </span>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="outside_content_container">
+                <div class="content_container">
+                    <div class="title_container">
+                        <div class="small_title_container">
+                            <a id="allproject" class="a_herf_no_line small_title" href="">All Project</a>
+                            <label class="small_title"> / </label>
+                            <label id="prjname_label" class="text-capitalize small_title"></label>        
+                        </div>
+                        <div class="md_main_continer">
+                            <div class="md_title_container">
+                                <div class="md_text">Dataset</div>
+                                <div id="dataset_num" class="dataset_num_text">0/0</div>
+                            </div>
+                            <div id="right_btn_container" class="md_right_btn_container">
+                                <button id="more_btn" class="dataset_more_button" data-bs-toggle="dropdown" aria-expanded="false" onclick="">
+                                    <span id="more_txt_${uuid}" class="material-symbols-outlined">more_horiz</span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a id="aug_prj" class="dropdown-item" onclick="">Augmentation</a></li>
+                                    <li><a id="select_prj" class="dropdown-item" onclick="">Select</a></li>
+                                </ul>
+                                <input type="button" class="all_button" value="Upload" onclick="open_upload_mkpopup()">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="graph_container" class="graph_container">
+                        <div class="gallery_container">
+                            <div class="filter_cls_container">
+                                <div id="expand_cls_less" class="expand_btn_container">
+                                    <span class="material-symbols-outlined expand_btn_css user-select-none">
+                                        arrow_back_ios
+                                    </span>
+                                </div>
+                                <div id="cls_container" class="cls_container">
+                                </div>
+                                <div id="expand_cls_more" class="expand_btn_container">
+                                    <span class="material-symbols-outlined expand_btn_css user-select-none">
+                                        arrow_forward_ios
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="small_img_container" class="display_small_img_container scroll">
+                            </div>
+                        </div>
+                        <div id="preview_container" class="display_container preview_exterior">
+                            <div class="preview_label_container">
+                                <div class="preview_font">Preview</div>
+                                <div id="label_btn_container" class="label_btn_container">
+                                    <input type="button" class="all_button label_btn_css" value="Label" onclick="panel_change('label')">
+                                </div>
+                            </div>
+                            <div class="preview_img_container">
+                                <div id="expand_img_less" class="expand_img_container expand_btn_container expand_img_left" onclick="preview_expand_btn('less')">
+                                    <span class="material-symbols-outlined expand_btn_css user-select-none">
+                                        arrow_back_ios
+                                    </span>
+                                </div>
+                                <img id="preview_img" class="show_image" loading="lazy">
+                                <div id="expand_img_more" class="expand_img_container expand_btn_container" onclick="preview_expand_btn('more')">
+                                    <span class="material-symbols-outlined expand_btn_css user-select-none">
+                                        arrow_forward_ios
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="img_cls_show_container" class="img_cls_show_container scroll">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="null_dataset_container" class="null_dataset_container">
+                        <span class="material-symbols-outlined null_img">
+                            add_photo_alternate
+                        </span>
+                        <div class="null_text">
+                            Please upload images!!!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Maindiv>
+        <Labeldiv id="label_div" style="display: none;" class="setting_center">
+        </Labeldiv>
+        <Upload>
+            <div id="upload_mkpopup" class="mkpopup">
+                <!-- Modal content -->
+                <div class="mkpopup_content_outside mkpopup_content_container mkpopup_upload_container">
+                    <div class="mkpopup_main_container">
+                        <div class="mkpopup_title_container">
+                            <label class="mkpopup_text">Upload</label>
+                        </div>
+                        <div class="upload_switch_containter margin_bottom_20">
+                            <div id="upload_file" class="upload_file standard_font_txt" onclick="switch_folder_file('file')">Files</div>
+                            <div id="upload_folder" class="upload_folder standard_font_txt" onclick="switch_folder_file('folder')">Folders</div>
+                        </div> 
+                        <div id="upload_outside_container" class="mkpopup_form_container">
+                            <div id="upload_container_file" class="upload_container margin_bottom_20">
+                                <div id="drop_container_file" class="drop_container">
+                                    <span class="material-symbols-outlined drop_icon">cloud_download</span>
+                                    <div class="standard_font_txt margin_bottom_20">Drap & Drop</div>
+                                    <label id="btnupload_file" class="form_button_style postion_center ">
+                                        Browse your computer
+                                        <input id='chose_file' type="file" style="display: none;" multiple accept="image/*, .txt">
+                                    </label>
+                                </div>
+                            </div>
+                            <form id="cls_form" method="post" name="form_project"  action="#">
+                                <div class="form_item_position">
+                                    <lable class="form_item_font">Class</lable>
+                                </div>
+                                <div>
+                                    <input id="cls_name" type="text" class="form_obj_style">
+                                </div>
+                            </form>
+                            <div id="upload_container_folder" class="upload_container margin_bottom_20"  style='display: none;'>
+                                <div id="drop_container_folder" class="drop_container">
+                                    <span class="material-symbols-outlined drop_icon">cloud_download</span>
+                                    <div class="standard_font_txt margin_bottom_20">Drap & Drop</div>
+                                    <label id="btnupload_folder" class="form_button_style postion_center">
+                                        Browse your computer
+                                        <input id='chose_folder' type="file" style='display:none;' webkitdirectory multiple/>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="upload_btn_div" class="mkpopup_btn_container">
+                        <button id="cancel_btn" type="button" class="form_cancel_btn_style margin_right_12" onclick="close_upload_mkpopup()">Cancel</button>
+                        <button id="upload_btn" type="button" class="form_button_style" onclick="upload_create()" disabled="disabled">Upload</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </Upload>
+    </body>
+</html>

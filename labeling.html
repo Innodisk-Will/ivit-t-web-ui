@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script language="JavaScript">
+            var DEL_CLS=[];
+            var RENAME_CLS={};
+            $( document ).ready(function() {
+                init_smallimg_container();
+                sel_action();
+                listen_draw();
+                save_keyup();
+            })
+        </script>
+    </head>
+    <body>
+        <Maindiv class="prj_function_container main_container">
+            <div class="label_txtbtn_container">
+                <div class="label_left_container">
+                    <div id="label_text" class="label_text_container">Label</div>
+                    <div id="dataset_num_label" class="dataset_num_text margin_right_16 setting_center">0/0</div>
+                    <div class="label_type_container setting_center">
+                        <div id="label_type" class="label_type_text text-capitalize">Type</div>
+                    </div>
+                </div>
+                <div id="back_btn_container" class="label_btn_container margin_0">
+                    <input id="back_btn" type="button" class="all_button label_btn_css" value="Back" onclick="panel_change('back')">
+                </div>
+            </div>
+            <div class="draw_tool_container">
+                <div class="tool_container">
+                    <div class="setting_center margin-bottom-16 margin-top-16 pointer label_tool_container">
+                        <span class="material-symbols-outlined label_icon label_rotate" onclick="point()">
+                            near_me
+                        </span>
+                    </div>
+                    <div class="setting_center margin-bottom-16 pointer label_tool_container" onclick="rectangle()">
+                        <span class="material-symbols-outlined">
+                            crop_square
+                        </span>
+                    </div>
+                    <div class="setting_center margin-bottom-16 pointer label_tool_container" onclick="delete_rect()">
+                        <span class="material-symbols-outlined label_icon">
+                            delete_forever
+                        </span>
+                    </div>
+                </div>
+                <div class="draw_show_container">
+                    <div id="show_large_img" class="show_large_image_container">
+                        <img id="large_img" class="show_image" loading="lazy" src="">
+                    </div>
+                    <div class="label_smallimg_tool_container">
+                        <div id="expand_less_img" class="expand_btn_container" onclick="expand_img('less')">
+                            <span class="material-symbols-outlined expand_btn_css user-select-none">
+                                arrow_back_ios
+                            </span>
+                        </div>
+                        <div id="label_smallimg_container" class="small_image_container">
+                        </div>
+                        <div id="expand_more_img" class="expand_btn_container" onclick="expand_img('more')">
+                            <span class="material-symbols-outlined expand_btn_css user-select-none">
+                                arrow_forward_ios
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class_color_container">
+                    <div class="label_class_tool_container">
+                        <div class="label_class_edit_container">
+                            <div class="label_class_txt">Class</div>
+                            <div class="label_edit_tool" onclick="open_edit_mkpopup()">
+                                <span class="material-symbols-outlined label_icon pointer">
+                                    drive_file_rename_outline
+                                </span>
+                            </div>
+                        </div>
+                        <div class="label_input_background">
+                            <input id="input_txt" type="text" list="classes" class="label_input input_txt" placeholder="Please select class"/>
+                            <div id="classes_list" list="classes" class="classes_list">
+                                <div id="classes_list_main" class="classes_main" list="classes"></div>
+                                <div id="create_newcls" class="create_class" onclick="create_new_class()">Create new class</div>
+                            </div>
+                            <span id="more_list" class="material-symbols-outlined label_expand_icon pointer" onclick="more_press()">
+                                keyboard_arrow_down
+                            </span>
+                        </div>
+                    </div>
+                    <div class="label_annotation_container">
+                        <div class="label_annotation_txt">Annotation</div>
+                        <div id="annotation">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Maindiv>
+
+        <!-- EditClass -->
+        <Editclass>
+            <div id="edit_label_mkpopup" class="mkpopup">
+                <!-- Modal content -->
+                <div class="mkpopup_content_outside mkpopup_content_container">
+                    <div class="mkpopup_main_container">
+                        <div class="mkpopup_title_container">
+                            <label class="mkpopup_text">Edit Classes</label>
+                        </div>
+                        <div id="edit_labelname" class="edit_class_container">
+                        </div>
+                    </div>
+                    <div id="edit_btn_div" class="mkpopup_btn_container">
+                        <button id="cancel_btn" type="button" class="form_cancel_btn_style margin_right_12" onclick="close_edit_mkpopup()">Cancel</button>
+                        <button id="save_btn" type="button" class="form_button_style" onclick="save_classes()">Save</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </Editclass>
+    </body>
+</html>

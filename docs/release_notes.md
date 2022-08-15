@@ -25,7 +25,7 @@
 - Create, Control iteration 
 
 ### Model
-    - Training
-    - Evaluate
-    - Convert
-    - Create, Control iteration
+- Training
+- Evaluate
+- Convert
+- Create, Control iteration

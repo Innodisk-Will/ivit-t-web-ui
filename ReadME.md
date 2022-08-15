@@ -1,11 +1,11 @@
 # iVIT-T WEB UI
 
 A user interfaces to the training model. This UI is easy to operate for train model and evaluates the trained model and convert to edge platform. 
-* [See What's New](#See-What's-New)
-* [Pre-requirements](##Pre-requirements)
-* [Build docker images](###Build-docker-images)
-* [Run container](###Run-container)
-* [Open web UI](###Open-web-UI)
+* [See What's New](#see-whats-new)
+* [Pre-requirements](#pre-requirements)
+* [Build docker images](#build-docker-images)
+* [Run container](#run-container)
+* [Open web UI](#open-web-ui)
 
 
 # See What's New

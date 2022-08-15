@@ -5,9 +5,9 @@ A user interfaces to the training model. This UI is easy to operate for train mo
 
 ##  Installation docker container 
 ```shell
-sudo chmod 777 ./web/client_server
-sudo ./web/client_server/build.sh
-sudo ./web/client_server/run_client.sh -p 6530
+sudo chmod 777 ./docker
+sudo ./docker/build.sh
+sudo ./docker/run_client.sh -p 6530
 ```
 
 This "-p" is the port number that relative port of web API.

@@ -14,7 +14,7 @@ def extract_ip():
         st.close()
     return IP
 
-JS_FILE=['./web/js/utils.js']
+JS_FILE=['./js/utils.js']
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--port", help="Input port number")
 args = parser.parse_args()

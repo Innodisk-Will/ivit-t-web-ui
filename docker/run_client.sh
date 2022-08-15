@@ -37,10 +37,9 @@ while getopts "p:h" option; do
 done
 #!/bin/bash
 echo "Setting IP of webapi."
-python3 ./web/client_server/get_domain.py -p ${port}
+python3 ./docker/get_domain.py -p ${port}
 
 echo "Open Nginx service."
-cd ./web
 
 # ---------------------------------------------------------
 # start service

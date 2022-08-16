@@ -262,7 +262,7 @@ function sel_action(){
         };
     });
 
-    keyup_input();
+    keyup_input('.input_txt[list]');
 
     // Listener div
     $(document).on('click', '.classes_list[list] span', function(event){
@@ -284,27 +284,30 @@ function more_press(){
 //             $("#classes_list").removeAttr("style");
 //        };
 //    });
-keyup_input();
+    keyup_input("");
 };
 
 // Event for input and drop down
-function keyup_input(){
+function keyup_input(children){
     // Listener input
-    $(document).on('keyup', '.input_txt[list]', function(event){
+    $(document).on('keyup', children, function(event){
         event.preventDefault();
         var list = $(this).attr('list');
-        var div_list =  $('div[list='+$(this).attr('list')+']');
+        // var div_list =  $('div[list='+$(this).attr('list')+']');
         if(event.which == 27){ // esc
-            $(div_list).hide(200);
+            console.log("esc")
+            // $(div_list).hide(200);
             $(this).focus();
+            $("#classes_list").removeAttr("style");
         }
         else if(event.which == 13){ // enter
-            $('div[list='+list+']').hide(100);
+            console.log("enter")
+            // $('div[list='+list+']').hide(100);
             // Append to Class list and backend
             change_class();
         }
         else {
-            console.log("test")
+            console.log("other key")
             $('div[list='+list+']').show(100);
             var str  = $(this).val();
             $('div[list='+$(this).attr('list')+'] span').each(function(){

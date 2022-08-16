@@ -9,17 +9,8 @@
 }
 
 .dataset_more_button{
-    width: 32px;
-    height: 32px;
-    background: #E8E8E8 0% 0% no-repeat padding-box;
-    border-radius: 4px;
-    opacity: 1;
-    display: flex;
-    border: none;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
+    margin: 0 !important;
+    margin-right: 10px !important;
 }
 
 .label_btn_css{

@@ -108,7 +108,7 @@
     opacity: 1;
     margin: 10px 16px 0px 0px;
     border: 0;
-    background-color: transparent;
+    background-color: #F8F8F8;
     color:#000000;
     display: flex;
     align-content: center;
@@ -117,7 +117,7 @@
 }
 
 .more_button.active, .more_button:hover{
-    background: #E8E8E8 0% 0% no-repeat padding-box;
+    background: #979CB53D 0% 0% no-repeat padding-box;
     color:#000000 ;
 }
 

@@ -262,36 +262,7 @@ function sel_action(){
         };
     });
 
-    // Listener input
-    $(document).on('keyup', '.input_txt[list]', function(event){
-        event.preventDefault();
-        var list = $(this).attr('list');
-        var div_list =  $('div[list='+$(this).attr('list')+']');
-        if(event.which == 27){ // esc
-            $(div_list).hide(200);
-            $(this).focus();
-        }
-        else if(event.which == 13){ // enter
-            $('div[list='+list+']').hide(100);
-            // Append to Class list and backend
-            change_class();
-        }
-        else if(event.which == 9){ // tab
-            $('div[list]').hide();
-        }
-        else {
-            $('div[list='+list+']').show(100);
-            var str  = $(this).val();
-            $('div[list='+$(this).attr('list')+'] span').each(function(){
-                if($(this).html().toLowerCase().indexOf(str.toLowerCase()) < 0){
-                    $(this).hide(200);
-                }
-                else {
-                    $(this).show(200);
-                };
-            });
-        };
-    });
+    keyup_input();
 
     // Listener div
     $(document).on('click', '.classes_list[list] span', function(event){
@@ -308,11 +279,44 @@ function sel_action(){
 // More btn press action
 function more_press(){
     $("#classes_list").attr("style","display: block");
-    $(document).keyup(function(e) {
-        if (e.key === "Escape") { // escape key maps to keycode `27`
-            $("#classes_list").removeAttr("style");
-       };
-   });
+//     $(document).keyup(function(e) {
+//         if (e.key === "Escape") { // escape key maps to keycode `27`
+//             $("#classes_list").removeAttr("style");
+//        };
+//    });
+keyup_input();
+};
+
+// Event for input and drop down
+function keyup_input(){
+    // Listener input
+    $(document).on('keyup', '.input_txt[list]', function(event){
+        event.preventDefault();
+        var list = $(this).attr('list');
+        var div_list =  $('div[list='+$(this).attr('list')+']');
+        if(event.which == 27){ // esc
+            $(div_list).hide(200);
+            $(this).focus();
+        }
+        else if(event.which == 13){ // enter
+            $('div[list='+list+']').hide(100);
+            // Append to Class list and backend
+            change_class();
+        }
+        else {
+            console.log("test")
+            $('div[list='+list+']').show(100);
+            var str  = $(this).val();
+            $('div[list='+$(this).attr('list')+'] span').each(function(){
+                if($(this).html().toLowerCase().indexOf(str.toLowerCase()) < 0){
+                    $(this).hide(200);
+                }
+                else {
+                    $(this).show(200);
+                };
+            });
+        };
+    });
 };
 
 function create_new_class(){
@@ -394,7 +398,7 @@ function cls_change_class(){
             // Append new class
             img_show_class(new_path);
             // Clear input value
-            $("#input_txt").val("");
+            // $("#input_txt").val("");
         });
     };
 };
@@ -591,9 +595,11 @@ function listen_draw(){
 
 // Save listener keyup
 function save_keyup(){
-    $(document).keypress(function(e) {
-        if (e.which == 115) {
-            save_label();
-        };
-    });
+    if( TYPE_NAME=="object_detection"){
+        $(document).keypress(function(e) {
+            if (e.which == 115) {
+                save_label();
+            };
+        });
+    };
 };

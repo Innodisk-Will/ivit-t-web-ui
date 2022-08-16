@@ -7,8 +7,7 @@
             $( document ).ready(function() {
                 init_smallimg_container();
                 sel_action();
-                listen_draw();
-                save_keyup();
+                label_keyup();
             })
         </script>
     </head>
@@ -41,6 +40,11 @@
                     <div class="setting_center margin-bottom-16 pointer label_tool_container" onclick="delete_rect()">
                         <span class="material-symbols-outlined label_icon">
                             delete_forever
+                        </span>
+                    </div>
+                    <div class="setting_center margin-bottom-16 pointer label_tool_container" onclick="save_label()">
+                        <span class="material-symbols-outlined label_icon">
+                            save
                         </span>
                     </div>
                 </div>

@@ -343,7 +343,9 @@ function select_img(e){
 
 // Preview img
 function preview_img(src, id, img_name=null){
-    // Reset rectangle
+    // // Reset rectangle
+    // SAVE_INFO["image_size"] = IMAGE_SIZE;
+    // SAVE_INFO["save_rect"] = RECTANGLES;
     RECTANGLES = [];
     // Clean box -> because selec null class still box in image
     $("#boxes").html("");
@@ -519,8 +521,12 @@ function show_box(event, img_name){
             $(".preview_img_container").append(svg_html);
         }
         else{
-            // label svg
+            // Label svg
             $("#show_large_img").append(svg_html);
+            // // Listen change panel
+            // listen_draw();
+            // Preset function
+            point();
         };
     };
     

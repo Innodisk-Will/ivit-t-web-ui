@@ -591,18 +591,38 @@ function save_label(){
     update_bbox_api(MAIN_UUID, front_param);
 };
 
-// Draw pannel has changed, then save
-function listen_draw(){
-
-};
+// // Draw pannel has changed, then save
+// function listen_draw(){
+//     console.log(SAVE_INFO)
+//     if( TYPE_NAME=="object_detection"){
+//         $("#show_large_img").bind("DOMSubtreeModified", function() {
+//             alert("tree changed");
+//             $("#show_large_img").unbind("DOMSubtreeModified")
+//             console.log(RECTANGLES)
+//             // save_label(SAVE_RECTANGLE);
+//         });
+//     };
+// };
 
 // Save listener keyup
-function save_keyup(){
+function label_keyup(){
     if( TYPE_NAME=="object_detection"){
         $(document).keypress(function(e) {
+            // Press S
             if (e.which == 115) {
+                console.log("Press S:",e.which)
                 save_label();
             };
+            // Press P
+            if (e.which == 112) {
+                console.log("Press P:",e.which)
+                point();
+            };
+            // Press R
+            if (e.which == 114) {
+                console.log("Press R:",e.which)
+                rectangle();
+            };                    
         });
     };
 };

@@ -370,6 +370,18 @@
     align-content: center;
 }
 
+.save_status{
+    width: fit-content;
+    height: 21px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-13)/var(--unnamed-line-spacing-18) var(--unnamed-font-family-roboto);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 13px/18px Roboto;
+    letter-spacing: 0px;
+    color: #979CB5CC;
+    opacity: 1;
+}
+
 .main_container{
     height: 758px;
     margin-bottom: 50px;
@@ -403,25 +415,6 @@
     opacity: 1;
     font-weight: 500;
     margin-right:16px;
-}
-
-.label_type_container{
-    width: 135px;
-    height: 24px;
-    background: #21D59B14 0% 0% no-repeat padding-box;
-    border: 1px solid #21D59B;
-    border-radius: 4px;
-    opacity: 1;
-}
-
-.label_type_text{
-    width: 111px;
-    height: 20px;
-    text-align: center;
-    font: normal normal normal 15px/20px Roboto;
-    letter-spacing: 0px;
-    color: #21D59B;
-    opacity: 1;
 }
 
 .draw_tool_container{
@@ -485,6 +478,7 @@
 .label_tool_container:hover{
     border: 1px #979cb545 solid;
     border-radius: 6px;
+    color: #E61F23;
 }
 
 .label_smallimg_tool_container{
@@ -556,19 +550,33 @@
 
 .label_class_txt{
     width: 50px;
-    height: 26px;
     text-align: right;
     font: normal normal 20px/24px Roboto;
     letter-spacing: 0px;
     color: #16272E;
     opacity: 1;
     font-weight: 500 !important;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .label_edit_tool{
-    width: 20px;
-    height: 19px;
+    width: 32px;
+    height: 32px;
     opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.label_edit_tool:hover{
+    border: 1px #979cb545 solid;
+    border-radius: 6px;
+    color: #E61F23;
 }
 
 .label_input_background{
@@ -647,13 +655,23 @@
 }
 
 .label_anntation_name{
-    width: 100%;
+    width: 62%;
     height: 21px;
     text-align: left;
     font: normal normal normal 16px/21px Roboto;
     letter-spacing: 0px;
     color: #16272E;
     opacity: 1;
+}
+
+.label_anntation_number{
+    text-align: right;
+    font: normal normal 16px/21px Roboto;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-weight: 500 !important;
+    width: 22%;
 }
 
 .input_txt[list]:focus {
@@ -790,3 +808,31 @@ rect {
     padding-left: 12px;
     padding-right: 4px;
 }
+
+/* //////////////// REMIND KEY ////////////////*/
+/* //////////////// REMIND KEY ////////////////*/
+/* //////////////// REMIND KEY ////////////////*/
+
+.labeltip_start {
+    position: relative;
+    text-align: center;
+}
+  
+.labeltip_text {
+    visibility: hidden;
+    width: max-content;
+    background-color: #0000006e;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    top: 25px;
+    left: 25px;
+    font-size: 14px;
+}
+  
+.labeltip_start:hover .labeltip_text {
+    visibility: visible;
+}
+  

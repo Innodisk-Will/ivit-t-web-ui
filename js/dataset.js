@@ -338,7 +338,7 @@ function select_img(e){
     }
     else{
         preview_img(src, "preview_img");
-    }
+    };
 };
 
 // Preview img
@@ -421,7 +421,6 @@ function preview_expand_btn(key){
             $(before).css("border","2px solid #E61F23").ready(function(){
                 // Remove select div
                 remove_select_img(1);
-    
             });
         };
     };
@@ -523,6 +522,7 @@ function show_box(event, img_name){
         else{
             // Label svg
             $("#show_large_img").append(svg_html);
+            // Loading panel action
             // // Listen change panel
             // listen_draw();
             // Preset function

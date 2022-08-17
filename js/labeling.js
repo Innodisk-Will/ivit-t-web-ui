@@ -34,6 +34,10 @@ function init_draw_box(bbox){
             redraw();
         };
     };
+    // Count class number
+    if ($("#label_div").children().length>0){
+        count_annotation();
+    };
 };
 
 ///////////////////////////////// EVALUATE /////////////////////////////////////
@@ -136,12 +140,12 @@ function init_smallimg_container(){
     };
 
     // Add number name
-    $("#dataset_num_label").text($("#dataset_num").text());
+    // $("#dataset_num_label").text($("#dataset_num").text());
     // Add type
-    $("#label_type").text(TYPE_NAME);
+    // $("#label_type").text(TYPE_NAME);
     // Check type for tool
     if (TYPE_NAME == "classification"){
-        $(".label_tool_container").attr("style","opacity: 0.2; cursor: not-allowed;");
+        $(".label_tool_container").attr("style","opacity: 0.2; cursor: not-allowed; pointer-events: none;");
     };
 
     // Check main show img
@@ -242,11 +246,24 @@ function add_annotation(class_name){
                 <div class="label_annotation_object">
                     <div class="label_anntation_color" style="background: ${color}"></div>
                     <div id="anno_${class_name}" class="label_anntation_name text-truncate">${class_name}</div>
+                    <div id="num_${class_name}" class="label_anntation_number">1</div>
                 </div>
                 `;
     $("#annotation").append(html).ready(function(){
         hover_marquee(`anno_${class_name}`);
     });;
+};
+
+// Compute annotation count
+function count_annotation(){
+    let anntation = $("#annotation").children();
+    for (let cls of anntation){
+        let name = $($(cls).children()[1]).text();
+        let background = $($(cls).children()[0]).attr("style");
+        let color = background.split("#")[1];
+        let len = $(`#boxes rect[style*='stroke:#${color}; fill:transparent; stroke-width: 3px;']`).length;
+        $(`#num_${name}`).text(len);
+    };
 };
 
 ///////////////////////////////// SELECT /////////////////////////////////////
@@ -274,6 +291,27 @@ function sel_action(){
         // Append to Class list and backend
         change_class();
     });
+};
+
+// Input onclick
+function label_click_listen(){
+    if (TYPE_NAME=="object_detection"){
+        $(document).on("click", function(e){
+            $(document).unbind("keyup");
+            if(e.target["id"]== "input_txt"){
+                // Upbind
+                $(document).unbind("keyup");
+                // Give main keyup
+                keyup_input('.input_txt[list]');
+            }
+            else{
+                // Upbind
+                $(document).unbind("keyup", '.input_txt[list]');
+                // Give main keyup
+                label_keyup();
+            };
+        });
+    };
 };
 
 // More btn press action
@@ -372,6 +410,9 @@ function cls_change_class(){
         class_name = "Unlabeled";
     };
 
+    // Change saving action
+    save_action("saving")
+
     // Backend
     let src_path = $("#large_img").attr("src").split('/');
     let img_name = src_path[src_path.length - 1];
@@ -380,9 +421,12 @@ function cls_change_class(){
                         "class_name":$("#input_txt").val()
                     };
     let edit_result = edit_img_class_api(MAIN_UUID, front_param);
+    
 
     // Change class
     if (edit_result.includes("Change")){
+        // Save is finished 
+        save_action("save");
         // Get new path
         let new_path = "";
         for (let i = 0; i < src_path.length; i++){
@@ -462,6 +506,7 @@ function init_all_classes(){
     };
 };
 
+// Delete class
 function delete_class(class_name){
     // Delete html in edit_labelname
     $(`#edit_labelname #lable_${class_name}`).remove();
@@ -483,6 +528,7 @@ function input_change(class_name){
     RENAME_CLS[`${class_name}`] = $(`#label_input_${class_name}`).val();
 };
 
+// Save class
 function save_classes(){
     // DEL_CLS
     if (DEL_CLS.length>0){
@@ -518,6 +564,7 @@ function rectangle(){
             alert("Require to point class!")
         }
         else{
+            press_action("square");
             $("#draw").attr("style","pointer-events:none")
             document.getElementById("large_img").addEventListener('pointerdown', start_drag);
         };
@@ -528,18 +575,16 @@ function rectangle(){
 function point(){
     if (TYPE_NAME=="object_detection"){
         $("#draw").attr("style","pointer-events:painted");
-        $(document).keyup(function(e) {
-            if (e.keyCode == 46) { // delete key maps to keycode `46`
-                delete_rect();
-           };
-       });
+        press_action("point");
     };
 };
 
 // Delete rectangle
 function delete_rect(){
     if (TYPE_NAME=="object_detection"){
-        console.log("selected_delete_element:",SLELCTED_DEL_ELEMENT)
+        // Delete btn active
+        $("#delete_rect").attr("style", "color: #E61F23;");
+
         // Build SLELCTED_ELEMENT object
         let needle ={
             x: parseFloat($(SLELCTED_ELEMENT).attr("x")), 
@@ -548,47 +593,90 @@ function delete_rect(){
             height: parseFloat($(SLELCTED_ELEMENT).attr("height")),
         };
         // console.log(needle)
-
         // Find index in RECTANGLES
         idx = RECTANGLES.findIndex(object => {
             return ((object["x"] === needle["x"] && object["y"] === needle["y"]) && 
             (object["width"] === needle["width"] && object["height"] === needle["height"]));
         });
         // Remove rect in RECTANGLES
-        RECTANGLES.splice(idx,1)
-        console.log("remove-rectangles:",RECTANGLES)
+        if (idx != -1){
+            RECTANGLES.splice(idx,1)
+            console.log("remove-rectangles:",RECTANGLES)
+        };
+
         // Remove rect in g(boxes)
-        document.getElementById("boxes").removeChild(SLELCTED_DEL_ELEMENT);
+        console.log("selected_delete_element:",SLELCTED_DEL_ELEMENT)
+        $(SLELCTED_DEL_ELEMENT).remove();
+
+        // Delay close
+        setTimeout('$("#delete_rect").removeAttr("style")',100);
+        // Update number of annotation 
+        count_annotation();
     };
 };
 
 // Save label
 function save_label(){
-    let x_rate = IMAGE_SIZE["small_panel"][0]/IMAGE_SIZE["org"][1];
-    let y_rate = IMAGE_SIZE["small_panel"][1]/IMAGE_SIZE["org"][0];
-    let src_path = $("#large_img").attr("src").split("/");
-    let img_name = src_path[src_path.length-1];
+    if (TYPE_NAME=="object_detection"){
+        // Open save remind
+        save_action("saving");
+        $("#save").attr("style", "color: #E61F23;");
 
-    let front_param= {
-                        "image_name":`${img_name}`,
-                        "box_info":[]
-                    };
+        let x_rate = IMAGE_SIZE["small_panel"][0]/IMAGE_SIZE["org"][1];
+        let y_rate = IMAGE_SIZE["small_panel"][1]/IMAGE_SIZE["org"][0];
+        let src_path = $("#large_img").attr("src").split("/");
+        let img_name = src_path[src_path.length-1];
 
-    // Reorganize to backend
-    for (let rec of RECTANGLES){
-        // console.log(rec);
-        let one_box_info = {"class_id":String(ALL_CLASSES["keys"].indexOf(rec["class"])-1),
-                            "class_name":rec["class"],
-                            "bbox": [rec["x"]/x_rate, 
-                                        rec["y"]/y_rate, 
-                                        (rec["width"]+rec["x"])/x_rate,
-                                        (rec["height"]+rec["y"])/y_rate]
-                            };
-        front_param["box_info"].push(one_box_info);
+        let front_param= {
+                            "image_name":`${img_name}`,
+                            "box_info":[]
+                        };
+
+        // Reorganize to backend
+        for (let rec of RECTANGLES){
+            // console.log(rec);
+            let one_box_info = {"class_id":String(ALL_CLASSES["keys"].indexOf(rec["class"])-1),
+                                "class_name":rec["class"],
+                                "bbox": [rec["x"]/x_rate, 
+                                            rec["y"]/y_rate, 
+                                            (rec["width"]+rec["x"])/x_rate,
+                                            (rec["height"]+rec["y"])/y_rate]
+                                };
+            front_param["box_info"].push(one_box_info);
+        };
+        console.log(front_param);
+        // Send to backend
+        let save_status = update_bbox_api(MAIN_UUID, front_param);
+        // Delay close
+        if (save_status.includes("Update")){
+            setTimeout('$("#save").removeAttr("style")',1000);
+            save_action("save");
+        };
     };
-    console.log(front_param);
-    // Send to backend
-    update_bbox_api(MAIN_UUID, front_param);
+};
+
+// Save action
+function save_action(key){
+    if (key == "saving"){
+        $("#latest").attr("style","display: none;");
+        $("#sync").removeAttr("style");
+    }
+    else{
+        setTimeout('$("#latest").removeAttr("style")',1000);
+        setTimeout('$("#sync").attr("style","display: none;")',1000);
+    };
+};
+
+// Press action
+function press_action(key){
+    if (key == "point"){
+        $("#point").attr("style", "color: #E61F23;");
+        $("#square").removeAttr("style");
+    }
+    else{
+        $("#point").removeAttr("style");
+        $("#square").attr("style", "color: #E61F23;");
+    };
 };
 
 // // Draw pannel has changed, then save
@@ -607,22 +695,28 @@ function save_label(){
 // Save listener keyup
 function label_keyup(){
     if( TYPE_NAME=="object_detection"){
-        $(document).keypress(function(e) {
+        $(document).on("keyup", function(e) {
             // Press S
-            if (e.which == 115) {
+            if (e.keyCode == 83) {
                 console.log("Press S:",e.which)
                 save_label();
             };
-            // Press P
-            if (e.which == 112) {
-                console.log("Press P:",e.which)
+            // Press V
+            if (e.keyCode == 86) {
+                console.log("Press V:",e.which)
                 point();
             };
             // Press R
-            if (e.which == 114) {
+            if (e.keyCode == 82) {
                 console.log("Press R:",e.which)
                 rectangle();
-            };                    
+            };
+            // Press delete and press point now
+            if (e.keyCode == 46 && $("#point").attr("style")=="color: #E61F23;") { 
+                // delete key maps to keycode `46`
+                console.log("Press Delete:",e.keyCode)
+                delete_rect();
+            };               
         });
     };
 };

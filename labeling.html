@@ -8,6 +8,7 @@
                 init_smallimg_container();
                 sel_action();
                 label_keyup();
+                label_click_listen();
             })
         </script>
     </head>
@@ -16,9 +17,19 @@
             <div class="label_txtbtn_container">
                 <div class="label_left_container">
                     <div id="label_text" class="label_text_container">Label</div>
-                    <div id="dataset_num_label" class="dataset_num_text margin_right_16 setting_center">0/0</div>
-                    <div class="label_type_container setting_center">
-                        <div id="label_type" class="label_type_text text-capitalize">Type</div>
+                    <div id="save_status" class="save_status margin_right_16 setting_center">
+                        <div id="latest" class="setting_center">
+                            <span class="material-symbols-outlined margin_right_7">
+                                check_circle
+                            </span>
+                            Update to the latest.
+                        </div>
+                        <div id="sync" class="setting_center" style="display: none;">
+                            <span class="material-symbols-outlined margin_right_7">
+                                sync
+                            </span>
+                            Saving...
+                        </div>
                     </div>
                 </div>
                 <div id="back_btn_container" class="label_btn_container margin_0">
@@ -27,25 +38,29 @@
             </div>
             <div class="draw_tool_container">
                 <div class="tool_container">
-                    <div class="setting_center margin-bottom-16 margin-top-16 pointer label_tool_container">
-                        <span class="material-symbols-outlined label_icon label_rotate" onclick="point()">
+                    <div id="point" class="setting_center margin-bottom-16 margin-top-16 pointer label_tool_container labeltip_start" onclick="point()">
+                        <span class="material-symbols-outlined label_icon label_rotate">
                             near_me
                         </span>
+                        <span class="labeltip_text standard_font_txt">Select(V)</span>
                     </div>
-                    <div class="setting_center margin-bottom-16 pointer label_tool_container" onclick="rectangle()">
+                    <div id="square" class="setting_center margin-bottom-16 pointer label_tool_container labeltip_start" onclick="rectangle()">
                         <span class="material-symbols-outlined">
                             crop_square
                         </span>
+                        <span class="labeltip_text standard_font_txt">Rectangle(R)</span>
                     </div>
-                    <div class="setting_center margin-bottom-16 pointer label_tool_container" onclick="delete_rect()">
+                    <div id="delete_rect" class="setting_center margin-bottom-16 pointer label_tool_container labeltip_start" onclick="delete_rect()">
                         <span class="material-symbols-outlined label_icon">
                             delete_forever
                         </span>
+                        <span class="labeltip_text standard_font_txt">Delete(Del)</span>
                     </div>
-                    <div class="setting_center margin-bottom-16 pointer label_tool_container" onclick="save_label()">
+                    <div id="save" class="setting_center margin-bottom-16 pointer label_tool_container labeltip_start" onclick="save_label()">
                         <span class="material-symbols-outlined label_icon">
                             save
                         </span>
+                        <span class="labeltip_text standard_font_txt">Save(S)</span>
                     </div>
                 </div>
                 <div class="draw_show_container">

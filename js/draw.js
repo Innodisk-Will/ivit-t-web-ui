@@ -50,6 +50,8 @@ function stop_drag(ev) {
         temp_value["class"]=lastKey   
         RECTANGLES.push(temp_value);
         redraw();
+        // Update number of annotation 
+        count_annotation();
     };
 };
 

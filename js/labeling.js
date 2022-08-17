@@ -274,7 +274,7 @@ function count_annotation(){
 function sel_action(){
     // Append orignal classes in option
     ALL_CLASSES["keys"].forEach((val,idx) => {
-        if (! (val == "All")){
+        if (! (val == "All") & !(val=="Unlabeled")){
             $('#classes_list_main').append(`<span>${val}</span>`); 
         };
     });

@@ -21,6 +21,10 @@
     background: #ffffff 0% 0% no-repeat padding-box;
 }
 
+.label_btn_css:hover{
+    background: #E61F231A;
+}
+
 .filter_cls_container{
     height: 55px;
     width: 100%;

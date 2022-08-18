@@ -274,17 +274,15 @@ function count_annotation(){
 function sel_action(id){
     // Append orignal classes in option
     ALL_CLASSES["keys"].forEach((val,idx) => {
-        if (! (val == "All") & !(val=="Unlabeled")){
-            // Label-input_txt action
-            if (id == "input_txt"){
-                html = `<span>${val}</span>`;
-            }
-            // Upload-cls_name action
-            else{
-                html = `<span style="padding-left: 16px;">${val}</span>`;
-            }
-            $('#classes_list_main').append(html); 
-        };
+        // Label-input_txt action
+        if (id == "input_txt"){
+            html = `<span>${val}</span>`;
+        }
+        // Upload-cls_name action
+        else{
+            html = `<span style="padding-left: 16px;">${val}</span>`;
+        }
+        $('#classes_list_main').append(html); 
     });
 
     keyup_input('.input_txt[list]', id);
@@ -311,6 +309,12 @@ function label_click_listen(){
                 $(document).unbind("keyup");
                 // Give main keyup
                 keyup_input('.input_txt[list]', "input_txt");
+            }
+            else if (e.target["id"]== "more_list"){
+                // Upbind
+                $(document).unbind("keyup");
+                // Give main keyup
+                keyup_input('', "input_txt");
             }
             else{
                 // Upbind
@@ -387,6 +391,8 @@ function create_new_class(id){
                 // Backend
                 let front_param = {"class_name":input_val};
                 add_class_api(MAIN_UUID, front_param);
+                // Change select color
+                change_class("input_txt");
             }
             // Upload-cls_name action
             else{
@@ -477,8 +483,8 @@ function obj_change_class(){
     let class_name = $("#input_txt").val();
     // Get index of class_name in ALL_CLASSES
     let idx = ALL_CLASSES["keys"].indexOf(class_name);
-    // Get class_name color
-    let hex_color = COLOR_BAR[idx];
+    // Get class_name color(key not 0, required +1)
+    let hex_color = COLOR_BAR[idx+1];
     // Select point color
     let color = rgb2hex(hex_color[2], hex_color[1], hex_color[0]);
     // POINTING COLOR
@@ -657,7 +663,7 @@ function save_label(){
         // Reorganize to backend
         for (let rec of RECTANGLES){
             // console.log(rec);
-            let one_box_info = {"class_id":String(ALL_CLASSES["keys"].indexOf(rec["class"])-1),
+            let one_box_info = {"class_id":String(ALL_CLASSES["keys"].indexOf(rec["class"])),
                                 "class_name":rec["class"],
                                 "bbox": [rec["x"]/x_rate, 
                                             rec["y"]/y_rate, 

@@ -3,7 +3,6 @@
 ///////////////////////////////// DRAW RECTANGE /////////////////////////////////////
 
 var RECTANGLES = [];
-var POINTCOLOR = {};
 
 // Temp variables
 let START_X = 0;

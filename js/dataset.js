@@ -45,21 +45,23 @@ function check_dataset(){
 // Show filter classes btn
 function filter_classes_btn(all, classes, effect){
     // Append all btn
-    ALL_CLASSES["keys"].push("All");
-    ALL_CLASSES["values"].push(all);
+    DATASET_CLASSES["keys"].push("All");
+    DATASET_CLASSES["values"].push(all);
     // Append Unlabeled
     if (all-effect>0){
-        ALL_CLASSES["keys"].push("Unlabeled");
-        ALL_CLASSES["values"].push(all-effect);
+        DATASET_CLASSES["keys"].push("Unlabeled");
+        DATASET_CLASSES["values"].push(all-effect);
     };
     // Append individual class
     for (let cls_name of Object.keys(classes)){
+        DATASET_CLASSES["keys"].push(cls_name);
+        DATASET_CLASSES["values"].push(classes[cls_name]);
         ALL_CLASSES["keys"].push(cls_name);
         ALL_CLASSES["values"].push(classes[cls_name]);
     };
     // Get total of added div
-    let total = ALL_CLASSES["keys"].length;
-    if (ALL_CLASSES["keys"].length>4){
+    let total = DATASET_CLASSES["keys"].length;
+    if (DATASET_CLASSES["keys"].length>4){
         total = 4;
     };
     // Create div
@@ -101,13 +103,13 @@ function show_cls_name_number(total){
             $(`#class_outside_${num}`).attr("onclick",'get_all_image()');
         }
         else{
-            $(`#class_outside_${num}`).attr("onclick",`filter_small_img('${ALL_CLASSES["keys"][num]}')`);
+            $(`#class_outside_${num}`).attr("onclick",`filter_small_img('${DATASET_CLASSES["keys"][num]}')`);
         };
         // Give div text
         give_cls_txt(num, num);
     };
     // Show expand btn 
-    if (ALL_CLASSES["keys"].length>total){
+    if (DATASET_CLASSES["keys"].length>total){
         // Give css for expand_more
         $("#expand_cls_more").css("opacity","1");
         $("#expand_cls_more").css("cursor","pointer");
@@ -119,14 +121,14 @@ function show_cls_name_number(total){
 function expand_cls_btn(key, total){
     // Get first text
     let firset_txt = $("#class_0").text();
-    let index = ALL_CLASSES["keys"].indexOf(firset_txt);
+    let index = DATASET_CLASSES["keys"].indexOf(firset_txt);
     if (key=="more"){
         let expand = parseInt(index)+parseInt(total);
         // Show classes name and number
         for (let num = 0; num<total; num++){
-            if (num+expand < ALL_CLASSES["keys"].length){
+            if (num+expand < DATASET_CLASSES["keys"].length){
                 // Get all btn onclick
-                $(`#class_outside_${num}`).attr("onclick",`filter_small_img('${ALL_CLASSES["keys"][num+expand]}')`);
+                $(`#class_outside_${num}`).attr("onclick",`filter_small_img('${DATASET_CLASSES["keys"][num+expand]}')`);
                 // Give div text
                 give_cls_txt(num, num+expand);
             }
@@ -136,7 +138,7 @@ function expand_cls_btn(key, total){
             };
         };
         // While value is last, then expand_cls_more remove
-        if ( parseInt(expand) + parseInt(total) >= ALL_CLASSES["keys"].length){
+        if ( parseInt(expand) + parseInt(total) >= DATASET_CLASSES["keys"].length){
             $("#expand_cls_more").css("opacity","0.4");
             $("#expand_cls_more").css("cursor","");
             $("#expand_cls_more").attr("onclick",``);
@@ -156,7 +158,7 @@ function expand_cls_btn(key, total){
                 $(`#class_outside_${num}`).attr("onclick",'get_all_image()');
             }
             else{
-                $(`#class_outside_${num}`).attr("onclick",`filter_small_img('${ALL_CLASSES["keys"][index - (total-num)]}')`);
+                $(`#class_outside_${num}`).attr("onclick",`filter_small_img('${DATASET_CLASSES["keys"][index - (total-num)]}')`);
             };
             // Give div text
             give_cls_txt(num, index - (total-num));
@@ -179,8 +181,8 @@ function expand_cls_btn(key, total){
 
 // Give text of div(class)
 function give_cls_txt(num, index){
-    $(`#class_${num}`).text(ALL_CLASSES["keys"][index]);
-    $(`#class_num_${num}`).text(ALL_CLASSES["values"][index]);
+    $(`#class_${num}`).text(DATASET_CLASSES["keys"][index]);
+    $(`#class_num_${num}`).text(DATASET_CLASSES["values"][index]);
     hover_marquee(`class_${num}`);
 };
 
@@ -189,49 +191,59 @@ function onclick_listener_btn(){
     $( document ).on("click",function(e) {
         // Class btn
         if  (e.target["id"].includes("class")){
-            // Remove select div
-            remove_select_cls();
-            // Append css
-            if (!e.target["id"].includes("outside")){
-                $($(e.target).parent()).css("border","2px solid #E61F23");
-                let childs = $($(e.target).parent()).children();
-                $(childs[0]).css("opacity","1");
-                $(childs[1]).css("opacity","1");
-            }
-            else{
-                $(e.target).css("border","2px solid #E61F23");
-                let childs = $(e.target).children();
-                $(childs[0]).css("opacity","1");
-                $(childs[1]).css("opacity","1");
-            };
-            // First image select
-            init_preview_img();
-            // Check preview expand btn
-            check_preview_expand();
-            // Clean box -> because selec null class still box in image
-            // $("#boxes").html("");
+            id_class(e);
         };
 
         // img btn
         if  (e.target["id"].includes("image")){
-            // Remove select div
-            remove_select_img();
-            // Append css
-            if (e.target["id"].includes("div")){
-                $(e.target).css("border","2px solid #E61F23");
-                // selected img to preview
-                select_img($(e.target).children()[0]);
-            }
-            else{
-                $($(e.target).parent()).css("border","2px solid #E61F23");
-                // selected img to preview
-                select_img(e.target);
-            };
+            id_image(e);
         };
 
         // Stop event
         e.stopPropagation();
     });
+};
+
+// Id has "class" action
+function id_class(e){
+    // Remove select div
+    remove_select_cls();
+    // Append css
+    if (!e.target["id"].includes("outside")){
+        $($(e.target).parent()).css("border","2px solid #E61F23");
+        let childs = $($(e.target).parent()).children();
+        $(childs[0]).css("opacity","1");
+        $(childs[1]).css("opacity","1");
+    }
+    else{
+        $(e.target).css("border","2px solid #E61F23");
+        let childs = $(e.target).children();
+        $(childs[0]).css("opacity","1");
+        $(childs[1]).css("opacity","1");
+    };
+    // First image select
+    init_preview_img();
+    // Check preview expand btn
+    check_preview_expand();
+    // Clean box -> because selec null class still box in image
+    // $("#boxes").html("");
+};
+
+// Id has "image" action
+function id_image(e){
+    // Remove select div
+    remove_select_img();
+    // Append css
+    if (e.target["id"].includes("div")){
+        $(e.target).css("border","2px solid #E61F23");
+        // selected img to preview
+        select_img($(e.target).children()[0]);
+    }
+    else{
+        $($(e.target).parent()).css("border","2px solid #E61F23");
+        // selected img to preview
+        select_img(e.target);
+    };
 };
 
 // Remove select_cls
@@ -269,6 +281,7 @@ function filter_small_img(class_name){
     };
     let front_param = {"iteration":iteration, "class_name":class_name};
     let img_info = filter_class_api(MAIN_UUID, front_param);
+    console.log(img_info)
     // Clean old image
     $(`#small_img_container`).html("");
     // Show new image
@@ -526,7 +539,9 @@ function show_box(event, img_name){
             // // Listen change panel
             // listen_draw();
             // Preset function
-            point();
+            if (Object.keys(POINTCOLOR).length==0){
+                point();
+            };
         };
     };
     

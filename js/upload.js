@@ -7,6 +7,8 @@ function open_upload_mkpopup(){
     document.getElementById("upload_mkpopup").style.display = "block";
     // option
     drop_folder_file();
+    // Get value
+    sel_action("cls_name");
 };
 
 // Close upload_mkpopup
@@ -14,6 +16,8 @@ function close_upload_mkpopup(){
     document.getElementById("upload_mkpopup").style.display = "none";
     // Clean input name
     $("#cls_name").val("");
+    // Clean option
+    $("#classes_list_main").html("");
     // Preset panel->file
     switch_folder_file(null);
 };

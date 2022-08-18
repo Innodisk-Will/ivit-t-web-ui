@@ -6,7 +6,7 @@
             var RENAME_CLS={};
             $( document ).ready(function() {
                 init_smallimg_container();
-                sel_action();
+                sel_action("input_txt");
                 label_keyup();
                 label_click_listen();
             })
@@ -96,9 +96,9 @@
                             <input id="input_txt" type="text" list="classes" class="label_input input_txt" placeholder="Please select class"/>
                             <div id="classes_list" list="classes" class="classes_list">
                                 <div id="classes_list_main" class="classes_main" list="classes"></div>
-                                <div id="create_newcls" class="create_class" onclick="create_new_class()">Create new class</div>
+                                <div id="create_newcls" class="create_class" onclick="create_new_class('input_txt')">Create new class</div>
                             </div>
-                            <span id="more_list" class="material-symbols-outlined label_expand_icon pointer" onclick="more_press()">
+                            <span id="more_list" class="material-symbols-outlined label_expand_icon pointer" onclick="more_press('input_txt')">
                                 keyboard_arrow_down
                             </span>
                         </div>

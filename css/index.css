@@ -6183,6 +6183,18 @@ textarea.form-control-lg {
   outline: 1px solid #979CB5;
 }
 
+.form_input_center{
+  display: flex;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.form_input_tip{
+  top:50px !important;
+}
+
 .form_button_style{
   min-width: 80px;
   height: 32px;

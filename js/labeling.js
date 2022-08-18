@@ -271,15 +271,23 @@ function count_annotation(){
 ///////////////////////////////// SELECT /////////////////////////////////////
 
 // Select option and action
-function sel_action(){
+function sel_action(id){
     // Append orignal classes in option
     ALL_CLASSES["keys"].forEach((val,idx) => {
         if (! (val == "All") & !(val=="Unlabeled")){
-            $('#classes_list_main').append(`<span>${val}</span>`); 
+            // Label-input_txt action
+            if (id == "input_txt"){
+                html = `<span>${val}</span>`;
+            }
+            // Upload-cls_name action
+            else{
+                html = `<span style="padding-left: 16px;">${val}</span>`;
+            }
+            $('#classes_list_main').append(html); 
         };
     });
 
-    keyup_input('.input_txt[list]');
+    keyup_input('.input_txt[list]', id);
 
     // Listener div
     $(document).on('click', '.classes_list[list] span', function(event){
@@ -289,7 +297,7 @@ function sel_action(){
         $('input[list='+list+']').val(item);
         $('div[list='+list+']').hide(100);
         // Append to Class list and backend
-        change_class();
+        change_class(id);
     });
 };
 
@@ -302,7 +310,7 @@ function label_click_listen(){
                 // Upbind
                 $(document).unbind("keyup");
                 // Give main keyup
-                keyup_input('.input_txt[list]');
+                keyup_input('.input_txt[list]', "input_txt");
             }
             else{
                 // Upbind
@@ -315,18 +323,18 @@ function label_click_listen(){
 };
 
 // More btn press action
-function more_press(){
+function more_press(id){
     $("#classes_list").attr("style","display: block");
 //     $(document).keyup(function(e) {
 //         if (e.key === "Escape") { // escape key maps to keycode `27`
 //             $("#classes_list").removeAttr("style");
 //        };
 //    });
-    keyup_input("");
+    keyup_input("", id);
 };
 
 // Event for input and drop down
-function keyup_input(children){
+function keyup_input(children, id){
     // Listener input
     $(document).on('keyup', children, function(event){
         event.preventDefault();
@@ -339,13 +347,16 @@ function keyup_input(children){
             $("#classes_list").removeAttr("style");
         }
         else if(event.which == 13){ // enter
-            console.log("enter")
-            // $('div[list='+list+']').hide(100);
-            // Append to Class list and backend
-            change_class();
+            // Label-input_txt action
+            if (id == "input_txt"){
+                console.log("enter");
+                $("#classes_list").removeAttr("style");
+                // Append to Class list and backend
+                change_class("input_txt");
+            };
         }
         else {
-            console.log("other key")
+            console.log("other key");
             $('div[list='+list+']').show(100);
             var str  = $(this).val();
             $('div[list='+$(this).attr('list')+'] span').each(function(){
@@ -360,44 +371,55 @@ function keyup_input(children){
     });
 };
 
-function create_new_class(){
-    if ($("#input_txt").val()!=""){
+function create_new_class(id){
+    let input_val = $(`#${id}`).val();
+    if (input_val!=""){
         // Close dropdown
         $("#classes_list").removeAttr("style");
         // Append to Class list and backend
-        if (! ALL_CLASSES["keys"].includes($("#input_txt").val())){
-            // Front
-            $('#classes_list_main').append(`<span>${$("#input_txt").val()}</span>`);
-            ALL_CLASSES["keys"].push($("#input_txt").val());
-            ALL_CLASSES["values"].push(0);
-            // Backend
-            let front_param = {"class_name":$("#input_txt").val()};
-            add_class_api(MAIN_UUID, front_param);
+        if (! ALL_CLASSES["keys"].includes(input_val)){
+            // Label-input_txt action
+            if (id == "input_txt"){
+                // Front
+                $('#classes_list_main').append(`<span>${input_val}</span>`);
+                ALL_CLASSES["keys"].push(input_val);
+                ALL_CLASSES["values"].push(0);
+                // Backend
+                let front_param = {"class_name":input_val};
+                add_class_api(MAIN_UUID, front_param);
+            }
+            // Upload-cls_name action
+            else{
+                $('#classes_list_main').append(`<span style="padding-left: 16px;">${input_val}</span>`);
+            };
         }; 
     };
 };
 
 // Change class action
-function change_class(){
-    // Append to Class list and backend
-    if ($("#input_txt").val()!=""){
-        if (! ALL_CLASSES["keys"].includes($("#input_txt").val())){
-            // Front
-            $('#classes_list_main').append(`<span>${$("#input_txt").val()}</span>`);
-            ALL_CLASSES["keys"].push($("#input_txt").val());
-            ALL_CLASSES["values"].push(0);
-            // Backend
-            let front_param = {"class_name":$("#input_txt").val()};
-            add_class_api(MAIN_UUID, front_param);
+function change_class(id){
+    // // Append to Class list and backend
+    // if (input_val!=""){
+    //     if (! ALL_CLASSES["keys"].includes(input_val)){
+    //         // Front
+    //         $('#classes_list_main').append(`<span>${input_val}</span>`);
+    //         ALL_CLASSES["keys"].push(input_val);
+    //         ALL_CLASSES["values"].push(0);
+    //         // Backend
+    //         let front_param = {"class_name":input_val};
+    //         add_class_api(MAIN_UUID, front_param);
+    //     };
+    // };
+    // Label-input_txt action
+    if (id == "input_txt"){
+        // Change class front and backend
+        if (TYPE_NAME=="classification"){
+            cls_change_class();
+        }
+        else if (TYPE_NAME=="object_detection"){
+            obj_change_class();
         };
     };
-    // Change class front and backend
-    if (TYPE_NAME=="classification"){
-        cls_change_class();
-    }
-    else if (TYPE_NAME=="object_detection"){
-        obj_change_class();
-    }
 };
 
 // Change classifcation class action

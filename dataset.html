@@ -168,8 +168,15 @@
                                 <div class="form_item_position">
                                     <lable class="form_item_font">Class</lable>
                                 </div>
-                                <div>
-                                    <input id="cls_name" type="text" class="form_obj_style">
+                                <div class="form_obj_style form_input_center">
+                                    <input id="cls_name" type="text" list="classes" class="label_input input_txt" placeholder="Please select class">
+                                    <div id="classes_list" list="classes" class="classes_list form_input_tip">
+                                        <div id="classes_list_main" class="classes_main" list="classes"></div>
+                                        <div id="create_newcls" class="create_class" style="padding-left: 16px;" onclick="create_new_class('cls_name')">Create new class</div>
+                                    </div>
+                                    <span id="more_list" class="material-symbols-outlined label_expand_icon pointer" onclick="more_press('cls_name')">
+                                        keyboard_arrow_down
+                                    </span>
                                 </div>
                             </form>
                             <div id="upload_container_folder" class="upload_container margin_bottom_20"  style='display: none;'>

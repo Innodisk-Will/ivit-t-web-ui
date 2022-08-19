@@ -482,7 +482,7 @@ function append_img_show_cls(class_name, num, parent){
         COLOR_BAR = get_color_bar_api();
         // Get index of all classes
         cls_idx = Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(class_name);
-        cls_idx = parseInt(cls_idx) + 1;
+        cls_idx = parseInt(cls_idx+1);
         color = rgb2hex(COLOR_BAR[parseInt(cls_idx)][2], 
                         COLOR_BAR[parseInt(cls_idx)][1], 
                         COLOR_BAR[parseInt(cls_idx)][0]);

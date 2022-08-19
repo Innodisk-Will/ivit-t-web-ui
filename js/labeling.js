@@ -237,7 +237,7 @@ function add_annotation(class_name){
     COLOR_BAR = get_color_bar_api();
     // Get index of all classes
     cls_idx = Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(class_name);
-    cls_idx = parseInt(cls_idx) + 1;
+    cls_idx = parseInt(cls_idx+1);
     color = rgb2hex(COLOR_BAR[parseInt(cls_idx)][2], 
                     COLOR_BAR[parseInt(cls_idx)][1], 
                     COLOR_BAR[parseInt(cls_idx)][0]);
@@ -515,7 +515,7 @@ function init_all_classes(){
     // For loop in all classes and add html
     for (let class_name of Object.keys(PRJ_INFO["front_project"]["classes_num"])){
         cls_idx = Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(class_name);
-        cls_idx = parseInt(cls_idx) + 1;
+        cls_idx = parseInt(cls_idx+1);
         color = rgb2hex(COLOR_BAR[parseInt(cls_idx)][2], 
                         COLOR_BAR[parseInt(cls_idx)][1], 
                         COLOR_BAR[parseInt(cls_idx)][0]);

@@ -21,8 +21,9 @@ function init_prj_api(){
             }
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -47,8 +48,9 @@ function get_allprj_info_api(){
             }
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -73,8 +75,9 @@ function get_type_api(){
             }
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -99,8 +102,9 @@ function get_platform_api(){
             }
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -119,9 +123,9 @@ function create_project_api(front_param){
             console.log(data);
         },
         error: function (jqXHR, exception) {
-            alert(jqXHR);
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     setTimeout('myrefresh()',500);
@@ -140,9 +144,9 @@ function rename_prjname_api(uuid, front_param){
             console.log(data);
         },
         error: function (jqXHR, exception) {
-            alert(jqXHR);
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     setTimeout('myrefresh()',500);
@@ -160,8 +164,9 @@ function delete_project_api(uuid){
             console.log(data)
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     setTimeout('myrefresh()',500);
@@ -190,8 +195,9 @@ function get_dataset_api(uuid){
             }
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -217,8 +223,9 @@ function filter_dataset_api(uuid, front_param){
             }
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -244,8 +251,9 @@ function filter_class_api(uuid, front_param){
             }
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -265,8 +273,9 @@ function iter_cls_num_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -287,8 +296,9 @@ function upload_api(uuid, formData){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -308,8 +318,9 @@ function delete_img_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -333,8 +344,9 @@ function get_img_cls_api(type, path){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -354,8 +366,9 @@ function add_class_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -375,8 +388,9 @@ function delete_class_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -396,8 +410,9 @@ function rename_class_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -417,8 +432,9 @@ function edit_img_class_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -438,8 +454,9 @@ function get_bbox_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -459,8 +476,9 @@ function update_bbox_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -479,8 +497,9 @@ function get_color_bar_api(){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -504,8 +523,9 @@ function metrics_history_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -525,8 +545,9 @@ function curve_history_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -546,8 +567,9 @@ function get_model_info_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -567,7 +589,7 @@ function check_best_model_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
             result=jqXHR["responseJSON"];
         }
@@ -592,8 +614,9 @@ function get_method_training_api(){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -612,8 +635,9 @@ function get_model_api(uuid){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -632,8 +656,9 @@ function get_batch_size_api(uuid){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -653,8 +678,9 @@ function get_default_param_api(uuid, front_param){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -695,8 +721,9 @@ function start_training_api(uuid){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -715,8 +742,9 @@ function stop_training_api(uuid){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;
@@ -788,8 +816,9 @@ function get_export_platform_api(uuid){
             result=data;
         },
         error: function (jqXHR, exception) {
-            console.log(jqXHR);
+            console.log(jqXHR["responseJSON"]);
             console.log(exception);
+            result=jqXHR["responseJSON"];
         }
     });
     return result;

@@ -236,7 +236,7 @@ function add_annotation(class_name){
     // Give color
     COLOR_BAR = get_color_bar_api();
     // Get index of all classes
-    cls_idx = Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(class_name);
+    cls_idx = ALL_CLASSES["keys"].indexOf(class_name);
     cls_idx = parseInt(cls_idx+1);
     color = rgb2hex(COLOR_BAR[parseInt(cls_idx)][2], 
                     COLOR_BAR[parseInt(cls_idx)][1], 
@@ -393,6 +393,8 @@ function create_new_class(id){
                 add_class_api(MAIN_UUID, front_param);
                 // Change select color
                 change_class("input_txt");
+                // Updata globel variable
+                PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
             }
             // Upload-cls_name action
             else{
@@ -514,7 +516,7 @@ function init_all_classes(){
     COLOR_BAR = get_color_bar_api();
     // For loop in all classes and add html
     for (let class_name of Object.keys(PRJ_INFO["front_project"]["classes_num"])){
-        cls_idx = Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(class_name);
+        cls_idx = ALL_CLASSES["keys"].indexOf(class_name);
         cls_idx = parseInt(cls_idx+1);
         color = rgb2hex(COLOR_BAR[parseInt(cls_idx)][2], 
                         COLOR_BAR[parseInt(cls_idx)][1], 

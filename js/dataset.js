@@ -281,7 +281,7 @@ function filter_small_img(class_name){
     };
     let front_param = {"iteration":iteration, "class_name":class_name};
     let img_info = filter_class_api(MAIN_UUID, front_param);
-    console.log(img_info)
+
     // Clean old image
     $(`#small_img_container`).html("");
     // Show new image

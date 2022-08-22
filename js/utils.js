@@ -112,24 +112,29 @@ function open_train_mkpopup(){
     let cls_length = Object.keys(cls_num).length;
     let check_num = false;
     if (cls_length>0){
-        for (let key of Object.keys(cls_num)){
-            if (cls_num[key]>15){
-                check_num = true;
-            }
-            else{
-                check_num = false;
-            };
-        };
-        // If true then setting
-        if (check_num){
-            document.getElementById("train_mkpopup").style.display = "block";
-            // Option
-            get_method_training();
-            // Clear option
-            option_show_hide();
+        if (cls_length<2 && TYPE_NAME== "classification"){
+            alert("Your project can't be trained just yet. Make sure you have over 2 classes in Classification");
         }
         else{
-            alert("Your project can't be trained just yet. Make sure you have at least 15 images for every class.");
+            for (let key of Object.keys(cls_num)){
+                if (cls_num[key]>15){
+                    check_num = true;
+                }
+                else{
+                    check_num = false;
+                };
+            };
+            // If true then setting
+            if (check_num){
+                document.getElementById("train_mkpopup").style.display = "block";
+                // Option
+                get_method_training();
+                // Clear option
+                option_show_hide();
+            }
+            else{
+                alert("Your project can't be trained just yet. Make sure you have at least 15 images for every class.");
+            };
         };
     }
     else{

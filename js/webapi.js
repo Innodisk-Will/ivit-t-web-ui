@@ -867,3 +867,89 @@ function share_api(uuid, front_param){
     });
     return result;
 };
+
+///////////////////////////////// ALL /////////////////////////////////////
+///////////////////////////////// ALL /////////////////////////////////////
+///////////////////////////////// ALL /////////////////////////////////////
+
+// Process uuid
+function uuid_exist(key, uuid){
+    // UUID
+    if (uuid == null){
+        url = `${SCRIPT_ROOT}/${key}`;
+    }
+    else{
+        url = `${SCRIPT_ROOT}/${uuid}/${key}`;
+    };
+    return url;
+};
+
+// All post uuid api
+function post_api(key, uuid, front_param){
+    let url = uuid_exist(key, uuid);
+
+    var result=null;
+    $.ajax({
+        data: JSON.stringify(front_param),
+        dataType: "json",
+        url:url,
+        method: "POST",
+        contentType: "application/json",
+        async : false,
+        success: function (data, textStatus, xhr) {
+            result=data;
+        },
+        error: function (jqXHR, exception) {
+            console.log(jqXHR["responseJSON"]);
+            console.log(exception);
+            result=jqXHR["responseJSON"];
+        }
+    });
+    return result;
+};
+
+// All get uuid api
+function get_api(key, uuid){
+    let url = uuid_exist(key, uuid);
+
+    var result=null;
+    $.ajax({
+        dataType: "json",
+        url:url,
+        method: "GET",
+        contentType: "application/json",
+        async : false,
+        success: function (data, textStatus, xhr) {
+            result=data;
+        },
+        error: function (jqXHR, exception) {
+            console.log(jqXHR["responseJSON"]);
+            console.log(exception);
+            result=jqXHR["responseJSON"];
+        }
+    });
+    return result;
+};
+
+// FormData -> POST
+function formdata_api(key, uuid, formData){
+    var result=null;
+    $.ajax({
+        data: formData,
+        url:`${SCRIPT_ROOT}/${uuid}/${key}`,
+        method: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,
+        async : false,
+        success: function (data, textStatus, xhr) {
+            result=data;
+        },
+        error: function (jqXHR, exception) {
+            console.log(jqXHR["responseJSON"]);
+            console.log(exception);
+            result=jqXHR["responseJSON"];
+        }
+    });
+    return result;
+};

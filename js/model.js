@@ -11,7 +11,7 @@ function init_model(){
     let model_info = get_model_info_api(MAIN_UUID, front_param);
     
     // Setting show metrics
-    if (metrics_data != null){
+    if (!(typeof(metrics_data)=="string")){
         $("#metrics_container").css("display","flex");
         metrics_data_process(metrics_data);
     };
@@ -20,7 +20,7 @@ function init_model(){
     open_eval_export();
 
     // Setting show curve and log
-    if (curve_data != null){
+    if (!(typeof(curve_data)=="string")){
         $("#train_data_container").css("display","flex");
         dataset = curve_data_process(curve_data);
         // Append log
@@ -32,12 +32,11 @@ function init_model(){
     };
 
     // Setting model info
-    if (model_info != null){
+    if (!(typeof(model_info)=="string")){
         $("#info_container").css("display","flex");
         // Split model info
         model_info_process(model_info);
     };
-
 };
 ///////////////////////////////// METIRCS CHART /////////////////////////////////////
 ///////////////////////////////// METIRCS CHART /////////////////////////////////////
@@ -332,7 +331,10 @@ function socket_spend_time(){
         // Aviod main train panel
         if (MAIN_PAGE=="model" && ITER_NAME == PRJ_INFO["training_info"]["iteration"]){
             $(`#time_text`).text("Spend time");
-            $('#time_val').text(msg+"s");
+            // Time processing
+            let min = parseInt(parseInt(msg)/60);
+            let sec = parseInt(msg)%60;
+            $("#time_val").text(min+"m "+sec+"s");
         }; 
     });
 };

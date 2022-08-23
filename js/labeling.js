@@ -255,8 +255,13 @@ function add_annotation(class_name){
 };
 
 // Compute annotation count
-function count_annotation(){
+function count_annotation(class_name=null){
     let anntation = $("#annotation").children();
+    // Initial draw
+    if (anntation.length == 0 || $(`#anno_${class_name}`).length<=0){
+        add_annotation(class_name)
+    }
+    // Count number
     for (let cls of anntation){
         let name = $($(cls).children()[1]).text();
         let background = $($(cls).children()[0]).attr("style");
@@ -515,7 +520,7 @@ function init_all_classes(){
     // Give color
     COLOR_BAR = get_color_bar_api();
     // For loop in all classes and add html
-    for (let class_name of Object.keys(PRJ_INFO["front_project"]["classes_num"])){
+    for (let class_name of ALL_CLASSES["keys"]){
         cls_idx = ALL_CLASSES["keys"].indexOf(class_name);
         cls_idx = parseInt(cls_idx+1);
         color = rgb2hex(COLOR_BAR[parseInt(cls_idx)][2], 

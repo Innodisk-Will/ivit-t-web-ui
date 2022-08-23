@@ -404,6 +404,11 @@ function create_new_class(id){
             // Upload-cls_name action
             else{
                 $('#classes_list_main').append(`<span style="padding-left: 16px;">${input_val}</span>`);
+                // Backend
+                let front_param = {"class_name":input_val};
+                add_class_api(MAIN_UUID, front_param);
+                // Updata globel variable
+                PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
             };
         }; 
     };

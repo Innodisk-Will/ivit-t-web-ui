@@ -1,6 +1,6 @@
 FROM nginx
 # ------------------------------------------------------------------
-COPY ./client_server/nginx.conf /etc/nginx/nginx.conf
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 # ------------------------------------------------------------------
 # 由於 安裝套件有互動界面會導致報錯 所以先行關閉
 ENV DEBIAN_FRONTEND noninteractive

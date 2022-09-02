@@ -1,0 +1,8 @@
+{
+    "PROJECT": "ivit-t-UI",
+    "VERSION": "v1.0",
+    "HOST": "",
+    "PORT": 6531,
+    "DEBUG": false,
+    "WORKER": 1
+}

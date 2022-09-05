@@ -2,8 +2,6 @@
 # ---------------------------------------------------------
 # Set the default value of the getopts variable 
 PORT=""
-CONTAINER_NAME="ivit-t-web-service"
-DOCKER_IMAGE="willqiuinnodisk/ivit-t-web-service"
 WORKSPACE="/etc/nginx/html"
 CONF="./docs/version.json"
 # ---------------------------------------------------------
@@ -45,9 +43,18 @@ echo -e "${NC}"
 
 sudo apt-get install -y jq
 
+# ---------------------------------------------------------
 # Get version number
+echo -e "${RED}"
+echo "-----Get version number-----"
+echo -e "${NC}"
 TAG_VER=$(cat ${CONF} | jq -r '.VERSION')
 WEB_PORT=$(cat ${CONF} | jq -r '.PORT')
+USER=$(cat ${CONF} | jq -r '.USER')
+BASE_NAME=$(cat ${CONF} | jq -r '.PROJECT')
+
+DOCKER_IMAGE= "${USER}/${BASE_NAME}"
+CONTAINER_NAME="${BASE_NAME}"
 # ---------------------------------------------------------
 echo "Setting IP of webapi."
 python3 ./docker/get_domain.py -p ${port}

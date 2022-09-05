@@ -13,7 +13,7 @@ NC='\033[0m';
 
 # ---------------------------------------------------------
 # Install jq
-echo -e "${RED}"
+echo -e "${YELLOW}"
 echo "-----Installing jq-----"
 echo -e "${NC}"
 
@@ -28,13 +28,13 @@ TAG_VER=$(cat ${CONF} | jq -r '.VERSION')
 # --------------------------------------------------------
 # Concate name
 IMAGE_NAME="${USER}/${BASE_NAME}:${TAG_VER}"
-echo -e "${RED}"
+echo -e "${YELLOW}"
 echo "-----Concatenate docker image name: ${IMAGE_NAME}-----"
 echo -e "${NC}"
 
 # --------------------------------------------------------
 # Build the docker image
-echo -e "${RED}"
+echo -e "${YELLOW}"
 echo "-----Build the docker image. (${IMAGE_NAME})-----"
 echo -e "${NC}"
 

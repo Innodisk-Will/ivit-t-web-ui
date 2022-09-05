@@ -4,6 +4,15 @@
 PORT=""
 WORKSPACE="/etc/nginx/html"
 CONF="./docs/version.json"
+
+# ---------------------------------------------------------
+# color ANIS
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m';
+
 # ---------------------------------------------------------
 # help
 function help(){
@@ -37,7 +46,7 @@ while getopts "p:h" option; do
 done
 # ---------------------------------------------------------
 # Install jq
-echo -e "${RED}"
+echo -e "${YELLOW}"
 echo "-----Installing jq-----"
 echo -e "${NC}"
 
@@ -45,7 +54,7 @@ sudo apt-get install -y jq
 
 # ---------------------------------------------------------
 # Get version number
-echo -e "${RED}"
+echo -e "${YELLOW}"
 echo "-----Get version number-----"
 echo -e "${NC}"
 TAG_VER=$(cat ${CONF} | jq -r '.VERSION')
@@ -53,7 +62,7 @@ WEB_PORT=$(cat ${CONF} | jq -r '.PORT')
 USER=$(cat ${CONF} | jq -r '.USER')
 BASE_NAME=$(cat ${CONF} | jq -r '.PROJECT')
 
-DOCKER_IMAGE= "${USER}/${BASE_NAME}"
+DOCKER_IMAGE="${USER}/${BASE_NAME}"
 CONTAINER_NAME="${BASE_NAME}"
 # ---------------------------------------------------------
 echo "Setting IP of webapi."

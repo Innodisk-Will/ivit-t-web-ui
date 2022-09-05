@@ -2,8 +2,10 @@
 # ---------------------------------------------------------
 # Set the default value of the getopts variable 
 port=""
-docker_image="nginx-web-service"
+container_name="ivit-t-web-service"
+docker_image="willqiuinnodisk/ivit-t-web-service"
 workspace="/etc/nginx/html"
+CONF="./docs/version.json"
 # ---------------------------------------------------------
 # help
 function help(){
@@ -35,7 +37,17 @@ while getopts "p:h" option; do
 			;;
 	esac
 done
-#!/bin/bash
+# ---------------------------------------------------------
+# Install jq
+echo -e "${RED}"
+echo "-----Installing jq-----"
+echo -e "${NC}"
+
+sudo apt-get install -y jq
+
+# Get version number
+TAG_VER=$(cat ${CONF} | jq -r '.VERSION')
+# ---------------------------------------------------------
 echo "Setting IP of webapi."
 python3 ./docker/get_domain.py -p ${port}
 
@@ -48,12 +60,14 @@ command="service nginx start"
 # ---------------------------------------------------------
 # Run container
 docker_cmd="docker run \
---name ${docker_image} \
+--name ${container_name} \
 --rm -it \
+--ipc=host \
 -p 6531:80 \
 -v `pwd`:${workspace} \
+-w ${workspace} \
 -v /etc/localtime:/etc/localtime:ro \
-${docker_image} \"${command} && bash \""
+${docker_image}:${TAG_VER} \"${command} && bash \""
 
 echo ""
 echo -e "Command: ${docker_cmd}"

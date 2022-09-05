@@ -1,9 +1,12 @@
 FROM nginx
 # ------------------------------------------------------------------
-COPY ./docker/nginx.conf /etc/nginx/nginx.conf
-# ------------------------------------------------------------------
-# 由於 安裝套件有互動界面會導致報錯 所以先行關閉
+# Close noninteractive
 ENV DEBIAN_FRONTEND noninteractive
+
 # ------------------------------------------------------------------
-# 寫入進入W
+# Setting nginx.conf
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf
+
+# ------------------------------------------------------------------
+# Define Entrypoint
 ENTRYPOINT [ "/bin/bash", "-c" ]

@@ -9,6 +9,17 @@ function load_exist_project(){
     $.each(project_info, function(uuid, valueObj){
         add_model("prj_card_collect_container", uuid, valueObj)
     });
+    check_project();
+};
+
+// Every check dataset is upload image
+function check_project(){
+    console.log($("#prj_card_collect_container").children().length)
+    if ($("#prj_card_collect_container").children().length<1){
+        $("#prj_card_collect_container").css("display","none");
+        $("#null_project_container").css("display","flex");
+        $("#null_project_container").css("margin","20% 40%");
+    };
 };
 
 ///////////////////////////////// ADD BUTTON /////////////////////////////////////

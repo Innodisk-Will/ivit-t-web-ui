@@ -32,7 +32,7 @@ sudo ./docker/build.sh
 
 ### Run container
 ```shell
-sudo ./docker/run_client.sh -p 6530
+sudo ./docker/run.sh -p 6530
 ```
 
 This "-p" is the port number that relative port of web API.

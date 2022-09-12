@@ -22,7 +22,7 @@ A user interfaces to the training model. This UI is easy to operate for train mo
 
 ### Pre-requirements
 - Running ```iVIT-T Web API```
-- [Tutorial](https://github.com/Innodisk-Will/iVIT-T.git)
+- [Tutorial](https://github.com/Innodisk-Will/ivit-t.git)
 
 ### Build docker images
 ```shell

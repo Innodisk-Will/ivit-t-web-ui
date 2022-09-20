@@ -19,6 +19,9 @@
 
 ### Dataset
 - Upload
+    - image: support .jpg/.jpeg/.png/.bmp
+    - annotation: support .txt(format of yolo)
+    - format of dataset: flies or folder/files
 - Labeling
     - Select Classes
     - Draw bounding box

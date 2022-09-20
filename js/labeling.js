@@ -315,6 +315,10 @@ function label_click_listen(){
                 // Give main keyup
                 keyup_input('.input_txt[list]', "input_txt");
             }
+            else if (e.target["id"].includes("label_input")){
+                // Upbind
+                $(document).unbind("keyup");
+            }
             else if (e.target["id"]== "more_list"){
                 // Upbind
                 $(document).unbind("keyup");
@@ -411,6 +415,9 @@ function create_new_class(id){
                 PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
             };
         }; 
+    }
+    else{
+        alert("Please input text in 'INPUT BAR.'")
     };
 };
 

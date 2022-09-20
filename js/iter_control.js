@@ -21,9 +21,14 @@ function load_exist_iter(uuid){
         $("#model_href").removeAttr( 'href' );
     }
     else{
+        // Model change url
         let iteration = model_btn_url(FOlDER_LIST["folder_name"].length);
         let model_href = $("#model_href").attr("href")+iteration;
         $("#model_href").attr("href", model_href);
+        // Dataset change url
+        let d_iteration = dataset_btn_url();
+        let dataset_href = $("#dataset_href").attr("href")+d_iteration;
+        $("#dataset_href").attr("href", dataset_href);
     };
 };
 
@@ -34,6 +39,18 @@ function model_btn_url(folder_len){
         iteration = `&iteration${folder_len-1}`;
     }
     else if (ITER_NAME != undefined){
+        iteration = `&${ITER_NAME}`;
+    }
+    else{
+        iteration = "";
+    };
+    return iteration;
+};
+
+// Setting dataset iteration url
+function dataset_btn_url(){
+    // Setting dataset url
+    if (ITER_NAME != undefined){
         iteration = `&${ITER_NAME}`;
     }
     else{

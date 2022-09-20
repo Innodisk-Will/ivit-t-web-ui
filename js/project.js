@@ -5,10 +5,12 @@
 // Get exist project
 function load_exist_project(){
     let project_info = init_prj_api();
-    // Each loop to project info
-    $.each(project_info, function(uuid, valueObj){
-        add_model("prj_card_collect_container", uuid, valueObj)
-    });
+    if (!project_info.includes("exist")){
+        // Each loop to project info
+        $.each(project_info, function(uuid, valueObj){
+            add_model("prj_card_collect_container", uuid, valueObj)
+        });
+    }
     check_project();
 };
 

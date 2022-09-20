@@ -237,6 +237,12 @@ function socket_log(){
         // Settting scroll
         scroll_bottom("log_container");
         // Ending process
+        if (msg.includes("Trained.")){
+            console.log("Get metrics");
+            // Get metrics
+            get_metrics_api(MAIN_UUID);
+        }
+        // Ending process
         if (msg.includes("Ending...")){
             console.log("The end..............");
             // Refresh variable

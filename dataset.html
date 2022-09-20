@@ -4,39 +4,6 @@
         <!-- Load our component. -->
         <!-- <link href="css/dataset.css" rel="stylesheet" /> -->
         <!-- <link href="css/container.css" rel="stylesheet" /> -->
-        <!-- Initial -->
-        <script language="JavaScript">
-            var HREF = window.location.href.split("&");
-            var MAIN_PAGE = HREF[0].split("?")[1];
-            var MAIN_UUID = HREF[1];
-            var PRJ_NAME = HREF[2];
-            var TYPE_NAME = HREF[3];
-            var ITER_NAME = HREF[4];
-            var MAIN_HREF = HREF[0] + "&" + HREF[1] + "&" + HREF[2]+ "&" + HREF[3];
-            var FOlDER_LIST = "";
-            var PRJ_INFO = "";
-            var ALL_CLASSES = {"keys":[],"values":[]};
-            var DATASET_CLASSES = {"keys":[],"values":[]};
-            var UPLOAD_COUNT = 0;
-            var TOTAL_UPLOAD = 0;
-            var IMAGE_SIZE = {};
-            var COLOR_BAR = null;
-            // var SAVE_INFO={"image_size":{}, "save_rect":[]};
-            $( document ).ready(function() {
-                hover_marquee("prj_name");
-                load_exist_iter(MAIN_UUID);
-                give_title_text("allproject", "prjname_label", PRJ_NAME);
-                PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
-                setting_dataset();
-                get_all_image();
-                init_preview_img();
-                onclick_listener_btn();
-                check_preview_expand();
-                check_type_class_form();
-                check_training_stats();
-                check_dataset();
-            });
-        </script>
     </head>
     <body>
         <Maindiv id="main_div" class="outside_1_container">
@@ -201,4 +168,37 @@
             </div>
         </Upload>
     </body>
+    <!-- Initial -->
+    <script language="JavaScript">
+        var HREF = window.location.href.split("&");
+        var MAIN_PAGE = HREF[0].split("?")[1];
+        var MAIN_UUID = HREF[1];
+        var PRJ_NAME = HREF[2];
+        var TYPE_NAME = HREF[3];
+        var ITER_NAME = HREF[4];
+        var MAIN_HREF = HREF[0] + "&" + HREF[1] + "&" + HREF[2]+ "&" + HREF[3];
+        var FOlDER_LIST = "";
+        var PRJ_INFO = "";
+        var ALL_CLASSES = {"keys":[],"values":[]};
+        var DATASET_CLASSES = {"keys":[],"values":[]};
+        var UPLOAD_COUNT = 0;
+        var TOTAL_UPLOAD = 0;
+        var IMAGE_SIZE = {};
+        var COLOR_BAR = null;
+        // var SAVE_INFO={"image_size":{}, "save_rect":[]};
+        $( document ).ready(function() {
+            hover_marquee("prj_name");
+            load_exist_iter(MAIN_UUID);
+            give_title_text("allproject", "prjname_label", PRJ_NAME);
+            PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
+            setting_dataset();
+            get_all_image();
+            init_preview_img();
+            onclick_listener_btn();
+            check_preview_expand();
+            check_type_class_form();
+            check_training_stats();
+            check_dataset();
+        });
+    </script>
 </html>

@@ -304,12 +304,24 @@ function start_training(){
 function stop_training(){
     let stop = stop_training_api(MAIN_UUID);
     if (stop.includes("Stop")){
-        $("#train_action").val("Train");
-        $("#train_action").attr("onclick","open_train_mkpopup()");
-        // Refresh variable
-        refresh_variable();
-        // Open evaluate/export
-        open_eval_export();
+        // Check best model
+        let front_param = {"iteration":ITER_NAME};
+        let exist_model = check_best_model_api(MAIN_UUID, front_param);
+        if (!exist_model.includes("not")){
+            // Get metrics
+            let metrics = get_metrics_api(MAIN_UUID);
+            // Change btn and other status
+            $("#train_action").val("Train");
+            $("#train_action").attr("onclick","open_train_mkpopup()");
+            // Refresh variable
+            refresh_variable();
+            // Open evaluate/export
+            open_eval_export();
+        }
+        else{
+            alert("This training is not exist best model!");
+            setTimeout('myrefresh()', 1000);
+        };
     };
 };
 

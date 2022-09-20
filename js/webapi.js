@@ -729,6 +729,28 @@ function start_training_api(uuid){
     return result;
 };
 
+// Get metrics api -> GET
+// Start training api -> GET
+function get_metrics_api(uuid){
+    var result=null;
+    $.ajax({
+        dataType: "json",
+        url:`${SCRIPT_ROOT}/${uuid}/get_metrics`,
+        method: "GET",
+        contentType: "application/json",
+        async : false,
+        success: function (data, textStatus, xhr) {
+            result=data;
+        },
+        error: function (jqXHR, exception) {
+            console.log(jqXHR["responseJSON"]);
+            console.log(exception);
+            result=jqXHR["responseJSON"];
+        }
+    });
+    return result;
+};
+
 // Stop training api -> GET
 function stop_training_api(uuid){
     var result=null;

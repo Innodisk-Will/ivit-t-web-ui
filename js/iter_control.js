@@ -67,7 +67,7 @@ function iter_btn_html(total){
         // Element
         let h5=`
                 <div id="iter_${num}" class="iter_btn_container">
-                    <a id="iteration_${num}" class="iter_btn_other_txt" href=""></a>
+                    <a id="iteration_${num}" class="iter_btn_other_txt labeltip_start" href=""></a>
                 </div>
                 `;
         html = html.concat(h5);
@@ -124,10 +124,12 @@ function dataset_iter_btn(multiple, iter_len, iter_num, total){
     if (multiple==0){
         $(`#iteration_0`).text("W");
         $("#iteration_0").attr("href", MAIN_HREF);
+        add_tooltip("iteration_0", "Workspace");
         for (let i = 1; i < total+1; i++){
             if (i < iter_len){
                 $(`#iteration_${i}`).text(i);
                 $(`#iteration_${i}`).attr("href", MAIN_HREF+`&iteration${i}`);
+                add_tooltip(`iteration_${i}`, `iteration${i}`);
                 // Change main text
                 change_main_div(i, iter_num, i);
             };
@@ -139,6 +141,7 @@ function dataset_iter_btn(multiple, iter_len, iter_num, total){
             if (show_iter < iter_len){
                 $(`#iteration_${i}`).text(show_iter);
                 $(`#iteration_${i}`).attr("href", MAIN_HREF+`&iteration${show_iter}`);
+                add_tooltip(`iteration_${i}`, `iteration${show_iter}`);
                 // Change main text
                 change_main_div(show_iter, iter_num, i)
             };
@@ -163,6 +166,7 @@ function model_iter_btn(multiple, iter_len, iter_num, total){
             if (show_iter < iter_len){
                 $(`#iteration_${i}`).text(show_iter);
                 $(`#iteration_${i}`).attr("href",MAIN_HREF+`&iteration${show_iter}`);
+                add_tooltip(`iteration_${i}`, `iteration${show_iter}`);
                 // Change main text
                 change_main_div(show_iter, iter_num, i)
             };
@@ -178,6 +182,7 @@ function model_iter_btn(multiple, iter_len, iter_num, total){
             if (show_iter < iter_len){
                 $(`#iteration_${i}`).text(show_iter);
                 $(`#iteration_${i}`).attr("href",MAIN_HREF+`&iteration${show_iter}`);
+                add_tooltip(`iteration_${i}`, `iteration${show_iter}`);
                 // Change main text
                 change_main_div(show_iter, iter_num, i)
             };
@@ -185,12 +190,12 @@ function model_iter_btn(multiple, iter_len, iter_num, total){
     };
 
     // Show expand_more
-    let show_last_iter = $("#iteration_5").text();
+    let show_last_iter = $("#iteration_5").text().split("iteration")[0];
     if (show_last_iter != "" & (iter_len-1) - parseInt(show_last_iter) > 0){
         $("#expand_more").css("visibility","visible");
     };
     // Show expand_less
-    let show_first_iter = $("#iteration_0").text();
+    let show_first_iter = $("#iteration_0").text().split("iteration")[0];
     if (show_first_iter != "1"){
         $("#expand_less").css("visibility","visible");
     }
@@ -198,6 +203,11 @@ function model_iter_btn(multiple, iter_len, iter_num, total){
     if (multiple > 3){
         $("#expand_more").css("visibility","hidden");
     };  
+};
+
+// Add tooltip html
+function add_tooltip(id, val){
+    $(`#${id}`).append(`<span class="labeltip_text standard_font_txt">${val}</span>`);
 };
 
 ///////////////////////////////// MAIN ITERATION BUTTON CSS /////////////////////////////////////
@@ -235,7 +245,7 @@ function iter_light_dark(id, key){
 
 // Expand_more buttion action
 function expand_btn(key){
-    let show_first_txt = $("#iteration_0").text()
+    let show_first_txt = $("#iteration_0").text().split("Workspace")[0];
     let total = 6;
     let iter_len= FOlDER_LIST["folder_name"].length;
     // Fill iteration btn

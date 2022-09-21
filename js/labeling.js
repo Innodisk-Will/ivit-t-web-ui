@@ -344,6 +344,19 @@ function more_press(id){
 //        };
 //    });
     keyup_input("", id);
+    mouse_click();
+};
+
+// Create close dropdown (classes) click action
+function mouse_click(){
+    $("#main_container").on("click", function(event){
+        if (event.target["nodeName"]!="SPAN"){
+            console.log(event.target["id"], event.target["nodeName"]);
+            $(this).focus();
+            $("#classes_list").removeAttr("style");
+            $("#main_container").unbind("click");
+        };
+    });
 };
 
 // Event for input and drop down
@@ -380,6 +393,7 @@ function keyup_input(children, id){
                     $(this).show(200);
                 };
             });
+            mouse_click();
         };
     });
 };
@@ -417,7 +431,7 @@ function create_new_class(id){
         }; 
     }
     else{
-        alert("Please input text in 'INPUT BAR.'")
+        alert("Please input text in 'INPUT BAR'")
     };
 };
 

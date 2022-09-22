@@ -45,11 +45,11 @@
                                 <button id="more_btn" class="more_button dataset_more_button" data-bs-toggle="dropdown" aria-expanded="false" onclick="">
                                     <span id="more_txt_${uuid}" class="material-symbols-outlined">more_horiz</span>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul id="more_drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><a id="aug_prj" class="dropdown-item" onclick="">Augmentation</a></li>
                                     <li><a id="select_prj" class="dropdown-item" onclick="">Select</a></li>
                                 </ul>
-                                <input type="button" class="all_button" value="Upload" onclick="open_upload_mkpopup()">
+                                <input id="upload_btn" type="button" class="all_button" value="Upload" onclick="open_upload_mkpopup()">
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                     </div>
                     <div id="upload_btn_div" class="mkpopup_btn_container">
                         <button id="cancel_btn" type="button" class="form_cancel_btn_style margin_right_12" onclick="close_upload_mkpopup()">Cancel</button>
-                        <button id="upload_btn" type="button" class="form_button_style" onclick="upload_create()" disabled="disabled">Upload</button>
+                        <button id="mkpop_upload_btn" type="button" class="form_button_style" onclick="upload_create()" disabled="disabled">Upload</button>
                     </div>
                 </div>
                 <div class="clearfix"></div>

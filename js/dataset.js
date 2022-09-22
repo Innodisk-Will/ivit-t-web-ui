@@ -12,8 +12,7 @@ function setting_dataset(){
                             cls_info["classes_num"],
                             cls_info["total"],);
         // Remove upload/label btn
-        $("#right_btn_container").css("visibility","hidden");
-        $("#label_btn_container").css("visibility","hidden");
+        change_iter_action();
     }
     else{
         // Set filter classes
@@ -23,6 +22,15 @@ function setting_dataset(){
     };
     // Setting show dataset number
     get_dataset_num(PRJ_INFO["front_project"]["effect_img_num"], PRJ_INFO["front_project"]["total_img_num"]);
+};
+
+// Remove upload/label btn
+function change_iter_action(){
+    $("#upload_btn").css("display","none");
+    $("#more_btn").attr("style","margin-right: 0px !important");
+    $("#label_btn_container").css("visibility","hidden");
+    // Remove option in more
+    $("#more_drop").html(`<li><a id="del_iter" class="dropdown-item" onclick="remove_iteration('dataset')">Delete_iteration</a></li>`);
 };
 
 // Setting dataset numbers

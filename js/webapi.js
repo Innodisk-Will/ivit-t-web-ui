@@ -326,6 +326,28 @@ function delete_img_api(uuid, front_param){
     return result;
 };
 
+// Delete iteration-> POST
+function delete_iteration(uuid, front_param){
+    var result=null;
+    $.ajax({
+        data: JSON.stringify(front_param),
+        dataType: "json",
+        url:`${SCRIPT_ROOT}/${uuid}/delete_iteration`,
+        method: "POST",
+        contentType: "application/json",
+        async : false,
+        success: function (data, textStatus, xhr) {
+            result=data;
+        },
+        error: function (jqXHR, exception) {
+            console.log(jqXHR["responseJSON"]);
+            console.log(exception);
+            result=jqXHR["responseJSON"];
+        }
+    });
+    return result;
+};
+
 ///////////////////////////////// LABEL /////////////////////////////////////
 ///////////////////////////////// LABEL /////////////////////////////////////
 ///////////////////////////////// LABEL /////////////////////////////////////

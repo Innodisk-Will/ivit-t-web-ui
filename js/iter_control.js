@@ -152,7 +152,7 @@ function dataset_iter_btn(multiple, iter_len, iter_num, total){
 
     // Show expand_more
     let show_last_iter = $("#iteration_5").text();
-    if (show_last_iter != "" & iter_len - parseInt(show_last_iter) > 0){
+    if (show_last_iter != "" & iter_len - (parseInt(show_last_iter)+1) > 0){
         $("#expand_more").css("visibility","visible");
     };
 };
@@ -311,5 +311,30 @@ function model_expand_action(key, show_first_txt, total, iter_len){
         console.log(multiple)
         // model_iter_btn((multiple-1), iter_len, ((multiple-1)*total)+1, total);
         window.location.replace(MAIN_HREF+"&"+`iteration${((multiple-1)*total)+1}`);
+    };
+};
+
+///////////////////////////////// DELETE ITERATION PROCESS /////////////////////////////////////
+///////////////////////////////// DELETE ITERATION PROCESS /////////////////////////////////////
+///////////////////////////////// DELETE ITERATION PROCESS /////////////////////////////////////
+
+// Remove iteration
+function remove_iteration(key){
+    let front_param = {"iteration":ITER_NAME};
+    let msg = delete_iteration(MAIN_UUID, front_param);
+    console.log(msg)
+    if (msg.includes("Delete")){
+        // Dataset
+        if(key == "dataset"){
+            refresh_variable();
+            window.location.replace(MAIN_HREF);
+        }
+        // Model
+        else{
+    
+        };
+    }
+    else{
+        alert(msg);
     };
 };

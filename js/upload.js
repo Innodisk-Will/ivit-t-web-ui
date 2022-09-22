@@ -452,7 +452,7 @@ function upload(file, dir_idx, length){
         };
         // if upload progress success hide cancel
         $("#cancel_btn").css("visibility","hidden");
-        $("#upload_btn").removeAttr("disabled");
+        $("#mkpop_upload_btn").removeAttr("disabled");
     };
 };
 

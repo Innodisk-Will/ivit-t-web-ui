@@ -4,39 +4,6 @@
         <!-- Load our component. -->
         <!-- <link href="css/dataset.css" rel="stylesheet" /> -->
         <!-- <link href="css/container.css" rel="stylesheet" /> -->
-        <!-- Initial -->
-        <script language="JavaScript">
-            var HREF = window.location.href.split("&");
-            var MAIN_PAGE = HREF[0].split("?")[1];
-            var MAIN_UUID = HREF[1];
-            var PRJ_NAME = HREF[2];
-            var TYPE_NAME = HREF[3];
-            var ITER_NAME = HREF[4];
-            var MAIN_HREF = HREF[0] + "&" + HREF[1] + "&" + HREF[2]+ "&" + HREF[3];
-            var FOlDER_LIST = "";
-            var PRJ_INFO = "";
-            var ALL_CLASSES = {"keys":[],"values":[]};
-            var DATASET_CLASSES = {"keys":[],"values":[]};
-            var UPLOAD_COUNT = 0;
-            var TOTAL_UPLOAD = 0;
-            var IMAGE_SIZE = {};
-            var COLOR_BAR = null;
-            // var SAVE_INFO={"image_size":{}, "save_rect":[]};
-            $( document ).ready(function() {
-                hover_marquee("prj_name");
-                load_exist_iter(MAIN_UUID);
-                give_title_text("allproject", "prjname_label", PRJ_NAME);
-                PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
-                setting_dataset();
-                get_all_image();
-                init_preview_img();
-                onclick_listener_btn();
-                check_preview_expand();
-                check_type_class_form();
-                check_training_stats();
-                check_dataset();
-            });
-        </script>
     </head>
     <body>
         <Maindiv id="main_div" class="outside_1_container">
@@ -78,11 +45,11 @@
                                 <button id="more_btn" class="more_button dataset_more_button" data-bs-toggle="dropdown" aria-expanded="false" onclick="">
                                     <span id="more_txt_${uuid}" class="material-symbols-outlined">more_horiz</span>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul id="more_drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><a id="aug_prj" class="dropdown-item" onclick="">Augmentation</a></li>
                                     <li><a id="select_prj" class="dropdown-item" onclick="">Select</a></li>
                                 </ul>
-                                <input type="button" class="all_button" value="Upload" onclick="open_upload_mkpopup()">
+                                <input id="upload_btn" type="button" class="all_button" value="Upload" onclick="open_upload_mkpopup()">
                             </div>
                         </div>
                     </div>
@@ -194,11 +161,44 @@
                     </div>
                     <div id="upload_btn_div" class="mkpopup_btn_container">
                         <button id="cancel_btn" type="button" class="form_cancel_btn_style margin_right_12" onclick="close_upload_mkpopup()">Cancel</button>
-                        <button id="upload_btn" type="button" class="form_button_style" onclick="upload_create()" disabled="disabled">Upload</button>
+                        <button id="mkpop_upload_btn" type="button" class="form_button_style" onclick="upload_create()" disabled="disabled">Upload</button>
                     </div>
                 </div>
                 <div class="clearfix"></div>
             </div>
         </Upload>
     </body>
+    <!-- Initial -->
+    <script language="JavaScript">
+        var HREF = window.location.href.split("&");
+        var MAIN_PAGE = HREF[0].split("?")[1];
+        var MAIN_UUID = HREF[1];
+        var PRJ_NAME = HREF[2];
+        var TYPE_NAME = HREF[3];
+        var ITER_NAME = HREF[4];
+        var MAIN_HREF = HREF[0] + "&" + HREF[1] + "&" + HREF[2]+ "&" + HREF[3];
+        var FOlDER_LIST = "";
+        var PRJ_INFO = "";
+        var ALL_CLASSES = {"keys":[],"values":[]};
+        var DATASET_CLASSES = {"keys":[],"values":[]};
+        var UPLOAD_COUNT = 0;
+        var TOTAL_UPLOAD = 0;
+        var IMAGE_SIZE = {};
+        var COLOR_BAR = null;
+        // var SAVE_INFO={"image_size":{}, "save_rect":[]};
+        $( document ).ready(function() {
+            hover_marquee("prj_name");
+            load_exist_iter(MAIN_UUID);
+            give_title_text("allproject", "prjname_label", PRJ_NAME);
+            PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
+            setting_dataset();
+            get_all_image();
+            init_preview_img();
+            onclick_listener_btn();
+            check_preview_expand();
+            check_type_class_form();
+            check_training_stats();
+            check_dataset();
+        });
+    </script>
 </html>

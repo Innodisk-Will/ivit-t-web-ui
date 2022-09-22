@@ -11,6 +11,8 @@
 .dataset_more_button{
     margin: 0 !important;
     margin-right: 10px !important;
+    border: 1px solid #E0E1E6 !important;
+    background: #fff !important;
 }
 
 .label_btn_css{

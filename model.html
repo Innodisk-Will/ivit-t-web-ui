@@ -4,41 +4,6 @@
         <!-- Load our component. -->
         <!-- <link href="css/model.css" rel="stylesheet" /> -->
         <!-- <link href="css/container.css" rel="stylesheet" /> -->
-        <!-- Initial -->
-        <script language="JavaScript">
-            var HREF = window.location.href.split("&");
-            var MAIN_PAGE = HREF[0].split("?")[1];
-            var MAIN_UUID = HREF[1];
-            var PRJ_NAME = HREF[2];
-            var TYPE_NAME = HREF[3];
-            var ITER_NAME = HREF[4];
-            var MAIN_HREF = HREF[0] + "&" + HREF[1] + "&" + HREF[2]+ "&" + HREF[3];
-            var FOlDER_LIST = "";
-            var PRJ_INFO = "";
-            var METRICS_CHART = false;
-            var TRAIN_CURVE_CHART = false;
-            var VAL_CURVE_CHART = false;
-            var EVAL_IMG_LIST = {};
-            var EVAL_RESULT = {};
-            var FILTER_RESULT = [];
-            var IMAGE_SIZE = {};
-            var COLOR_BAR = null;
-            const socket = io.connect(`${SCRIPT_ROOT}/${MAIN_UUID}/log`);
-            $( document ).ready(function() {
-                hover_marquee("prj_name");
-                load_exist_iter(MAIN_UUID);
-                give_title_text("allproject", "prjname_label", PRJ_NAME);
-                PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
-                init_model();
-                check_training_stats();
-                socket_log();
-                socket_graph();
-                socket_remaining_time();
-                socket_spend_time();
-                listen_socket_log();
-                eval_listen();
-            });
-        </script>
     </head>
     <body>
         <Maindiv id="main_div" class="outside_1_container">
@@ -194,14 +159,14 @@
                                 <div class="eval_text">Evaluate</div>
                                 <label id="btnupload_file_1" class="all_button margin_right_24" style="display: none;">
                                     Upload
-                                    <input id="eval_chose_file_1" type="file" style="display: none;" multiple="" accept="image/*, .txt">
+                                    <input id="eval_chose_file_1" type="file" style="display: none;" multiple="" accept="image/*">
                                 </label>
                             </div>
                             <div id="evalimage_outside_container" class="evalimage_outside_container">
                                 <div class="eval_upload_container">
                                     <label id="btnupload_file_2" class="all_button">
                                         Upload
-                                        <input id="eval_chose_file_2" type="file" style="display: none;" multiple="" accept="image/*, .txt" disabled="disabled">
+                                        <input id="eval_chose_file_2" type="file" style="display: none;" multiple="" accept="image/*" disabled="disabled">
                                     </label>
                                 </div>
                             </div>
@@ -247,4 +212,39 @@
             </div>
         </Export>
     </body>
+    <!-- Initial -->
+    <script language="JavaScript">
+        var HREF = window.location.href.split("&");
+        var MAIN_PAGE = HREF[0].split("?")[1];
+        var MAIN_UUID = HREF[1];
+        var PRJ_NAME = HREF[2];
+        var TYPE_NAME = HREF[3];
+        var ITER_NAME = HREF[4];
+        var MAIN_HREF = HREF[0] + "&" + HREF[1] + "&" + HREF[2]+ "&" + HREF[3];
+        var FOlDER_LIST = "";
+        var PRJ_INFO = "";
+        var METRICS_CHART = false;
+        var TRAIN_CURVE_CHART = false;
+        var VAL_CURVE_CHART = false;
+        var EVAL_IMG_LIST = {};
+        var EVAL_RESULT = {};
+        var FILTER_RESULT = [];
+        var IMAGE_SIZE = {};
+        var COLOR_BAR = null;
+        const socket = io.connect(`${SCRIPT_ROOT}/${MAIN_UUID}/log`);
+        $( document ).ready(function() {
+            hover_marquee("prj_name");
+            load_exist_iter(MAIN_UUID);
+            give_title_text("allproject", "prjname_label", PRJ_NAME);
+            PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
+            init_model();
+            check_training_stats();
+            socket_log();
+            socket_graph();
+            socket_remaining_time();
+            socket_spend_time();
+            listen_socket_log();
+            eval_listen();
+        });
+    </script>
 </html>

@@ -6125,13 +6125,12 @@ textarea.form-control-lg {
   flex-direction: column;
   justify-content: space-between;
   max-width: 60%;
-  min-height: 500px;
-  min-width: 40%;
+  min-width: 500px;
+  min-height: 40%;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 12px;
   opacity: 1;
-  width: 584px;
 }
 
 .mkpopup_main_container{

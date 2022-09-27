@@ -257,7 +257,14 @@ function id_image(e){
 // Remove select_cls
 function remove_select_cls(){
     let selector =  $("#cls_container div[style*='border: 2px solid rgb(230, 31, 35);']");
-    $(selector[0]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+    // exclude have hidden problem
+    if (selector[0] != undefined && selector[0]["style"]["visibility"] == "hidden"){
+        $(selector[0]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        $(selector[0]).attr( "style","visibility:hidden;" );
+    }
+    else{
+        $(selector[0]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+    };
     let childs = $(selector[0]).children();
     $(childs[0]).removeAttr("style");
     $(childs[1]).removeAttr("style");

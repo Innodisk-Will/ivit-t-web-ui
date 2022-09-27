@@ -30,7 +30,7 @@ function change_iter_action(){
     $("#more_btn").attr("style","margin-right: 0px !important");
     $("#label_btn_container").css("visibility","hidden");
     // Remove option in more
-    $("#more_drop").html(`<li><a id="del_iter" class="dropdown-item" onclick="remove_iteration('dataset')">Delete_iteration</a></li>`);
+    $("#more_drop").html(`<li><a id="del_iter" class="dropdown-item" onclick="open_deliter_mkpopup()">Delete_iteration</a></li>`);
 };
 
 // Setting dataset numbers
@@ -44,6 +44,20 @@ function check_dataset(){
         $("#graph_container").css("display","none");
         $("#null_dataset_container").css("display","flex");
     };
+};
+
+///////////////////////////////// DELETE ITERATION /////////////////////////////////////
+///////////////////////////////// DELETE ITERATION /////////////////////////////////////
+///////////////////////////////// DELETE ITERATION /////////////////////////////////////
+
+// Open delete_mkpopup
+function open_deliter_mkpopup(){
+    document.getElementById("deliter_mkpopup").style.display = "block";
+};
+
+// Close rename_mkpopup
+function close_deliter_mkpopup(){
+    document.getElementById("deliter_mkpopup").style.display = "none";
 };
 
 ///////////////////////////////// FILTER CLASSES BUTTON /////////////////////////////////////

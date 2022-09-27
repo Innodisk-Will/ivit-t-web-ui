@@ -258,8 +258,9 @@ function add_annotation(class_name){
 function count_annotation(class_name=null){
     let anntation = $("#annotation").children();
     // Initial draw
-    if (anntation.length == 0 || $(`#anno_${class_name}`).length<=0){
-        add_annotation(class_name)
+    if (anntation.length == 0 || (class_name != null && $(`#anno_${class_name}`).length<=0)){
+        // Label page
+        add_annotation(class_name);
     }
     // Count number
     for (let cls of anntation){

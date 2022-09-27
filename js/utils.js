@@ -300,6 +300,22 @@ function start_training(){
     let start = start_training_api(MAIN_UUID);
 };
 
+// Check_training_status
+function check_training_stats(){
+    if (PRJ_INFO["training_info"]["status"]){
+        $("#train_action").val("Stop");
+        $("#train_action").attr("onclick","stop_training()");
+    }
+    else{
+        $("#train_action").val("Train");
+        $("#train_action").attr("onclick","open_train_mkpopup()");
+    };
+};
+
+///////////////////////////////// STOP BUTTON /////////////////////////////////////
+///////////////////////////////// STOP BUTTON /////////////////////////////////////
+///////////////////////////////// STOP BUTTON /////////////////////////////////////
+
 // Stop training
 function stop_training(){
     let stop = stop_training_api(MAIN_UUID);
@@ -313,16 +329,14 @@ function stop_training(){
     };
 };
 
-// Check_training_status
-function check_training_stats(){
-    if (PRJ_INFO["training_info"]["status"]){
-        $("#train_action").val("Stop");
-        $("#train_action").attr("onclick","stop_training()");
-    }
-    else{
-        $("#train_action").val("Train");
-        $("#train_action").attr("onclick","open_train_mkpopup()");
-    };
+// Open delete_mkpopup
+function open_stop_mkpopup(){
+    document.getElementById("stop_mkpopup").style.display = "block";
+};
+
+// Close rename_mkpopup
+function close_stop_mkpopup(){
+    document.getElementById("stop_mkpopup").style.display = "none";
 };
 
 ///////////////////////////////// LOADING /////////////////////////////////////

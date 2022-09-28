@@ -137,7 +137,7 @@ function rename_prjname_api(uuid, front_param){
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/rename_project`,
-        method: "POST",
+        method: "PUT",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -157,7 +157,7 @@ function delete_project_api(uuid){
     $.ajax({
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/delete_project`,
-        method: "GET",
+        method: "DELETE",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -311,7 +311,7 @@ function delete_img_api(uuid, front_param){
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/delete_img`,
-        method: "POST",
+        method: "DELETE",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -333,7 +333,7 @@ function delete_iteration(uuid, front_param){
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/delete_iteration`,
-        method: "POST",
+        method: "DELETE",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -403,7 +403,7 @@ function delete_class_api(uuid, front_param){
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/delete_class`,
-        method: "POST",
+        method: "DELETE",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -425,7 +425,7 @@ function rename_class_api(uuid, front_param){
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/rename_class`,
-        method: "POST",
+        method: "PUT",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {

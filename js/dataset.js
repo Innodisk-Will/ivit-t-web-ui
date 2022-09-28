@@ -315,7 +315,7 @@ function filter_small_img(class_name){
     $(`#small_img_container`).html("");
     // Show new image
     for (let img of img_info["img_path"]){
-        show_small_img(img);
+        filter_dataset_api(img);
     };
 };
 
@@ -327,7 +327,7 @@ function get_all_image(){
     else{
         iteration = ITER_NAME;
     };
-    let front_param = {"iteration":iteration};
+    let front_param = {"iteration":iteration, "class_name":"All"};
     let img_info = filter_dataset_api(MAIN_UUID, front_param);
     // Clean old image
     $(`#small_img_container`).html("");

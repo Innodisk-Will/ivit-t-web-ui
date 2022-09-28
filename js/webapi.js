@@ -327,7 +327,7 @@ function delete_img_api(uuid, front_param){
 };
 
 // Delete iteration-> DELETE
-function delete_iteration(uuid, front_param){
+function delete_iteration_api(uuid, front_param){
     var result=null;
     $.ajax({
         data: JSON.stringify(front_param),

@@ -321,7 +321,7 @@ function model_expand_action(key, show_first_txt, total, iter_len){
 // Remove iteration
 function remove_iteration(key){
     let front_param = {"iteration":ITER_NAME};
-    let msg = delete_iteration(MAIN_UUID, front_param);
+    let msg = delete_iteration_api(MAIN_UUID, front_param);
     console.log(msg)
     if (msg.includes("Delete")){
         // Dataset

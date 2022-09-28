@@ -131,13 +131,13 @@ function create_project_api(front_param){
     setTimeout('myrefresh()',500);
 };
 
-// Edit project name -> POST
+// Edit project name -> PUT
 function rename_prjname_api(uuid, front_param){
     $.ajax({
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/rename_project`,
-        method: "POST",
+        method: "PUT",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -152,12 +152,12 @@ function rename_prjname_api(uuid, front_param){
     setTimeout('myrefresh()',500);
 };
 
-// Delete_project -> GET
+// Delete_project -> DELETE
 function delete_project_api(uuid){
     $.ajax({
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/delete_project`,
-        method: "GET",
+        method: "DELETE",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -304,14 +304,14 @@ function upload_api(uuid, formData){
     return result;
 };
 
-// Delete image -> POST
+// Delete image -> DELETE
 function delete_img_api(uuid, front_param){
     var result=null;
     $.ajax({
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/delete_img`,
-        method: "POST",
+        method: "DELETE",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -326,14 +326,14 @@ function delete_img_api(uuid, front_param){
     return result;
 };
 
-// Delete iteration-> POST
+// Delete iteration-> DELETE
 function delete_iteration(uuid, front_param){
     var result=null;
     $.ajax({
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/delete_iteration`,
-        method: "POST",
+        method: "DELETE",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -396,14 +396,14 @@ function add_class_api(uuid, front_param){
     return result;
 };
 
-// Delete class -> POST
+// Delete class -> DELETE
 function delete_class_api(uuid, front_param){
     var result=null;
     $.ajax({
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/delete_class`,
-        method: "POST",
+        method: "DELETE",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
@@ -418,14 +418,14 @@ function delete_class_api(uuid, front_param){
     return result;
 };
 
-// Rename class -> POST
+// Rename class -> PUT
 function rename_class_api(uuid, front_param){
     var result=null;
     $.ajax({
         data: JSON.stringify(front_param),
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/rename_class`,
-        method: "POST",
+        method: "PUT",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {

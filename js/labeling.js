@@ -645,7 +645,7 @@ function point(){
 function delete_rect(){
     if (TYPE_NAME=="object_detection"){
         // Delete btn active
-        $("#delete_rect").attr("style", "color: #E61F23;");
+        $("#delete_rect").attr("style", "color: #57b8ff;");
 
         // Build SLELCTED_ELEMENT object
         let needle ={
@@ -682,7 +682,7 @@ function save_label(){
     if (TYPE_NAME=="object_detection"){
         // Open save remind
         save_action("saving");
-        $("#save").attr("style", "color: #E61F23;");
+        $("#save").attr("style", "color: #57b8ff;");
 
         let x_rate = IMAGE_SIZE["small_panel"][0]/IMAGE_SIZE["org"][1];
         let y_rate = IMAGE_SIZE["small_panel"][1]/IMAGE_SIZE["org"][0];
@@ -732,12 +732,12 @@ function save_action(key){
 // Press action
 function press_action(key){
     if (key == "point"){
-        $("#point").attr("style", "color: #E61F23;");
+        $("#point").attr("style", "color: #57b8ff;");
         $("#square").removeAttr("style");
     }
     else{
         $("#point").removeAttr("style");
-        $("#square").attr("style", "color: #E61F23;");
+        $("#square").attr("style", "color: #57b8ff;");
     };
 };
 
@@ -774,7 +774,7 @@ function label_keyup(){
                 rectangle();
             };
             // Press delete and press point now
-            if (e.keyCode == 46 && $("#point").attr("style")=="color: #E61F23;") { 
+            if (e.keyCode == 46 && $("#point").attr("style")=="color: #57b8ff;") { 
                 // delete key maps to keycode `46`
                 console.log("Press Delete:",e.keyCode)
                 delete_rect();

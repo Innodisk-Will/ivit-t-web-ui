@@ -22,29 +22,6 @@
         <link href="css/model.css" rel="stylesheet" />
         <link href="css/project.css" rel="stylesheet" />
         <link href="css/container.css" rel="stylesheet" />
-        <!-- Import all javascript-->
-        <script src="js/utils.js"></script>
-        <script src="js/project.js"></script>
-        <script src="js/dataset.js"></script>
-        <script src="js/model.js"></script>
-        <script src="js/iter_control.js"></script>
-        <script src="js/chart.js"></script>
-        <script src="js/upload.js"></script>
-        <script src="js/labeling.js"></script>
-        <script src="js/draw.js"></script>
-        <script src="js/webapi.js"></script>
-        <!--chart-->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <!-- Initial -->
-        <script language="JavaScript">
-            var URL_VAL = window.location.href.split("?")
-            var SERVER_LOC = URL_VAL[0]
-            var LOC_VAL = URL_VAL[1]
-            $( document ).ready(function() {
-                init_prj_api();
-                loading_html(LOC_VAL);
-            });
-        </script>
     </head>
     <body>
         <!-- Navigation-->
@@ -55,7 +32,7 @@
                     <div class="head_container prj_name_container">
                         <div id="prj_name" class="prj_name text-truncate text-capitalize user-select-none">Project Name</div>
                     </div>
-                    <div class="head_container">
+                    <div id="func_btn" class="head_container">
                         <div id="dataset_btn_container" class="dataset_model_div dataset_div">
                             <a id="dataset_href" class="dataset_model_text" href="">Dataset</a>
                         </div>
@@ -64,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="head_container">
+                <div id="train_btn" class="head_container">
                     <input id="train_action" type="button" class="all_button train_btn_color" value="Train" onclick="open_train_mkpopup()">
                 </div>
             </div>
@@ -155,6 +132,29 @@
             </div>
         </Stop>
     </body>
+    <!-- Import all javascript-->
+    <script src="js/utils.js"></script>
+    <script src="js/project.js"></script>
+    <script src="js/dataset.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/iter_control.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/labeling.js"></script>
+    <script src="js/draw.js"></script>
+    <script src="js/webapi.js"></script>
+    <!--chart-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Initial -->
+    <script language="JavaScript">
+        var URL_VAL = window.location.href.split("?")
+        var SERVER_LOC = URL_VAL[0]
+        var LOC_VAL = URL_VAL[1]
+        $( document ).ready(function() {
+            init_prj_api();
+            loading_html(LOC_VAL);
+        });
+    </script>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

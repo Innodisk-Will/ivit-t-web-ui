@@ -309,7 +309,7 @@ function filter_small_img(class_name){
         iteration = ITER_NAME;
     };
     let front_param = {"iteration":iteration, "class_name":class_name};
-    let img_info = filter_class_api(MAIN_UUID, front_param);
+    let img_info = filter_dataset_api(MAIN_UUID, front_param);
 
     // Clean old image
     $(`#small_img_container`).html("");
@@ -327,7 +327,7 @@ function get_all_image(){
     else{
         iteration = ITER_NAME;
     };
-    let front_param = {"iteration":iteration};
+    let front_param = {"iteration":iteration, "class_name":"All"};
     let img_info = filter_dataset_api(MAIN_UUID, front_param);
     // Clean old image
     $(`#small_img_container`).html("");

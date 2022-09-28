@@ -231,34 +231,6 @@ function filter_dataset_api(uuid, front_param){
     return result;
 };
 
-// Filter img path of class -> POST
-function filter_class_api(uuid, front_param){
-    var result=null;
-    $.ajax({
-        data: JSON.stringify(front_param),
-        dataType: "json",
-        url:`${SCRIPT_ROOT}/${uuid}/filter_classes`,
-        method: "POST",
-        contentType: "application/json",
-        async : false,
-        success: function (data, textStatus, xhr) {
-            if (data != null){
-                // console.log("Image:",data)
-                result=data;
-            }
-            else{
-                console.log("Image is null.")
-            }
-        },
-        error: function (jqXHR, exception) {
-            console.log(jqXHR["responseJSON"]);
-            console.log(exception);
-            result=jqXHR["responseJSON"];
-        }
-    });
-    return result;
-};
-
 // Iteration_class_number -> POST
 function iter_cls_num_api(uuid, front_param){
     var result=null;

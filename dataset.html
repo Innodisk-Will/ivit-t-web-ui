@@ -208,6 +208,7 @@
         var TOTAL_UPLOAD = 0;
         var IMAGE_SIZE = {};
         var COLOR_BAR = null;
+        const socket = io.connect(`${SCRIPT_ROOT}/${MAIN_UUID}/log`);
         // var SAVE_INFO={"image_size":{}, "save_rect":[]};
         $( document ).ready(function() {
             hover_marquee("prj_name");

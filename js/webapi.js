@@ -702,6 +702,27 @@ function create_traing_iter_api(uuid, front_param){
     return result;
 };
 
+// Download pre-trained model api -> GET
+function download_pretrained_api(uuid){
+    var result=null;
+    $.ajax({
+        dataType: "json",
+        url:`${SCRIPT_ROOT}/${uuid}/download_pretrained`,
+        method: "GET",
+        contentType: "application/json",
+        async : false,
+        success: function (data, textStatus, xhr) {
+            result=data;
+        },
+        error: function (jqXHR, exception) {
+            console.log(jqXHR["responseJSON"]);
+            console.log(exception);
+            result=jqXHR["responseJSON"];
+        }
+    });
+    return result;
+};
+
 // Start training api -> GET
 function start_training_api(uuid){
     var result=null;

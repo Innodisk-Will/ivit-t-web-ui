@@ -547,7 +547,15 @@ function export_platform(){
 // get export platform
 function start_export(){
     // Loading 
-    let loading_html =`<div id="loader_container" class="loader_container_eval" style="top:0px; left:0px;"><div class="loader" style="margin:0px;font-size: 12px;">Loading...</div></div>`
+    let loading_html =  `<div id="loader_container" class="loader_container_eval" style="background: #0000003b;">
+                            <div class="loader" style="margin:0px;font-size: 5px;">
+                                Loading...
+                            </div>
+                            <div style="margin-top: 10px;">
+                                Loading...
+                            </div>
+                        </div>`
+                        
     $("#export_containter").append(loading_html);
     // Sent webapi to backend
     let front_param = {"iteration":ITER_NAME, "export_platform":$('#ep_list').val()};

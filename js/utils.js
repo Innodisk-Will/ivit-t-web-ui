@@ -275,22 +275,52 @@ function create_training(){
 
 // Before training, check parameters and check the folder of created
 function check_training_data(front_param){
-    let loading_html =`<div id="loader_container" class="loader_container_eval"><div class="loader" style="margin:0px;font-size: 12px;">Loading...</div></div>`
+    let loading_html =`<div id="loader_container" class="loader_container_eval" style="background: #0000003b;">
+                            <div class="loader" style="margin:0px;font-size: 5px;">
+                                Loading...
+                            </div>
+                            <div style="margin-top: 10px;">
+                                Loading...
+                            </div>
+                        </div>`
     
     $("#train_mkpopup").append(loading_html).ready(function(){
         // Waitting create folder and download pre-trained model
         let prepare_stats = create_traing_iter_api(MAIN_UUID, front_param);
         if (prepare_stats["iter_name"] != undefined){
+            // Download pre-trained model
+            if (!prepare_stats["pre_trained"]){
+                alert("No pre-trained model, Start to download...");
+                download_pretrained_api(MAIN_UUID);
+                socket_pretrained(prepare_stats);
+            }
+            else{
+                // Remove
+                remove_loader("train_mkpopup");
+                // Training
+                start_training();
+                // Change Panel
+                window.location.replace(HREF[0].split("?")[0]+"?model&"+MAIN_UUID+"&"+PRJ_NAME+"&"+TYPE_NAME+"&"+prepare_stats["iter_name"]);
+            };
+        }
+        else{
+            alert(prepare_stats+".");
+            alert("Please remove some iterations.");
+        };
+    });
+};
+
+// Socket pretrained model
+function socket_pretrained(prepare_stats){
+    // Graph info
+    socket.on('pretrained', function(msg){  
+        if (msg.includes("100%")){
             // Remove
             remove_loader("train_mkpopup");
             // Training
             start_training();
             // Change Panel
             window.location.replace(HREF[0].split("?")[0]+"?model&"+MAIN_UUID+"&"+PRJ_NAME+"&"+TYPE_NAME+"&"+prepare_stats["iter_name"]);
-        }
-        else{
-            alert(prepare_stats+".");
-            alert("Please remove some iterations.");
         };
     });
 };

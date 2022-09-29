@@ -289,6 +289,8 @@
     align-items: center;
     padding-bottom: 0px;
     padding-left: 0px;
+    overflow: hidden;
+    flex-direction: column;
 }
   
 .loader {
@@ -298,13 +300,13 @@
     width: 11em;
     height: 11em;
     border-radius: 50%;
-    background: #d2d2d2;
+    background: #E0E1E8;
     margin-top:15vw;
-    background: -moz-linear-gradient(left, #d2d2d2 10%, rgba(210,210,210, 0) 42%);
-    background: -webkit-linear-gradient(left, #d2d2d2 10%, rgba(210,210,210, 0) 42%);
-    background: -o-linear-gradient(left, #d2d2d2 10%, rgba(210,210,210, 0) 42%);
-    background: -ms-linear-gradient(left, #d2d2d2 10%, rgba(210,210,210, 0) 42%);
-    background: linear-gradient(to right, #d2d2d2 10%, rgba(210,210,210, 0) 42%);
+    background: -moz-linear-gradient(left, #E0E1E8 10%, rgba(210,210,210, 0) 42%);
+    background: -webkit-linear-gradient(left, #E0E1E8 10%, rgba(210,210,210, 0) 42%);
+    background: -o-linear-gradient(left, #E0E1E8 10%, rgba(210,210,210, 0) 42%);
+    background: -ms-linear-gradient(left, #E0E1E8 10%, rgba(210,210,210, 0) 42%);
+    background: linear-gradient(to right, #E0E1E8 10%, rgba(210,210,210, 0) 42%);
     position: relative;
     -webkit-animation: load3 1.4s infinite linear;
     animation: load3 1.4s infinite linear;
@@ -316,7 +318,7 @@
 .loader:before {
     width: 50%;
     height: 50%;
-    background: #d2d2d2;
+    background: #E0E1E8;
     border-radius: 100% 0 0 0;
     position: absolute;
     top: 0;

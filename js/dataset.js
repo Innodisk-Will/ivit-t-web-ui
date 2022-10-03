@@ -8,9 +8,9 @@ function setting_dataset(){
         let front_param = {"iteration":ITER_NAME}
         let cls_info = iter_cls_num_api(MAIN_UUID, front_param);
         // Set filter classes
-        filter_classes_btn(cls_info["total"],
+        filter_classes_btn(cls_info["All"],
                             cls_info["classes_num"],
-                            cls_info["total"],);
+                            cls_info["All"],);
         // Remove upload/label btn
         change_iter_action();
     }

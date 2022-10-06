@@ -329,7 +329,7 @@ function socket_spend_time(){
     // Spend_time
     socket.on('spend_time', function(msg){
         // Aviod main train panel
-        if (MAIN_PAGE=="model" && ITER_NAME == PRJ_INFO["training_info"]["iteration"]){
+        if (MAIN_PAGE=="model" && ITER_NAME == "iteration"+PRJ_INFO["front_project"]["iteration"]){
             $(`#time_text`).text("Spend time");
             // Time processing
             let min = parseInt(parseInt(msg)/60);

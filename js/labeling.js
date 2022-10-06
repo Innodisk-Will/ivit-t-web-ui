@@ -24,9 +24,7 @@ function init_draw_box(bbox){
         // Get class index in all_class
         let cls_idx = parseInt(bbox[index]["class_id"])+1;
         // Convert color
-        let color = rgb2hex(COLOR_BAR[cls_idx][2], 
-                            COLOR_BAR[cls_idx][1], 
-                            COLOR_BAR[cls_idx][0]);
+        let color = COLOR_BAR[cls_idx];
         // Create bbox Object
         let bbox_obj = {
                         x: box[0]*x_rate,
@@ -97,9 +95,7 @@ function draw_eval_box(){
         let cls_idx = parseInt(Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(FILTER_RESULT[index]["class"]));
 
         // Convert color
-        let color = rgb2hex(COLOR_BAR[cls_idx+1][2], 
-                            COLOR_BAR[cls_idx+1][1], 
-                            COLOR_BAR[cls_idx+1][0]);
+        let color = COLOR_BAR[cls_idx+1];
         // Create bbox Object
         let bbox_obj = {
                         x: box[0]*x_rate,
@@ -248,9 +244,7 @@ function add_annotation(class_name){
     // Get index of all classes
     cls_idx = ALL_CLASSES["keys"].indexOf(class_name);
     cls_idx = parseInt(cls_idx+1);
-    color = rgb2hex(COLOR_BAR[parseInt(cls_idx)][2], 
-                    COLOR_BAR[parseInt(cls_idx)][1], 
-                    COLOR_BAR[parseInt(cls_idx)][0]);
+    color = COLOR_BAR[parseInt(cls_idx)];
 
     let html = `
                 <div class="label_annotation_object">
@@ -528,9 +522,8 @@ function obj_change_class(){
     // Get index of class_name in ALL_CLASSES
     let idx = ALL_CLASSES["keys"].indexOf(class_name);
     // Get class_name color(key not 0, required +1)
-    let hex_color = COLOR_BAR[idx+1];
     // Select point color
-    let color = rgb2hex(hex_color[2], hex_color[1], hex_color[0]);
+    let color = COLOR_BAR[idx+1];
     // POINTING COLOR
     POINTCOLOR[String(class_name)] = color;
 };
@@ -560,9 +553,7 @@ function init_all_classes(){
     for (let class_name of ALL_CLASSES["keys"]){
         cls_idx = ALL_CLASSES["keys"].indexOf(class_name);
         cls_idx = parseInt(cls_idx+1);
-        color = rgb2hex(COLOR_BAR[parseInt(cls_idx)][2], 
-                        COLOR_BAR[parseInt(cls_idx)][1], 
-                        COLOR_BAR[parseInt(cls_idx)][0]);
+        color = COLOR_BAR[parseInt(cls_idx)];
         let html = `
                     <div id="lable_${class_name}" class="one_class_container margin_bottom_20">
                         <div class="label_anntation_color" style="background: ${color}"></div>

@@ -95,7 +95,7 @@ function draw_eval_box(){
         let cls_idx = parseInt(Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(FILTER_RESULT[index]["class"]));
 
         // Convert color
-        let color = COLOR_BAR[parseInt(cls_idx)];
+        let color = COLOR_BAR[parseInt(cls_idx)+1];
         // Create bbox Object
         let bbox_obj = {
                         x: box[0]*x_rate,
@@ -247,7 +247,7 @@ function add_annotation(class_name){
     color = COLOR_BAR[parseInt(cls_idx)];
 
     let html = `
-                <div class="label_annotation_object">
+                <div id=main_${class_name} class="label_annotation_object">
                     <div class="label_anntation_color" style="background: ${color}"></div>
                     <div id="anno_${class_name}" class="label_anntation_name text-truncate">${class_name}</div>
                     <div id="num_${class_name}" class="label_anntation_number">1</div>
@@ -273,6 +273,10 @@ function count_annotation(class_name=null){
         let color = background.split("#")[1];
         let len = $(`#boxes rect[style*='stroke:#${color}; fill:transparent; stroke-width: 3px;']`).length;
         $(`#num_${name}`).text(len);
+        // Remove if class = 0
+        if (len == 0){
+            $(`#main_${name}`).remove();
+        };
     };
 };
 
@@ -329,6 +333,8 @@ function label_click_listen(){
                 $(document).unbind("keyup");
                 // Give main keyup
                 keyup_input('', "input_txt");
+                // Clean class
+                // $("#input_txt").text("");
             }
             else{
                 // Upbind
@@ -542,6 +548,19 @@ function open_edit_mkpopup(){
 // Close rename_mkpopup
 function close_edit_mkpopup(){
     document.getElementById("edit_label_mkpopup").style.display = "none";
+    // Recovery delete classes
+    let front_param = {"iteration":"workspace"}
+    let cls_info = iter_cls_num_api(MAIN_UUID, front_param);
+    let classes = cls_info["classes_num"];
+    // Clean container
+    ALL_CLASSES["keys"]=[]
+    ALL_CLASSES["values"]=[]
+    // Append individual class
+    for (let cls_name of Object.keys(classes)){
+        ALL_CLASSES["keys"].push(cls_name);
+        ALL_CLASSES["values"].push(classes[cls_name]);
+    };
+    init_all_classes();
 };
 
 // Initial all classes
@@ -620,16 +639,26 @@ function rectangle(){
         let class_size = ALL_CLASSES["keys"].length;
         // Check is exist class
         if (class_size < 1){
-            alert("Require to add class!")
+            alert("Please select a class name!")
         }
         // Check is point color
         else if (Object.keys(POINTCOLOR).length < 1){
-            alert("Require to point class!")
+            alert("Please select a class name!")
         }
         else{
             press_action("square");
-            $("#draw").attr("style","pointer-events:none")
+            $("#draw").attr("style","pointer-events:none;")
             document.getElementById("large_img").addEventListener('pointerdown', start_drag);
+            
+            // Append action of mouse 
+            $("#large_img").attr("style","cursor:crosshair;");
+            // Clean panel
+            $("circle").remove();
+            // Change rect remove old style
+            dasharray_list = Object.values($(`#boxes rect[style*='stroke-dasharray: 5px;']`));
+            if (dasharray_list.includes(SLELCTED_ELEMENT) && dasharray_list.length > 2){
+                remove_dash(dasharray_list);
+            };
         };
     };
 };
@@ -639,6 +668,8 @@ function point(){
     if (TYPE_NAME=="object_detection"){
         $("#draw").attr("style","pointer-events:painted");
         press_action("point");
+        // Append action of mouse 
+        $("#large_img").removeAttr("style");
     };
 };
 
@@ -670,6 +701,7 @@ function delete_rect(){
         // Remove rect in g(boxes)
         console.log("selected_delete_element:",SLELCTED_DEL_ELEMENT)
         $(SLELCTED_DEL_ELEMENT).remove();
+        $(`circle`).remove();
 
         // Delay close
         setTimeout('$("#delete_rect").removeAttr("style")',100);

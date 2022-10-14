@@ -389,6 +389,12 @@ function preview_img(src, id, img_name=null){
     // SAVE_INFO["image_size"] = IMAGE_SIZE;
     // SAVE_INFO["save_rect"] = RECTANGLES;
     RECTANGLES = [];
+    MARQUEE_RECT= {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+    };
     // Clean box -> because selec null class still box in image
     $("#boxes").html("");
 
@@ -410,6 +416,11 @@ function preview_img(src, id, img_name=null){
             show_box(this, img_name);
             // Remove load event
             $(this).unbind("load");
+            // Point action
+            console.log($("#point").attr("style"))
+            if ($("#point").attr("style")=="color: #57b8ff;"){
+                point();
+            };
         }
         else{
             if (MAIN_PAGE=="model"){

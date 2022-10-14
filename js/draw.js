@@ -8,7 +8,7 @@ var RECTANGLES = [];
 let START_X = 0;
 let START_Y = 0;
 
-const MARQUEE_RECT= {
+let MARQUEE_RECT= {
     x: 0,
     y: 0,
     width: 0,
@@ -111,8 +111,8 @@ function draw_rect(rect, data) {
         rect.setAttribute('style', `stroke:${color}; fill:transparent; stroke-width: 3px;`);
 
         rect.setAttribute('id', `${data["class"]}_${idx}`);
-        rect.setAttribute('onmousedown', `mouse_down(evt)`);
-    }
+        rect.setAttribute('onmousedown', `mouse_down(evt,'rect')`);
+    };
 
     return rect;
 };
@@ -150,55 +150,210 @@ var CLICK_X, CLICK_Y; // stores cursor location upon first click
 var MOVE_X=0, MOVE_Y=0; // keeps track of overall transformation
 // var LASTMOVE_X=0, LASTMOVE_Y=0; // stores previous transformation (move)
 var RECT_IDX = 0;
-
 var SLELCTED_ELEMENT = null;
 var SLELCTED_DEL_ELEMENT = null;
  
-function mouse_down(evt){
+function mouse_down(evt, key){
     evt.preventDefault();
 
     CLICK=true;
     SLELCTED_ELEMENT = evt.target;
-    SLELCTED_DEL_ELEMENT = evt.target;
     CLICK_X = evt.offsetX; 
     CLICK_Y = evt.offsetY;
 
-    // console.log("SELECT ELEMENT:",SLELCTED_ELEMENT)
-
-    let needle ={
-                    x: parseFloat($(SLELCTED_ELEMENT).attr("x")), 
-                    y: parseFloat($(SLELCTED_ELEMENT).attr("y")),
-                    width: parseFloat($(SLELCTED_ELEMENT).attr("width")),
-                    height: parseFloat($(SLELCTED_ELEMENT).attr("height")),
-                }
-    
-    // console.log(needle)
-    idx = RECTANGLES.findIndex(object => {
-        return ((object["x"] === needle["x"] && object["y"] === needle["y"]) && 
-            (object["width"] === needle["width"] && object["height"] === needle["height"]));
-    });
-};
- 
-function move(evt){
-    evt.preventDefault();
-    if(CLICK){
-        // console.log(evt)
-        MOVE_X = parseInt(SLELCTED_ELEMENT.getAttribute("x")) + ( evt.offsetX - CLICK_X );
-        MOVE_Y = parseInt(SLELCTED_ELEMENT.getAttribute("y")) + ( evt.offsetY - CLICK_Y );
-        CLICK_X = evt.offsetX; 
-        CLICK_Y = evt.offsetY;
-        SLELCTED_ELEMENT.setAttribute("x", MOVE_X);
-        SLELCTED_ELEMENT.setAttribute("y", MOVE_Y);
-        RECTANGLES[RECT_IDX]["x"] = MOVE_X
-        RECTANGLES[RECT_IDX]["y"] = MOVE_Y
-        // console.log("MOVE SLELCTED_ELEMENT:",SLELCTED_ELEMENT)
+    // Choiced rectangle change style
+    // console.log("SELECT ELEMENT:",SLELCTED_ELEMENT);
+    if (key=="rect"){
+        catch_rect();
+        SLELCTED_DEL_ELEMENT = evt.target;
+    }
+    else{
+        let id_list = $(SLELCTED_ELEMENT).attr("id").split("-");
+        let rect_id = id_list[1];
+        SLELCTED_DEL_ELEMENT = $(`#${rect_id}`);
     };
 };
  
+function catch_rect(){
+    org_style = $(SLELCTED_ELEMENT).attr("style");
+    if (!org_style.includes("stroke-dasharray")){
+        $(SLELCTED_ELEMENT).attr("style",`${org_style} stroke-dasharray: 5px;`);
+        // Append point
+        let w = parseInt($(SLELCTED_ELEMENT).attr("width"));
+        let h = parseInt($(SLELCTED_ELEMENT).attr("height"));
+        let x = parseInt($(SLELCTED_ELEMENT).attr("x"));
+        let y = parseInt($(SLELCTED_ELEMENT).attr("y"));
+        let clr_list = org_style.split(";");
+        let color = clr_list.find(element => element.includes("stroke:")).split(":")[1];
+        let rect_num = $(SLELCTED_ELEMENT).attr("id");
+        point_rect(x, y, w, h, color, rect_num);
+    };
+    // Change rect remove old style
+    dasharray_list = Object.values($(`#boxes rect[style*='stroke-dasharray: 5px;']`));
+    if (dasharray_list.includes(SLELCTED_ELEMENT) && dasharray_list.length > 3){
+        let index = dasharray_list.indexOf(SLELCTED_ELEMENT);
+        dasharray_list.splice(index, 1); 
+        remove_dash(dasharray_list);
+    };
+    // Catch rectangle index
+    rect_index(SLELCTED_ELEMENT);
+};
+
+function remove_dash(dasharray_list){
+    // Change rect remove old style
+    org_style = $(dasharray_list[0]).attr("style");
+    org_style = org_style.split("stroke-dasharray: 5px;");
+    $(dasharray_list[0]).attr("style",`${org_style[0]}`);
+};
+
+function rect_index(event){
+    let needle ={
+        x: parseFloat($(event).attr("x")), 
+        y: parseFloat($(event).attr("y")),
+        width: parseFloat($(event).attr("width")),
+        height: parseFloat($(event).attr("height")),
+    };
+    // Catch rectangle index
+    RECT_IDX = RECTANGLES.findIndex(object => {
+                return ((object["x"] === needle["x"] && object["y"] === needle["y"]) && 
+                (object["width"] === needle["width"] && object["height"] === needle["height"]));
+                });
+};
+
+function move(evt){
+    evt.preventDefault();
+    if(CLICK){
+        // Update values of rectangle in object
+        if ($(SLELCTED_ELEMENT).is( "rect" )){
+            move_rect(evt);
+        }
+        else if ($(SLELCTED_ELEMENT).is( "circle" )){
+            console.log(MOVE_X, MOVE_Y)
+            move_point(evt, MOVE_X, MOVE_Y);
+        };
+        // Update new position
+        CLICK_X = evt.offsetX; 
+        CLICK_Y = evt.offsetY;
+    };
+};
+ 
+function move_rect(evt){
+    // Move rect
+    MOVE_X = parseInt(SLELCTED_ELEMENT.getAttribute("x")) + ( evt.offsetX - CLICK_X );
+    MOVE_Y = parseInt(SLELCTED_ELEMENT.getAttribute("y")) + ( evt.offsetY - CLICK_Y );
+    SLELCTED_ELEMENT.setAttribute("x", MOVE_X);
+    SLELCTED_ELEMENT.setAttribute("y", MOVE_Y);
+    RECTANGLES[RECT_IDX]["x"] = MOVE_X
+    RECTANGLES[RECT_IDX]["y"] = MOVE_Y
+
+    // Move point
+    org_style = $(SLELCTED_ELEMENT).attr("style");
+    let w = parseInt($(SLELCTED_ELEMENT).attr("width"));
+    let h = parseInt($(SLELCTED_ELEMENT).attr("height"));
+    let clr_list = org_style.split(";");
+    let color = clr_list.find(element => element.includes("stroke:")).split(":")[1];
+    let rect_num = $(SLELCTED_ELEMENT).attr("id");
+    point_rect(RECTANGLES[RECT_IDX]["x"], RECTANGLES[RECT_IDX]["y"], w, h, color, rect_num);
+    // console.log("MOVE SLELCTED_ELEMENT:",SLELCTED_ELEMENT)
+};
+
+function move_point(evt, MOVE_X, MOVE_Y){
+    // Move point
+    MOVE_X = parseInt(SLELCTED_ELEMENT.getAttribute("cx")) + ( evt.offsetX - CLICK_X );
+    MOVE_Y = parseInt(SLELCTED_ELEMENT.getAttribute("cy")) + ( evt.offsetY - CLICK_Y );
+    SLELCTED_ELEMENT.setAttribute("cx", MOVE_X);
+    SLELCTED_ELEMENT.setAttribute("cy", MOVE_Y);
+    // Move rect
+    let id_list = $(SLELCTED_ELEMENT).attr("id").split("-");
+    rect_size(id_list, MOVE_X, MOVE_Y);
+    
+};
+
 function end_move(evt){
     if(evt.type == 'mouseout' && CLICK) {
         return;
     }
     CLICK=false;
     // elementWithFocus = null;
+};
+
+///////////////////////////////// CHANGE RECTANGE SIZE /////////////////////////////////////
+///////////////////////////////// CHANGE RECTANGE SIZE /////////////////////////////////////
+///////////////////////////////// CHANGE RECTANGE SIZE /////////////////////////////////////
+
+function point_rect(x, y, w, h, color, rect_num){
+    let point_list = [[x,y,"nwse-resize"],[x,y+h, "nesw-resize"],[x+w,y, "nesw-resize"],[x+w,y+h, "nwse-resize"]];
+    if ($(`#draw circle`).length>=4){
+        $(`circle`).remove();
+    };
+
+    if ($(`#draw circle`).length==0){
+        // Append to point in panel
+        for (let po of point_list){
+            cir_num = point_list.indexOf(po);
+            $("#draw").append(circle_html(po[0], po[1], color, po[2], rect_num, cir_num));
+        };
+    };
+};
+
+function circle_html(xaxis, yaxis, color, cursor, rect_num, cir_num){
+    let point = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+    point.setAttribute('cx', xaxis);
+    point.setAttribute('cy', yaxis);
+    point.setAttribute('r', "5");
+    point.setAttribute('style', `opacity: 1; fill: ${color}; stroke: #fff; cursor: ${cursor};`);
+    point.setAttribute('onmousedown', `mouse_down(evt,"cir")`);
+    point.setAttribute('id', `point-${rect_num}-${cir_num}`);
+    return point;
+};
+
+function rect_size(id_list, MOVE_X, MOVE_Y){
+    let num = id_list[2]
+    let rect_id = id_list[1];
+    // Catch rectangle index
+    rect_index($(`#${rect_id}`));
+    let org_w = parseInt($(`#${rect_id}`).attr("width"));
+    let org_h = parseInt($(`#${rect_id}`).attr("height"));
+    let org_x = parseInt($(`#${rect_id}`).attr("x"));
+    let org_y = parseInt($(`#${rect_id}`).attr("y"));
+    
+    // w,h,x,y
+    let cn_list = [0, 0, 0, 0]
+    if (num == "0"){
+        cn_list = [org_w + (org_x - MOVE_X),
+                    org_h + (org_y - MOVE_Y),
+                    MOVE_X, MOVE_Y];
+    }
+    else if (num == "1"){
+        cn_list = [org_w + (org_x - MOVE_X), 
+                    MOVE_Y-org_y,
+                    MOVE_X, org_y];
+    }
+    else if (num == "2"){
+        cn_list = [MOVE_X-org_x,
+            org_h + (org_y - MOVE_Y),
+            org_x, MOVE_Y];
+    }
+    else if (num == "3"){
+        cn_list = [MOVE_X-org_x,
+            MOVE_Y-org_y,
+            org_x, org_y];
+    };
+
+    // Change rect
+    $(`#${rect_id}`).attr("width",  cn_list[0]);
+    $(`#${rect_id}`).attr("height", cn_list[1]);
+    $(`#${rect_id}`).attr("x", cn_list[2]);
+    $(`#${rect_id}`).attr("y", cn_list[3]);
+    // Upload value of rect in object
+    RECTANGLES[RECT_IDX]["width"] = cn_list[0];
+    RECTANGLES[RECT_IDX]["height"] = cn_list[1];
+    RECTANGLES[RECT_IDX]["x"] = cn_list[2];
+    RECTANGLES[RECT_IDX]["y"] = cn_list[3];
+    // Move 4 point
+    org_style = $(`#${rect_id}`).attr("style");
+    let clr_list = org_style.split(";");
+    let color = clr_list.find(element => element.includes("stroke:")).split(":")[1];
+    let rect_num = $(`#${rect_id}`).attr("id");
+    point_rect(cn_list[2], cn_list[3], cn_list[0], cn_list[1], color, rect_num);
 };

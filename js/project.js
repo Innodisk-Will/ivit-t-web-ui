@@ -16,7 +16,6 @@ function load_exist_project(){
 
 // Every check dataset is upload image
 function check_project(){
-    console.log($("#prj_card_collect_container").children().length)
     if ($("#prj_card_collect_container").children().length<1){
         $("#prj_card_collect_container").css("display","none");
         $("#null_project_container").css("display","flex");

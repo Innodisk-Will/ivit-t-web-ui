@@ -417,7 +417,6 @@ function preview_img(src, id, img_name=null){
             // Remove load event
             $(this).unbind("load");
             // Point action
-            console.log($("#point").attr("style"))
             if ($("#point").attr("style")=="color: #57b8ff;"){
                 point();
             };

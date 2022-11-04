@@ -17,7 +17,13 @@ echo -e "${YELLOW}"
 echo "-----Installing jq-----"
 echo -e "${NC}"
 
-apt-get install -y jq
+if ! type jq >/dev/null 2>&1; then
+    sudo apt-get install -y jq
+else
+    echo -e "${YELLOW}"
+    echo 'The jq has been installed.';
+    echo -e "${NC}"
+fi
 
 # --------------------------------------------------------
 # Parse information from configuration
@@ -40,3 +46,10 @@ echo -e "${NC}"
 
 docker build -t "${IMAGE_NAME}" \
 -f "${ROOT}/docker/Dockerfile" . 
+
+# ---------------------------------------------------------
+# Push dockerhub
+echo -e "${GREEN}"
+echo "-----Push dockerhub ${IMAGE_NAME}-----"
+echo -e "${NC}"
+docker push ${IMAGE_NAME}

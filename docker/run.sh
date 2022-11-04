@@ -50,7 +50,13 @@ echo -e "${YELLOW}"
 echo "-----Installing jq-----"
 echo -e "${NC}"
 
-sudo apt-get install -y jq
+if ! type jq >/dev/null 2>&1; then
+    sudo apt-get install -y jq
+else
+    echo -e "${YELLOW}"
+    echo 'The jq has been installed.';
+    echo -e "${NC}"
+fi
 
 # ---------------------------------------------------------
 # Get version number

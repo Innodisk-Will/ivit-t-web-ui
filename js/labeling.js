@@ -530,6 +530,7 @@ function obj_change_class(){
     // Select point color
     let color = COLOR_BAR[idx+1];
     // POINTING COLOR
+    POINTCOLOR={};
     POINTCOLOR[String(class_name)] = color;
 };
 
@@ -805,6 +806,18 @@ function label_keyup(){
                 console.log("Press R:",e.which)
                 rectangle();
             };
+            // Press D and press point now
+            if (e.keyCode == 68 && $("#point").attr("style")=="color: #57b8ff;") { 
+                // delete key maps to keycode `68`
+                console.log("Press Delete:",e.keyCode)
+                delete_rect();
+            };   
+            // Press backspace and press point now
+            if (e.keyCode == 8 && $("#point").attr("style")=="color: #57b8ff;") { 
+                // delete key maps to keycode `8`
+                console.log("Press Delete:",e.keyCode)
+                delete_rect();
+            };   
             // Press delete and press point now
             if (e.keyCode == 46 && $("#point").attr("style")=="color: #57b8ff;") { 
                 // delete key maps to keycode `46`

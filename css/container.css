@@ -291,6 +291,8 @@
     padding-left: 0px;
     overflow: hidden;
     flex-direction: column;
+    top: 0px;
+    left: 0px;
 }
   
 .loader {

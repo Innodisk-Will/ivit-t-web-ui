@@ -190,8 +190,9 @@ function get_entry_directory_files(entry) {
                         resolve(file);
                     }
                     else{
+                        alert(`This file can't upload-Filename:[${file.name}], Type:[${file.type}]`);
                         resolve(null);
-                    }
+                    };
                     })));
                 Promise.all(filesPromise).then(resolve, reject);
             }, reject)
@@ -339,7 +340,6 @@ function drop_file_upload(files, i, TOTAL_UPLOAD){
 
         // Remove folder
         if (((file.type.includes("image")) | (file.type == "text/plain")) && (file.size !== 0)){
-
             // Append prograssbar
             add_prograssbar(file.name, Object.values(files[i]).indexOf(file), 1);
             // Create upload info(Dic[folder name])
@@ -356,6 +356,7 @@ function drop_file_upload(files, i, TOTAL_UPLOAD){
         else{
             // Exclude
             TOTAL_UPLOAD -= 1
+            alert(`This file can't upload-Filename:[${file.name}], Type:[${file.type}]`)
         };
     };
     return TOTAL_UPLOAD

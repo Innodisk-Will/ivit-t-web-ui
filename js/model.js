@@ -47,7 +47,7 @@ function metrics_data_process(data){
     var colorlist = ['#57B8FF','#FFC700','#21D59B']
     
     for(const [index, [key, val]] of Object.entries(Object.entries(data))){
-        if (key != 'percision' & key != 'recall'){
+        if (key != 'precision' & key != 'recall'){
             // Setting div text
             $("#other_name").text(key);
             $("#other_percentage").text(Math.round(val*100)+"%");
@@ -185,7 +185,7 @@ function socket_graph(){
     socket.on('graph_data', function(msg){  
         // Aviod main train panel
         if (MAIN_PAGE=="model" && ITER_NAME == PRJ_INFO["training_info"]["iteration"]){
-            if (msg.includes("percision")){
+            if (msg.includes("precision")){
                 $("#metrics_container").css("display","flex");
                 metrics_data_process(JSON.parse(msg));
                 // Allow evaluate can upload

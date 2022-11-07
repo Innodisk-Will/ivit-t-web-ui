@@ -150,6 +150,7 @@ function create_curve(id, train_data, key){
         var component={
             label: key,
             data: train_data,
+            pointStyle: 'circle',
             backgroundColor: colorlist[index]+'1a',
             borderColor: colorlist[index],
             tension:0.4,

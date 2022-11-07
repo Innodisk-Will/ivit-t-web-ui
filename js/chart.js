@@ -45,7 +45,7 @@ function piechart_metrics(id, completed, Rejected, color){
 function train_val_curve(id, dataset, xAxisKey, key){
   // Setup 
   const data = {
-    datasets: dataset
+    datasets: dataset,
   };
 
   // Config 
@@ -62,6 +62,18 @@ function train_val_curve(id, dataset, xAxisKey, key){
           beginAtZero: false
         }
       },
+      pointRadius: 0,
+      borderWidth: 3,
+      pointHoverRadius: 5,
+      plugins: {
+        legend: {
+          position: "top",
+          align: "end",
+          labels: {
+            usePointStyle: true,
+          },
+        },
+      }
     }
   };
   

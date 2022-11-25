@@ -53,9 +53,7 @@ echo -e "${NC}"
 if ! type jq >/dev/null 2>&1; then
     sudo apt-get install -y jq
 else
-    echo -e "${YELLOW}"
     echo 'The jq has been installed.';
-    echo -e "${NC}"
 fi
 
 # ---------------------------------------------------------

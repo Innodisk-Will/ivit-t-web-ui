@@ -62,8 +62,8 @@ function train_val_curve(id, dataset, xAxisKey, key){
           beginAtZero: false
         }
       },
-      pointRadius: 0,
-      borderWidth: 3,
+      pointRadius: 1,
+      // borderWidth: 3,
       pointHoverRadius: 5,
       plugins: {
         legend: {
@@ -71,6 +71,9 @@ function train_val_curve(id, dataset, xAxisKey, key){
           align: "end",
           labels: {
             usePointStyle: true,
+            boxWidth: 7,
+            boxHeight: 7,
+            PointStyle:"rectRounded",
           },
         },
       }

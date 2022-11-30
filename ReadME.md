@@ -14,9 +14,7 @@ A user interfaces to the training model. This UI is easy to operate for train mo
 
 # See What's New
 - [Release Notes](docs/release_notes.md)
-- Projects: Create, Control 
-- Dataset: Upload, Labeling, Control iteration 
-- Model: Training, Evaluate, Convert, Control iteration
+- added code for web API that has a database
 
 # Getting Started
 

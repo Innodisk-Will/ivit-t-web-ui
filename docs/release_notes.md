@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 1.0.1
+### New Features/Highlights
+- added code for web API that has a database
+
 ## Release 1.0
 ### New Features/Highlights
 - Projects: Create, Control 

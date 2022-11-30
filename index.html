@@ -147,11 +147,14 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Initial -->
     <script language="JavaScript">
-        var URL_VAL = window.location.href.split("?")
-        var SERVER_LOC = URL_VAL[0]
-        var LOC_VAL = URL_VAL[1]
+        var URL_VAL = window.location.href.split("?");
+        var SERVER_LOC = URL_VAL[0];
+        var LOC_VAL = URL_VAL[1];
+        var INIT_PRJ = {};
+        var TRAINING_STATUS = {};
+        var ALL_CLASSES_API = {};
         $( document ).ready(function() {
-            init_prj_api();
+            INIT_PRJ = init_prj_api();
             loading_html(LOC_VAL);
         });
     </script>

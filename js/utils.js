@@ -98,8 +98,8 @@ function give_title_text(href_id, prj_id, text){
 
 // Get info of prj
 function get_uuid_prj_info(uuid){
-    let info = get_allprj_info_api();
-    return info[uuid];
+    // let info = get_allprj_info_api();
+    return INIT_PRJ[uuid];
 };
 
 ///////////////////////////////// TRAIN /////////////////////////////////////
@@ -108,7 +108,10 @@ function get_uuid_prj_info(uuid){
 
 // Open train_mkpopup
 function open_train_mkpopup(){
-    let cls_num = PRJ_INFO["front_project"]["classes_num"];
+    let set_iter_name = (ITER_NAME == undefined) ? "workspace" : ITER_NAME
+    let front_param = {"iteration":set_iter_name}
+    ALL_CLASSES_API = iter_cls_num_api(MAIN_UUID, front_param);
+    let cls_num = ALL_CLASSES_API["classes_num"];
     let cls_length = Object.keys(cls_num).length;
     let check_num = false;
     if (cls_length>0){
@@ -117,7 +120,7 @@ function open_train_mkpopup(){
         }
         else{
             for (let key of Object.keys(cls_num)){
-                if (cls_num[key]>15){
+                if (cls_num[key]>=15){
                     check_num = true;
                 }
                 else{
@@ -332,9 +335,13 @@ function start_training(){
 
 // Check_training_status
 function check_training_stats(){
-    if (PRJ_INFO["training_info"]["status"]){
-        $("#train_action").val("Stop");
-        $("#train_action").attr("onclick","open_stop_mkpopup()");
+    TRAINING_STATUS = get_training_task_api();
+    console.log("TRAINING_STATUS:", TRAINING_STATUS)
+    if (Object.keys(TRAINING_STATUS).length>0){
+        if (TRAINING_STATUS[MAIN_UUID]["status"]){
+            $("#train_action").val("Stop");
+            $("#train_action").attr("onclick","open_stop_mkpopup()");
+        };
     }
     else{
         $("#train_action").val("Train");
@@ -354,8 +361,6 @@ function stop_training(){
         let front_param = {"iteration":ITER_NAME};
         let exist_model = check_best_model_api(MAIN_UUID, front_param);
         if (!exist_model.includes("not")){
-            // Get metrics
-            let metrics = get_metrics_api(MAIN_UUID);
             // Refresh variable
             refresh_variable();
             // Open evaluate/export
@@ -365,6 +370,8 @@ function stop_training(){
         }
         else{
             alert("This training is not exist best model!");
+            number = parseInt(ITER_NAME.split('iteration')[1])-1
+            window.location.replace(MAIN_HREF+"&"+`iteration${number}`);
         };
         // Change btn and other status
         $("#train_action").val("Train");

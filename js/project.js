@@ -4,12 +4,12 @@
 
 // Get exist project
 function load_exist_project(){
-    let project_info = init_prj_api();
-    if( typeof(project_info)== "object"){
+    if( typeof(INIT_PRJ)== "object"){
+        let sort_uuid = sort_project();
         // Each loop to project info
-        $.each(project_info, function(uuid, valueObj){
-            add_model("prj_card_collect_container", uuid, valueObj)
-        });
+        for (uuid of sort_uuid){
+            add_model("prj_card_collect_container", uuid, INIT_PRJ[uuid])
+        };
     };
     check_project();
 };
@@ -27,24 +27,40 @@ function check_project(){
 ///////////////////////////////// ADD BUTTON /////////////////////////////////////
 ///////////////////////////////// ADD BUTTON /////////////////////////////////////
 
+// Sort project time
+function sort_project(){
+    var time = []
+    var sort_uuid = []
+    // Catch create_time
+    $.each(INIT_PRJ, function(uuid, valueObj){
+        time.push(`${valueObj["create_time"].toString()}/${uuid}`)
+    });
+    // Sort
+    time.sort();
+    // Catch uuid
+    for (val of time){
+        sort_uuid.push(val.split("/")[1])
+    };
+    return sort_uuid
+};
+
 // Add Card Font
 function add_model(element_id, uuid, info) {
     // Get pjname, platform, type, img, effect_num, total_num, iter_num
-    let pjname = info["front_project"]["project_name"];
-    let platform = info["front_project"]["platform"];
-    let type = info["front_project"]["type"];
-    let img_base64 =  info["front_project"]["cover_img"];
-    let effect_num = k_unit(info["front_project"]["effect_img_num"]);
-    let total_num = k_unit(info["front_project"]["total_img_num"]);
-    let iter_num = info["front_project"]["iteration"];
+    let pjname = info["project_name"];
+    let platform = info["platform"];
+    let type = info["type"];
+    let cover_img =  info["cover_img"];
+    let effect_num = k_unit(info["effect_img_nums"]);
+    let total_num = k_unit(info["total_img_nums"]);
+    let iter_num = info["iteration"];
 
-    if (img_base64 == null){
+    if (cover_img == ""){
         img_path = "/assets/preset.png"        
     }
     else{
-        img_path = `data:image/jpeg;base64,${img_base64}`
-        img_path = img_path.replace(/\s/g,"");
-    };
+        img_path = SCRIPT_ROOT + cover_img
+    }
 
     // // Loop for descript
     let onclick_val = "dataset&"+uuid+"&"+pjname+"&"+type;

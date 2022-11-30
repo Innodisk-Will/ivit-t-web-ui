@@ -4,24 +4,31 @@
 
 // Setting dataset numbers
 function setting_dataset(){
-    if (ITER_NAME != undefined){
-        let front_param = {"iteration":ITER_NAME}
-        let cls_info = iter_cls_num_api(MAIN_UUID, front_param);
-        // Set filter classes
-        filter_classes_btn(cls_info["All"],
-                            cls_info["classes_num"],
-                            cls_info["All"],);
+    if (ITER_NAME == undefined){
+        set_iter_name = "workspace"
+    }
+    else{
+        set_iter_name = ITER_NAME
         // Remove upload/label btn
         change_iter_action();
     }
+    let front_param = {"iteration":set_iter_name}
+    ALL_CLASSES_API = iter_cls_num_api(MAIN_UUID, front_param);
+    if (typeof ALL_CLASSES_API === "string"){
+        check_dataset();
+    }
     else{
+        // Remove if _temp problem
+        if (Object.keys(ALL_CLASSES_API["classes_num"]).includes("_temp")){
+            delete ALL_CLASSES_API["classes_num"]["_temp"]
+        };
         // Set filter classes
-        filter_classes_btn(PRJ_INFO["front_project"]["total_img_num"],
-                            PRJ_INFO["front_project"]["classes_num"],
-                            PRJ_INFO["front_project"]["effect_img_num"]);
+        filter_classes_btn(ALL_CLASSES_API["All"],
+                            ALL_CLASSES_API["classes_num"],
+                            ALL_CLASSES_API["All"],);
+        // Setting show dataset number
+        get_dataset_num(PRJ_INFO["effect_img_nums"], PRJ_INFO["total_img_nums"]);
     };
-    // Setting show dataset number
-    get_dataset_num(PRJ_INFO["front_project"]["effect_img_num"], PRJ_INFO["front_project"]["total_img_num"]);
 };
 
 // Remove upload/label btn
@@ -40,7 +47,7 @@ function get_dataset_num(effect_num, total_num){
 
 // Every check dataset is upload image
 function check_dataset(){
-    if (PRJ_INFO["front_project"]["total_img_num"]<1){
+    if (PRJ_INFO["total_img_nums"]<1){
         $("#graph_container").css("display","none");
         $("#null_dataset_container").css("display","flex");
     };
@@ -321,19 +328,21 @@ function filter_small_img(class_name){
 
 // Get all image
 function get_all_image(){
-    if (ITER_NAME == undefined){
-        iteration = "workspace";
-    }
-    else{
-        iteration = ITER_NAME;
-    };
-    let front_param = {"iteration":iteration, "class_name":"All"};
-    let img_info = filter_dataset_api(MAIN_UUID, front_param);
-    // Clean old image
-    $(`#small_img_container`).html("");
-    // Show new image
-    for (let img of img_info["img_path"]){
-        show_small_img(img);
+    if (PRJ_INFO["total_img_nums"]>0){
+        if (ITER_NAME == undefined){
+            iteration = "workspace";
+        }
+        else{
+            iteration = ITER_NAME;
+        };
+        let front_param = {"iteration":iteration, "class_name":"All"};
+        let img_info = filter_dataset_api(MAIN_UUID, front_param);
+        // Clean old image
+        $(`#small_img_container`).html("");
+        // Show new image
+        for (let img of img_info["img_path"]){
+            show_small_img(img);
+        };
     };
 };
 
@@ -520,7 +529,7 @@ function append_img_show_cls(class_name, num, parent){
     if (TYPE_NAME == "object_detection"){
         COLOR_BAR = get_color_bar_api();
         // Get index of all classes
-        cls_idx = Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(class_name);
+        cls_idx = Object.keys(ALL_CLASSES_API["classes_num"]).indexOf(class_name);
         cls_idx = parseInt(cls_idx+1);
         color = COLOR_BAR[parseInt(cls_idx)]
         style = `border-left: 3px solid ${color};`;

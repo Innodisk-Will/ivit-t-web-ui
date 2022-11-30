@@ -179,20 +179,26 @@ function training_init_curve(){
 };
 
 // Socket graph
-function socket_graph(){
+function socket_curve(){
     // Graph info
-    socket.on('graph_data', function(msg){  
+    socket.on('curve', function(msg){  
         // Aviod main train panel
-        if (MAIN_PAGE=="model" && ITER_NAME == PRJ_INFO["training_info"]["iteration"]){
-            if (msg.includes("precision")){
-                $("#metrics_container").css("display","flex");
-                metrics_data_process(JSON.parse(msg));
-                // Allow evaluate can upload
-                $("#eval_chose_file_2").removeAttr("disabled");
-            }
-            else{
-                curve_updata(JSON.parse(msg));
-            };
+        if (MAIN_PAGE=="model" && ITER_NAME == TRAINING_STATUS[MAIN_UUID]["iteration"]['front_name']){
+            curve_updata(JSON.parse(msg));
+        };
+    });
+};
+
+// Socket graph
+function socket_metrics(){
+    // Graph info
+    socket.on('metrics', function(msg){  
+        // Aviod main train panel
+        if (MAIN_PAGE=="model" && ITER_NAME == TRAINING_STATUS[MAIN_UUID]["iteration"]['front_name']){
+            $("#metrics_container").css("display","flex");
+            metrics_data_process(JSON.parse(msg));
+            // Allow evaluate can upload
+            $("#eval_chose_file_2").removeAttr("disabled");
         };
     });
 };
@@ -204,14 +210,14 @@ function socket_graph(){
 // Log process
 function log_process(data){
     for (const key in data) {
-        var log = `${Object.keys(data[key])[0]}:${data[key][Object.keys(data[key])[0]]}, 
-                    ${Object.keys(data[key]['status'])[0]}:${data[key]['status'][Object.keys(data[key]['status'])[0]]},
-                    ${Object.keys(data[key]['status'])[1]}:${data[key]['status'][Object.keys(data[key]['status'])[1]]}`;
+        var log = `${Object.keys(data[key])[0]}: ${data[key][Object.keys(data[key])[0]]} ∥
+                    ${Object.keys(data[key]['status'])[0]}: ${ Math.round(data[key]['status'][Object.keys(data[key]['status'])[0]]*100)/100},
+                    ${Object.keys(data[key]['status'])[1]}: ${ Math.round(data[key]['status'][Object.keys(data[key]['status'])[1]]*100)/100}`;
 
         if (TYPE_NAME == "classification"){
             log = log+`,
-                    ${Object.keys(data[key]['status'])[2]}:${data[key]['status'][Object.keys(data[key]['status'])[2]]},
-                    ${Object.keys(data[key]['status'])[3]}:${data[key]['status'][Object.keys(data[key]['status'])[3]]}`;
+                    ${Object.keys(data[key]['status'])[2]}: ${ Math.round(data[key]['status'][Object.keys(data[key]['status'])[2]]*100)/100},
+                    ${Object.keys(data[key]['status'])[3]}: ${ Math.round(data[key]['status'][Object.keys(data[key]['status'])[3]]*100)/100}`;
         };
         // Append html
         var html = `<label id="log_text" class='log_font'>${log}</label>`;
@@ -230,21 +236,14 @@ function socket_log(){
         // Append html
         var html = `<label id="log_text" class='log_font'>${msg}</label>`;
         // Aviod main train panel
-        if (MAIN_PAGE=="model" && ITER_NAME == PRJ_INFO["training_info"]["iteration"]){
+        if (MAIN_PAGE=="model" && ITER_NAME == TRAINING_STATUS[MAIN_UUID]["iteration"]['front_name']){
             $(`#log_container`).append(html);
         };
-  
         // Settting scroll
         scroll_bottom("log_container");
         // Ending process
-        if (msg.includes("Trained.")){
-            console.log("Get metrics");
-            // Get metrics
-            get_metrics_api(MAIN_UUID);
-        }
-        // Ending process
         if (msg.includes("Ending...")){
-            console.log("The end..............");
+            console.log("The end...");
             // Refresh variable
             refresh_variable();
             // Change train btn
@@ -256,7 +255,7 @@ function socket_log(){
             open_eval_export();
         }        
         else if (msg.includes("out of memory")){
-            console.log("out of memory..............")
+            console.log("out of memory...")
             // Refresh variable
             refresh_variable();
             // Change train btn
@@ -264,6 +263,9 @@ function socket_log(){
             $("#train_action").attr("onclick","open_train_mkpopup()");
             // Tip out of memory
             alert("The batch size is large, GPU is out of memory.");
+            // Refresh panel
+            number = parseInt(ITER_NAME.split('iteration')[1])-1
+            window.location.replace(MAIN_HREF+"&"+`iteration${number}`);
             // Refresh panel
             // setTimeout('myrefresh()',500);
         };
@@ -294,8 +296,8 @@ function scroll_bottom(id) {
 function model_info_process(data){
     // Information
     $("#type_val").text(TYPE_NAME);
-    $("#platform_val").text(PRJ_INFO["front_project"]["platform"]);
-    $("#dataset_val").text(data["effect_img_num"]);
+    $("#platform_val").text(PRJ_INFO["platform"]);
+    $("#dataset_val").text(data["effect_img_nums"]);
     $("#method_val").text(data["training_method"]);
     // Time processing
     let min = parseInt(parseInt(data["spend_time"])/60);
@@ -303,7 +305,7 @@ function model_info_process(data){
     $("#time_val").text(min+"m "+sec+"s");
     // Parameter
     $("#model_val").text(data["model"]);
-    $("#gpu_val").text(data["GPU"]).ready(function(){
+    $("#gpu_val").text(data["gpu"]).ready(function(){
         // Check project name overflow to marquee
         hover_marquee(`gpu_val`);
     });
@@ -317,7 +319,7 @@ function socket_remaining_time(){
     // Remaining_time
     socket.on('remaining_time', function(msg){
         // Aviod main train panel
-        if (MAIN_PAGE=="model" && ITER_NAME == PRJ_INFO["training_info"]["iteration"]){
+        if (MAIN_PAGE=="model" && ITER_NAME == TRAINING_STATUS[MAIN_UUID]["iteration"]['front_name']){
             if (msg != "0"){
                 $(`#time_text`).text("Remaining time");
                 // Time processing
@@ -335,7 +337,7 @@ function socket_spend_time(){
     // Spend_time
     socket.on('spend_time', function(msg){
         // Aviod main train panel
-        if (MAIN_PAGE=="model" && ITER_NAME == "iteration"+PRJ_INFO["front_project"]["iteration"]){
+        if (MAIN_PAGE=="model" && ITER_NAME == TRAINING_STATUS[MAIN_UUID]["iteration"]['front_name']){
             $(`#time_text`).text("Spend time");
             // Time processing
             let min = parseInt(parseInt(msg)/60);
@@ -396,7 +398,7 @@ function upload_eval_img(files){
         let loading_html =`<div id="loader_container" class="loader_container_eval"><div class="loader" style="margin:0px;font-size: 12px;">Loading...</div></div>`
         $("#evalimage_outside_container").append(loading_html).ready(function(){
             // Evaluate
-            let front_param = {"iteration":ITER_NAME};
+            let front_param = {"iteration":ITER_NAME, "threshold":0.5};
             EVAL_RESULT = evaluate_api(MAIN_UUID, front_param);
             if (Object.keys(EVAL_RESULT["detections"]).length>0){
                 // Remove loading

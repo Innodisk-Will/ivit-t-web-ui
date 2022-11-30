@@ -9,7 +9,6 @@ function load_exist_iter(uuid){
     let total = 6;
     // Create 6 div
     let html = iter_btn_html(total)
-    
     // Append to HTML
     $("#iter_container").append(html).ready(function(){
         // Check url and other action
@@ -84,7 +83,6 @@ function iter_btn_html(total){
 function check_url_iter(total){
     // Get total_child length
     let iter_len= FOlDER_LIST["folder_name"].length;
-
     // Check iteration of url
     if (ITER_NAME != undefined){
         // Get iter number
@@ -92,6 +90,7 @@ function check_url_iter(total){
         fill_iter_div(iter_len, iter_num, total);
     }
     else{
+        // console.log(iter_len, 0, total)
         fill_iter_div(iter_len, 0, total);
         // Show W css
         if (MAIN_PAGE=="dataset"){

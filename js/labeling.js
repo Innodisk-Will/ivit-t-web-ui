@@ -53,32 +53,17 @@ function init_draw_box(bbox){
 ///////////////////////////////// EVALUATE /////////////////////////////////////
 
 // Filter evaluate result
-function filter_eval(img_name, thresh=0.5){
+function filter_eval(img_name){
     // Filter
     let eval_img_info = EVAL_RESULT["detections"][img_name];
     // Clean global variable
     FILTER_RESULT = []
-
+    // Append eval in FILTER_RESULT
+    for (let eval_val of eval_img_info){
+        FILTER_RESULT.push(eval_val);
+    };
     if (TYPE_NAME == "object_detection"){
-        // For loop to val
-        for (let eval_val of eval_img_info){
-            let confidence = eval_val["confidence"];
-            // 0~100
-            if (confidence>thresh*100){
-                FILTER_RESULT.push(eval_val);
-            };
-        };
         draw_eval_box();
-    }
-    else{
-        // For loop to val
-        for (let eval_val of eval_img_info){
-            let confidence = eval_val["score"];
-            // 0~1
-            if (confidence>thresh){
-                FILTER_RESULT.push(eval_val);
-            };
-        };
     };
     // Appned log to div
     eval_log("eval_reslut");
@@ -92,7 +77,10 @@ function draw_eval_box(){
         // Get box
         let box = FILTER_RESULT[index]["bbox"]
         // Get class index in all_class
-        let cls_idx = parseInt(Object.keys(PRJ_INFO["front_project"]["classes_num"]).indexOf(FILTER_RESULT[index]["class"]));
+        let set_iter_name = (ITER_NAME == undefined) ? "workspace" : ITER_NAME
+        let front_param = {"iteration":set_iter_name}
+        ALL_CLASSES_API = iter_cls_num_api(MAIN_UUID, front_param);
+        let cls_idx = parseInt(Object.keys(ALL_CLASSES_API["classes_num"]).indexOf(FILTER_RESULT[index]["class"]));
 
         // Convert color
         let color = COLOR_BAR[parseInt(cls_idx)+1];
@@ -481,10 +469,8 @@ function cls_change_class(){
     else{
         class_name = "Unlabeled";
     };
-
     // Change saving action
     save_action("saving")
-
     // Backend
     let src_path = $("#large_img").attr("src").split('/');
     let img_name = src_path[src_path.length - 1];
@@ -493,8 +479,6 @@ function cls_change_class(){
                         "class_name":$("#input_txt").val()
                     };
     let edit_result = edit_img_class_api(MAIN_UUID, front_param);
-    
-
     // Change class
     if (edit_result.includes("Change")){
         // Save is finished 
@@ -519,7 +503,19 @@ function cls_change_class(){
             // Clear input value
             // $("#input_txt").val("");
         });
+        // Change small image src
+        change_src_cls_img(class_name, $("#input_txt").val());
     };
+};
+
+function change_src_cls_img(org_cls, new_cls){
+    console.log(org_cls, new_cls)
+    // let small_list = $('#label_smallimg_container').children();
+    let selector =  $("#label_smallimg_container div[style*='border: 2px solid rgb(230, 31, 35);']");
+    let img = $(selector[0]).children()[0];
+    let org_src_list = $(img).attr("src").split("workspace")
+    let new_src = org_src_list[1].replace(org_cls, new_cls)
+    $(img).attr("src", org_src_list[0] + "workspace" + new_src)
 };
 
 // Change object_detection class action

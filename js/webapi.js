@@ -13,7 +13,7 @@ function init_prj_api(){
         async : false,
         success: function (data, textStatus, xhr) {
             if (data != null){
-                console.log("init_prj_api:",data)
+                console.log("init_prj_api:", data)
                 result=data;
             }
             else{
@@ -40,7 +40,6 @@ function get_allprj_info_api(){
         async : false,
         success: function (data, textStatus, xhr) {
             if (data != null){
-                console.log("get_allprj_info_api:",data)
                 result=data;
             }
             else{
@@ -187,7 +186,6 @@ function get_dataset_api(uuid){
         async : false,
         success: function (data, textStatus, xhr) {
             if (data != null){
-                console.log("get_dataset:",data)
                 result=data;
             }
             else{
@@ -237,7 +235,7 @@ function iter_cls_num_api(uuid, front_param){
     $.ajax({
         data: JSON.stringify(front_param),
         dataType: "json",
-        url:`${SCRIPT_ROOT}/${uuid}/iter_cls_num`,
+        url:`${SCRIPT_ROOT}/${uuid}/iter_class_num`,
         method: "POST",
         contentType: "application/json",
         async : false,
@@ -329,12 +327,12 @@ function get_img_cls_api(type, path){
     var result=null;
     $.ajax({
         dataType: "json",
-        url:`${SCRIPT_ROOT}/get_img_cls/${type}/${path}`,
+        url:`${SCRIPT_ROOT}/get_img_cls_nums/${type}/${path}`,
         method: "GET",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            console.log("get_img_cls:",data)
+            // console.log("get_img_cls:",data)
             result=data;
         },
         error: function (jqXHR, exception) {
@@ -595,6 +593,27 @@ function check_best_model_api(uuid, front_param){
 ///////////////////////////////// TRAIN /////////////////////////////////////
 ///////////////////////////////// TRAIN /////////////////////////////////////
 
+// Get task of training -> GET
+function get_training_task_api(){
+    var result=null;
+    $.ajax({
+        dataType: "json",
+        url:`${SCRIPT_ROOT}/get_training_task`,
+        method: "GET",
+        contentType: "application/json",
+        async : false,
+        success: function (data, textStatus, xhr) {
+            result=data;
+        },
+        error: function (jqXHR, exception) {
+            console.log(jqXHR["responseJSON"]);
+            console.log(exception);
+            result=jqXHR["responseJSON"];
+        }
+    });
+    return result;
+};
+
 // Get method of training -> GET
 function get_method_training_api(){
     var result=null;
@@ -729,28 +748,6 @@ function start_training_api(uuid){
     $.ajax({
         dataType: "json",
         url:`${SCRIPT_ROOT}/${uuid}/start_training`,
-        method: "GET",
-        contentType: "application/json",
-        async : false,
-        success: function (data, textStatus, xhr) {
-            result=data;
-        },
-        error: function (jqXHR, exception) {
-            console.log(jqXHR["responseJSON"]);
-            console.log(exception);
-            result=jqXHR["responseJSON"];
-        }
-    });
-    return result;
-};
-
-// Get metrics api -> GET
-// Start training api -> GET
-function get_metrics_api(uuid){
-    var result=null;
-    $.ajax({
-        dataType: "json",
-        url:`${SCRIPT_ROOT}/${uuid}/get_metrics`,
         method: "GET",
         contentType: "application/json",
         async : false,

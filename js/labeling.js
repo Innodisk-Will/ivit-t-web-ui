@@ -127,7 +127,7 @@ function init_smallimg_container(){
     for (let i=0; i < total; i++){
         let html = `
                     <div id="label_img_${i}" class="label_smallimg" style="display: none;">
-                        <img id="image_${i}" class="show_image" loading="lazy">
+                        <img id="image_${i}" class="show_image lazyload" loading="lazy">
                     </div>
                 `;
         $("#label_smallimg_container").append(html);

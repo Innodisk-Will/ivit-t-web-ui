@@ -355,7 +355,7 @@ function show_small_img(img_path){
     img_path = `${SCRIPT_ROOT}/display_img/${new_path}`;
     html=`
         <div id="image_div" class="small_img_container">
-            <img id="image" src="${img_path}" class="show_image" loading="lazy">
+            <img id="image" src="${img_path}" class="show_image lazyload" loading="lazy">
         </div>
         `;
     $(`#small_img_container`).append(html);

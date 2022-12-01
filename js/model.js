@@ -420,7 +420,7 @@ function eval_trans_html(){
                         arrow_back_ios
                     </span>
                 </div>
-                <img id="eval_img" class="show_image" loading="lazy">
+                <img id="eval_img" class="show_image lazyload" loading="lazy">
                 <div id="eval_expand_more" class="expand_img_container expand_btn_container" onclick="eval_expand_btn('more')">
                     <span class="material-symbols-outlined expand_btn_css user-select-none">
                         arrow_forward_ios

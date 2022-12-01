@@ -1,6 +1,6 @@
 // Web API IP
 const DOMAIN = '172.16.92.124';
-const port = '6530';
+const port = '6550';
 var SCRIPT_ROOT = `http://${DOMAIN}:${port}`;
 
 ///////////////////////////////// MARQUEE /////////////////////////////////////
@@ -337,7 +337,7 @@ function start_training(){
 function check_training_stats(){
     TRAINING_STATUS = get_training_task_api();
     console.log("TRAINING_STATUS:", TRAINING_STATUS)
-    if (Object.keys(TRAINING_STATUS).length>0){
+    if (Object.keys(TRAINING_STATUS).includes(MAIN_UUID)){
         if (TRAINING_STATUS[MAIN_UUID]["status"]){
             $("#train_action").val("Stop");
             $("#train_action").attr("onclick","open_stop_mkpopup()");

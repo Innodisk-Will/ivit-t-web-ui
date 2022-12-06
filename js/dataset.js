@@ -14,7 +14,7 @@ function setting_dataset(){
     }
     let front_param = {"iteration":set_iter_name}
     ALL_CLASSES_API = iter_cls_num_api(MAIN_UUID, front_param);
-    if (typeof ALL_CLASSES_API === "string"){
+    if (ALL_CLASSES_API["All"] === 0){
         check_dataset();
     }
     else{

@@ -4,6 +4,8 @@
 
 // Setting dataset numbers
 function setting_dataset(){
+    // Setting show type
+    $("#type").text(TYPE_NAME);
     if (ITER_NAME == undefined){
         set_iter_name = "workspace"
     }
@@ -27,7 +29,7 @@ function setting_dataset(){
                             ALL_CLASSES_API["classes_num"],
                             ALL_CLASSES_API["All"],);
         // Setting show dataset number
-        get_dataset_num(PRJ_INFO["effect_img_nums"], PRJ_INFO["total_img_nums"]);
+        // get_dataset_num(PRJ_INFO["effect_img_nums"], PRJ_INFO["total_img_nums"]);
     };
 };
 

@@ -328,13 +328,20 @@ function filter_small_img(class_name){
 
 // Get all image
 function get_all_image(){
-    if (PRJ_INFO["total_img_nums"]>0){
-        if (ITER_NAME == undefined){
-            iteration = "workspace";
-        }
-        else{
-            iteration = ITER_NAME;
+    check = false
+    if (ITER_NAME == undefined){
+        iteration = "workspace";
+        if (PRJ_INFO["total_img_nums"]>0){
+            check = true
         };
+    }
+    else{
+        iteration = ITER_NAME;
+        if (PRJ_INFO["iteration"]>0){
+            check = true
+        };
+    };
+    if (check){
         let front_param = {"iteration":iteration, "class_name":"All"};
         let img_info = filter_dataset_api(MAIN_UUID, front_param);
         // Clean old image

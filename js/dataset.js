@@ -219,7 +219,7 @@ function give_cls_txt(num, index){
 
 // Listen onclick cls btn
 function onclick_listener_btn(){
-    $( document ).on("click",function(e) {
+    $( document ).on({"click.classimages":function(e) {
         // Class btn
         if  (e.target["id"].includes("class")){
             id_class(e);
@@ -232,7 +232,7 @@ function onclick_listener_btn(){
 
         // Stop event
         e.stopPropagation();
-    });
+    }});
 };
 
 // Id has "class" action
@@ -282,11 +282,13 @@ function remove_select_cls(){
     let selector =  $("#cls_container div[style*='border: 2px solid rgb(230, 31, 35);']");
     // exclude have hidden problem
     if (selector[0] != undefined && selector[0]["style"]["visibility"] == "hidden"){
-        $(selector[0]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        // $(selector[0]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        $(selector[0]).css( "border","");
         $(selector[0]).attr( "style","visibility:hidden;" );
     }
     else{
-        $(selector[0]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        // $(selector[0]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        $(selector[0]).css( "border","");
     };
     let childs = $(selector[0]).children();
     $(childs[0]).removeAttr("style");
@@ -301,16 +303,20 @@ function remove_select_cls(){
 function remove_select_img(index=0){
     if ($("#label_div").children().length>0){
         let selector =  $("#label_smallimg_container div[style*='border: 2px solid rgb(230, 31, 35);']");
-        $(selector[index]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        // $(selector[index]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        $(selector[index]).css( "border","");
     }
     else{
         let selector =  $("#small_img_container div[style*='border: 2px solid rgb(230, 31, 35);']");
-        $(selector[index]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        // $(selector[index]).removeAttr( "style","border: 2px solid rgb(230, 31, 35);" );
+        $(selector[index]).css( "border","");
     }
 };
 
 // Filter small image
 function filter_small_img(class_name){
+    // Update new array
+    ALL_PAHT = []
     if (ITER_NAME == undefined){
         iteration = "workspace";
     }
@@ -330,6 +336,8 @@ function filter_small_img(class_name){
 
 // Get all image
 function get_all_image(){
+    // Update new array
+    ALL_PAHT = []
     check = false
     if (ITER_NAME == undefined){
         iteration = "workspace";
@@ -339,9 +347,7 @@ function get_all_image(){
     }
     else{
         iteration = ITER_NAME;
-        if (PRJ_INFO["iteration"]>0){
-            check = true
-        };
+        check = true
     };
     if (check){
         let front_param = {"iteration":iteration, "class_name":"All"};
@@ -362,12 +368,185 @@ function show_small_img(img_path){
     let text_path = path_split.toString();
     let new_path = text_path.replace(/,/g, '/');
     img_path = `${SCRIPT_ROOT}/display_img/${new_path}`;
-    html=`
-        <div id="image_div" class="small_img_container">
-            <img id="image" src="${img_path}" class="show_image lazyload" loading="lazy">
-        </div>
-        `;
+    [id_name, org_name, cls] = get_src_info(path_split);
+    ALL_PAHT.push([id_name, org_name, cls]);
+    if (ITER_NAME == undefined){
+        html=`
+                <div id="image_div" class="small_img_container">
+                    <img id="image" src="${img_path}" class="show_image lazyload" loading="lazy">
+                    <span id=${id_name}_${cls} class="material-symbols-outlined selectbox_css selectbox_null" onclick="select_img_action('${id_name}','${org_name}','${cls}')">
+                        radio_button_unchecked
+                    </span>
+                </div>
+            `;
+    }
+    else{
+        html=`
+                <div id="image_div" class="small_img_container">
+                    <img id="image" src="${img_path}" class="show_image lazyload" loading="lazy">
+                </div>
+            `;
+    };
     $(`#small_img_container`).append(html);
+};
+
+function get_src_info(path_split){
+    id_name = path_split[path_split.length-1].split(".")[0]
+    org_name = path_split[path_split.length-1]
+    cls = path_split[path_split.length-2] != "" ? path_split[path_split.length-2] : "Unlabled";
+    return [id_name, org_name, cls]
+}
+///////////////////////////////// SELECT /////////////////////////////////////
+///////////////////////////////// SELECT /////////////////////////////////////
+///////////////////////////////// SELECT /////////////////////////////////////
+
+// Select action
+function select_img_action(id, img_name, cls){
+    if ($(`#${id}_${cls}`).html().includes("check_circle")){
+        // change new icon
+        $(`#${id}_${cls}`).html("radio_button_unchecked");
+        $(`#${id}_${cls}`).removeAttr("style");
+        // Removed opacity
+        $(`#${id}_${cls}`).parent().css("opacity","");
+        // Removed select img
+        SELECT_IMGS = SELECT_IMGS.filter(function(el) { return el[cls] != img_name;});
+        // Prevent event
+        if (SELECT_IMGS.length == 0){
+            stop_other_action("remove");
+        };
+        update_sel_count();
+    }
+    else{
+        // change new icon
+        $(`#${id}_${cls}`).html("check_circle")
+        $(`#${id}_${cls}`).attr("style","font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' -25, 'opsz' 40;color: #57b8ff;")
+        // Add opacity
+        parent =  $(`#${id}`).parent();
+        old = parent.attr("style");
+        if (old == undefined){
+            old = "";
+        };
+        parent.attr("style",old + "opacity:0.7;");
+        // Collect select img
+        SELECT_IMGS.push({[cls]:img_name})
+        // Prevent event
+        if (SELECT_IMGS.length == 1){
+            stop_other_action("stop");
+        };
+        update_sel_count();
+    };
+
+    if (ALL_PAHT.length == SELECT_IMGS.length){
+        $("#sel_all").val("Cancel");
+    }
+    else{
+        $("#sel_all").val("Select all");
+    };
+};
+
+// Stop other action(preview/filter stop)
+function stop_other_action(key){
+    if(key == "stop"){
+        $('.filter_cls_container').css("pointer-events","none");
+        // $('.filter_cls_container').css("cursor","not-allowed");
+        // Stop orginal action
+        $(document).off('click.classimages');
+        // Change new action
+        $( document ).on({"click.images":function(e) {
+            // img btn
+            if  (e.target["id"].includes("image")){
+                // DIV -> Child -> SRC
+                if (e.target["id"].includes("div")){
+                    path_split = $(e.target).children()[0]["src"].split("/");
+                } // IMAGE -> SRC
+                else{
+                    path_split = e.target["src"].split("/");
+                };
+                [id_name, org_name, cls] = get_src_info(path_split);
+                select_img_action(id_name, org_name, cls);
+            };
+            // Stop event
+            e.stopPropagation();
+        }});
+        // Count panel
+        $(".count_box_function_div").css("display","flex");
+
+    }
+    else{
+        $('.filter_cls_container').css("pointer-events","");
+        $('.filter_cls_container').css("cursor","");
+        $(document).off('click.images');
+        onclick_listener_btn();
+        // Remove Count panel
+        $(".count_box_function_div").css("display","none");
+        // Update select all
+        $("#sel_all").css("pointer-events","");
+    };
+};
+
+// Update select nubmer
+function update_sel_count(){
+    let sel_list =  $("#cls_container div[style*='border: 2px solid rgb(230, 31, 35);']")[0]['id'].split("_");
+    let idx = parseInt(sel_list[sel_list.length-1]);
+    var total = DATASET_CLASSES["values"][idx];
+    var count = SELECT_IMGS.length;
+    $('.count_bottom_div').text(`${count}/${total}`);
+};
+
+// Cancle action
+function cancle_sel_panal(){
+    // Remove Count panel
+    // $(".count_box_function_div").css("display","none");
+    // Cancle all select
+    for (let obj of SELECT_IMGS){
+        img_name = Object.values(obj)[0]
+        cls = Object.keys(obj)[0]
+        id = img_name.split(".")[0]
+        select_img_action(id, img_name, cls)
+    };
+};
+
+// Select all
+function select_all(){
+    all_select = ALL_PAHT.length == SELECT_IMGS.length
+    Promise.all(ALL_PAHT.map(val =>  stauts_select(val, all_select)))
+    // for (let list of ALL_PAHT){
+    //     var status = SELECT_IMGS.filter(function(el) { return el[list[2]] == list[1];}).length == 0
+
+    //     if (status || all_select){
+    //         select_img_action(list[0], list[1], list[2]);
+    //         if (ALL_PAHT.length == SELECT_IMGS.length){
+    //             $("#sel_all").val("Cancel");
+    //         }
+    //         else{
+    //             $("#sel_all").val("Select all");
+    //         };
+    //     };
+    // };;
+};
+
+function stauts_select(list, all_select){
+    const promises = new Promise((resolve) => {
+        var status = SELECT_IMGS.filter(function(el) { return el[list[2]] == list[1];}).length == 0
+        if (status || all_select){
+            select_img_action(list[0], list[1], list[2]);
+
+            resolve(true);
+        };
+    });
+    return promises
+};
+
+function getScrollTop(){
+    $(window).scroll(function () {
+        var scrollVal = $(this).scrollTop();
+        if (scrollVal > 30){
+            $(".count_box_function_div").css("bottom","10px");
+        }
+        else{
+            $(".count_box_function_div").css("bottom","");
+        }
+    });
 };
 
 ///////////////////////////////// PREVIEW /////////////////////////////////////

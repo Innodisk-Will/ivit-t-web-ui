@@ -50,7 +50,7 @@
                                 </button>
                                 <ul id="more_drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><a id="aug_prj" class="dropdown-item" onclick="">Augmentation</a></li>
-                                    <li><a id="select_prj" class="dropdown-item" onclick="">Select</a></li>
+                                    <!-- <li><a id="select_prj" class="dropdown-item" onclick="">Select</a></li> -->
                                 </ul>
                                 <input id="upload_btn" type="button" class="all_button" value="Upload" onclick="open_upload_mkpopup()">
                             </div>
@@ -106,6 +106,25 @@
                         <div class="null_text">
                             Please upload images!!!
                         </div>
+                    </div>
+                </div>
+                <div class="count_box_function_div">
+                    <div class="count_row_div">
+                        <div class="count_top_div">
+                            <div class="count_title_div">Selected</Select></div>
+                            <div id="sel_all_btn" class="count_sel_all_div">
+                                <input id="sel_all" type="button" class="all_button count_sel_all_btn" value="Select all" onclick="select_all()">
+                            </div>
+                        </div>
+                        <div class="count_bottom_div">0/0</div>
+                    </div>
+                    <div class="function_row_div">
+                        <div>
+                            <input id="del_action" type="button" class="all_button" value="Delete" onclick="">
+                        </div>
+                        <span class="material-symbols-outlined fuction_cancel" onclick="cancle_sel_panal()">
+                            cancel
+                        </span>
                     </div>
                 </div>
             </div>
@@ -212,6 +231,8 @@
         var IMAGE_SIZE = {};
         var COLOR_BAR = null;
         var UPLOAD_TEMP = null;
+        var SELECT_IMGS = [];
+        var ALL_PAHT = [];
         const socket = io.connect(`${SCRIPT_ROOT}/${MAIN_UUID}/log`);
         // var SAVE_INFO={"image_size":{}, "save_rect":[]};
         $( document ).ready(function() {
@@ -226,6 +247,7 @@
             check_preview_expand();
             check_type_class_form();
             check_training_stats();
+            getScrollTop();
         });
     </script>
 </html>

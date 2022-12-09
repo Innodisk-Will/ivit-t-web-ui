@@ -2,9 +2,10 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
-    position: fixed;
+    /* position: fixed; */
     height: 100vh;
     width: 100%;
+    overflow: auto;
 }
 
 .left_iter_container{
@@ -97,9 +98,10 @@
     display: flex;
     justify-content: center;
     width: -webkit-fill-available;
-    overflow: auto;
+    /* overflow-x: auto; */
     width: 100%;
-    width: -moz-available;
+    position: relative;
+    /* width: -moz-available; */
 }
 
 .content_container{

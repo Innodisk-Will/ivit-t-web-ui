@@ -549,7 +549,7 @@ function export_platform(){
     });
 
     // Setting default parameter
-    $('#ep_list').val(PRJ_INFO["front_project"]["platform"]);
+    $('#ep_list').val(PRJ_INFO["platform"]);
 };
 
 // get export platform

@@ -447,8 +447,10 @@ function select_img_action(id, img_name, cls){
 // Stop other action(preview/filter stop)
 function stop_other_action(key){
     if(key == "stop"){
-        $('.filter_cls_container').css("pointer-events","none");
-        // $('.filter_cls_container').css("cursor","not-allowed");
+        $('#cls_container').css("pointer-events","none");
+        $('#expand_cls_less').css("pointer-events","none");
+        $('#expand_cls_more').css("pointer-events","none");
+        $('.filter_cls_container').css("cursor","not-allowed");
         // Stop orginal action
         $(document).off('click.classimages');
         // Change new action
@@ -473,7 +475,9 @@ function stop_other_action(key){
 
     }
     else{
-        $('.filter_cls_container').css("pointer-events","");
+        $('#cls_container').css("pointer-events","");
+        $('#expand_cls_less').css("pointer-events","");
+        $('#expand_cls_more').css("pointer-events","");
         $('.filter_cls_container').css("cursor","");
         $(document).off('click.images');
         onclick_listener_btn();
@@ -549,6 +553,38 @@ function getScrollTop(){
     });
 };
 
+///////////////////////////////// DELETE_IMAGE /////////////////////////////////////
+///////////////////////////////// DELETE_IMAGE /////////////////////////////////////
+///////////////////////////////// DELETE_IMAGE /////////////////////////////////////
+
+function change_delete_mkpop(){
+    $("#deliter_label").text("Delete images");
+    $("#del_content").text("Are you sure you want to delete these images?");
+    $("#delete_btn").attr("onclick","delete_imgs()")
+    open_deliter_mkpopup();
+};
+
+function delete_imgs(){
+    if (ALL_PAHT.length == SELECT_IMGS.length){
+        delete_all_img_api(MAIN_UUID);
+        // Refresh panel
+        setTimeout('myrefresh()',50);
+    }
+    else{
+        var front_param = {"image_info":{ }}
+        for (let val of SELECT_IMGS){
+            if (! Object.keys(front_param["image_info"]).includes(Object.keys(val)[0])){
+                front_param["image_info"][Object.keys(val)[0]]=[Object.values(val)[0]]
+            }
+            else{
+                front_param["image_info"][Object.keys(val)[0]].push(Object.values(val)[0])
+            };
+        };
+        delete_img_api(MAIN_UUID, front_param);
+        // Refresh panel
+        setTimeout('myrefresh()',50);
+    };
+};
 ///////////////////////////////// PREVIEW /////////////////////////////////////
 ///////////////////////////////// PREVIEW /////////////////////////////////////
 ///////////////////////////////// PREVIEW /////////////////////////////////////

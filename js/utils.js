@@ -371,7 +371,7 @@ function stop_training(){
         else{
             alert("This training is not exist best model!");
             number = parseInt(ITER_NAME.split('iteration')[1])-1
-            window.location.replace(MAIN_HREF+"&"+`iteration${number}`);
+            window.location.replace(HREF[0].split("?")[0] + "?dataset&" + MAIN_UUID + "&" + PRJ_NAME + "&" + TYPE_NAME);
         };
         // Change btn and other status
         $("#train_action").val("Train");

@@ -22,12 +22,6 @@ A user interfaces to the training model. This UI is easy to operate for train mo
 - Running ```iVIT-T Web API```
 - [Tutorial](https://github.com/Innodisk-Will/ivit-t.git)
 
-### Build docker images
-```shell
-sudo chmod 777 ./docker
-sudo ./docker/build.sh
-```
-
 ### Run container
 ```shell
 sudo ./docker/run.sh -p 6530

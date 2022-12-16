@@ -256,8 +256,6 @@ function socket_log(){
         }        
         else if (msg.includes("out of memory")){
             console.log("out of memory...")
-            // Refresh variable
-            refresh_variable();
             // Change train btn
             $("#train_action").val("Train");
             $("#train_action").attr("onclick","open_train_mkpopup()");
@@ -265,9 +263,12 @@ function socket_log(){
             alert("The batch size is large, GPU is out of memory.");
             // Refresh panel
             number = parseInt(ITER_NAME.split('iteration')[1])-1
-            window.location.replace(MAIN_HREF+"&"+`iteration${number}`);
+            setTimeout(window.location.replace(HREF[0].split("?")[0] + "?dataset&" + MAIN_UUID + "&" + PRJ_NAME + "&" + TYPE_NAME), 1000);
+        }
+        else if (msg.includes("No best model")){
             // Refresh panel
-            // setTimeout('myrefresh()',500);
+            number = parseInt(ITER_NAME.split('iteration')[1])-1
+            setTimeout(window.location.replace(HREF[0].split("?")[0] + "?dataset&" + MAIN_UUID + "&" + PRJ_NAME + "&" + TYPE_NAME), 1000);
         };
     });
 };

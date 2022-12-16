@@ -1,6 +1,6 @@
 // Web API IP
 const DOMAIN = '172.16.92.124';
-const port = '6550';
+const port = '6530';
 var SCRIPT_ROOT = `http://${DOMAIN}:${port}`;
 
 ///////////////////////////////// MARQUEE /////////////////////////////////////

@@ -27,7 +27,7 @@ function setting_dataset(){
         // Set filter classes
         filter_classes_btn(ALL_CLASSES_API["All"],
                             ALL_CLASSES_API["classes_num"],
-                            ALL_CLASSES_API["All"],);
+                            ALL_CLASSES_API["Unlabeled"],);
         // Setting show dataset number
         // get_dataset_num(PRJ_INFO["effect_img_nums"], PRJ_INFO["total_img_nums"]);
     };
@@ -74,14 +74,14 @@ function close_deliter_mkpopup(){
 ///////////////////////////////// FILTER CLASSES BUTTON /////////////////////////////////////
 
 // Show filter classes btn
-function filter_classes_btn(all, classes, effect){
+function filter_classes_btn(all, classes, unlabeled){
     // Append all btn
     DATASET_CLASSES["keys"].push("All");
     DATASET_CLASSES["values"].push(all);
     // Append Unlabeled
-    if (all-effect>0){
+    if (unlabeled>0){
         DATASET_CLASSES["keys"].push("Unlabeled");
-        DATASET_CLASSES["values"].push(all-effect);
+        DATASET_CLASSES["values"].push(unlabeled);
     };
     // Append individual class
     for (let cls_name of Object.keys(classes)){

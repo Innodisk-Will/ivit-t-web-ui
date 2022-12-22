@@ -303,7 +303,7 @@ function model_info_process(data){
     // Time processing
     let min = parseInt(parseInt(data["spend_time"])/60);
     let sec = parseInt(data["spend_time"])%60;
-    $("#time_val").text(min+"m "+sec+"s");
+    min_sec_text(min, sec);
     // Parameter
     $("#model_val").text(data["model"]);
     $("#gpu_val").text(data["gpu"]).ready(function(){
@@ -313,6 +313,15 @@ function model_info_process(data){
     $("#input_shape_val").text(data["input_shape"]);
     $("#batchsize_val").text(data["batch_size"]);
     $("#step_val").text(data["step"]);
+};
+
+function min_sec_text(min, sec){
+    if (isNaN(min) || isNaN(sec)){
+        $("#time_val").text("Calculating");
+    }
+    else{
+        $("#time_val").text(min+"m "+sec+"s");
+    };
 };
 
 // Socket training remaining_time
@@ -326,8 +335,7 @@ function socket_remaining_time(){
                 // Time processing
                 let min = parseInt(parseInt(msg)/60);
                 let sec = parseInt(msg)%60;
-                $("#time_val").text(min+"m "+sec+"s");
-                // $('#time_val').text(msg+'s');
+                min_sec_text(min, sec);
             };
         };  
     });
@@ -343,7 +351,7 @@ function socket_spend_time(){
             // Time processing
             let min = parseInt(parseInt(msg)/60);
             let sec = parseInt(msg)%60;
-            $("#time_val").text(min+"m "+sec+"s");
+            min_sec_text(min, sec);
         }; 
     });
 };

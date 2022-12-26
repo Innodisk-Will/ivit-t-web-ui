@@ -6109,6 +6109,7 @@ textarea.form-control-lg {
   height: 100%;
   background-color: rgba(0,0,0,0.4);
   margin: auto;
+  overflow: auto;
 }
 
 .mkpopup_content_outside {

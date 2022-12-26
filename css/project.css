@@ -8,6 +8,7 @@
     flex-direction: column;
     align-content: center;
     justify-content: flex-start;
+    margin-bottom: 36px;
 }
 
 .all_prj_title_container{

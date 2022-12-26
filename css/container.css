@@ -5,7 +5,7 @@
     /* position: fixed; */
     height: 100vh;
     width: 100%;
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 .left_iter_container{
@@ -98,10 +98,11 @@
     display: flex;
     justify-content: center;
     width: -webkit-fill-available;
-    /* overflow-x: auto; */
-    width: 100%;
+    overflow: auto;
+    /* width: 100%; */
     position: relative;
     /* width: -moz-available; */
+    min-width: 1200px;
 }
 
 .content_container{

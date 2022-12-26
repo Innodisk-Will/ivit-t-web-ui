@@ -297,7 +297,8 @@ function drop_folder_upload(files, i, TOTAL_UPLOAD){
         files[i] = files[i].filter((file)=> { 
             // Check file is null
             if (file.size === 0){
-                alert(` The size of ${file.name} is 0.`)
+                // alert(` The size of ${file.name} is 0.`)
+                console.log(` The size of ${file.name} is 0.`)
             };
             // Check file is type
             if (file.type != undefined){
@@ -333,7 +334,8 @@ function drop_file_upload(files, i, TOTAL_UPLOAD){
     for (let file of files[i]){
         // Check file is null    
         if (file.size === 0){
-            alert(` The size of ${file.name} is 0`)
+            // alert(` The size of ${file.name} is 0`)
+            console.log(` The size of ${file.name} is 0.`)
             // Exclude
             TOTAL_UPLOAD -= 1
         };

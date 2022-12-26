@@ -407,7 +407,7 @@ function upload_eval_img(files){
         let loading_html =`<div id="loader_container" class="loader_container_eval"><div class="loader" style="margin:0px;font-size: 12px;">Loading...</div></div>`
         $("#evalimage_outside_container").append(loading_html).ready(function(){
             // Evaluate
-            let front_param = {"iteration":ITER_NAME, "threshold":0.5};
+            let front_param = {"iteration":ITER_NAME, "threshold":0};
             EVAL_RESULT = evaluate_api(MAIN_UUID, front_param);
             if (Object.keys(EVAL_RESULT["detections"]).length>0){
                 // Remove loading

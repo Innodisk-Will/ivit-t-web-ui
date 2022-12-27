@@ -2703,7 +2703,8 @@ textarea.form-control-lg {
   justify-content: space-between;
   align-content: center;
   height: 60px;
-  width: 100%;
+  /* width: 150vw; */
+  min-width: 1248px;
   border-bottom: 1px rgb(0 0 0 / 10%) solid;
   background: #E61F23 0% 0% no-repeat padding-box;
   opacity: 1;
@@ -2717,7 +2718,7 @@ textarea.form-control-lg {
 .navbar > .container-xxl {
     margin-right: auto;
     margin-left: auto;
-    width: 1200px;
+    width: 1248px;
     display: flex;
     align-content: center;
     align-items: center;

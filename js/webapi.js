@@ -885,7 +885,7 @@ function convert_api(uuid, front_param){
     $.ajax({
         data: JSON.stringify(front_param),
         dataType: "json",
-        url:`${SCRIPT_ROOT}/${uuid}/start_convert`,
+        url:`${SCRIPT_ROOT}/${uuid}/start_converting`,
         method: "POST",
         contentType: "application/json",
         async : false,

@@ -583,12 +583,12 @@ function start_export(){
 function socket_export(){
     // convert log
     socket.on('convert_log', function(msg){  
-        if (msg.includes("Converted")){
+        if (msg.includes("Success")){
             // Remove loading
             remove_loader("export_containter");
             change_export();
         }
-        else if (msg.includes('not')){
+        else if (msg.includes('Failure')){
             alert(msg);
         };
     });

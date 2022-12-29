@@ -1,6 +1,6 @@
 // Web API IP
 const DOMAIN = '172.16.92.124';
-const port = '6550';
+const port = '6530';
 var SCRIPT_ROOT = `http://${DOMAIN}:${port}`;
 
 ///////////////////////////////// MARQUEE /////////////////////////////////////
@@ -360,7 +360,7 @@ function stop_training(){
         // Check best model
         let front_param = {"iteration":ITER_NAME};
         let exist_model = check_best_model_api(MAIN_UUID, front_param);
-        if (!exist_model.includes("not")){
+        if (typeof(exist_model) == "object"){
             // Refresh variable
             refresh_variable();
             // Open evaluate/export

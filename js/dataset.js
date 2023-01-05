@@ -565,7 +565,9 @@ function change_delete_mkpop(){
 };
 
 function delete_imgs(){
-    if (ALL_PAHT.length == SELECT_IMGS.length){
+    let selector =  $("#cls_container div[style*='border: 2px solid rgb(230, 31, 35);']");
+    let classes_name = $($(selector).children()[0]).text();
+    if (ALL_PAHT.length == SELECT_IMGS.length && classes_name == "All"){
         delete_all_img_api(MAIN_UUID);
         // Refresh panel
         setTimeout('myrefresh()',50);

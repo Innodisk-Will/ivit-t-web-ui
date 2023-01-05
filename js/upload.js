@@ -403,7 +403,7 @@ function add_prograssbar(name, i, length){
     // Append html to container
     prograss = `
                     <div class="upload_lr_container">
-                        <div class="upload_name_container">
+                        <div class="upload_name_container text-truncate">
                             <lable class="form_item_font">${name}</lable>
                         </div>
                         <div class="upload_pg_container">

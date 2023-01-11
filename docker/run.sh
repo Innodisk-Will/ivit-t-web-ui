@@ -68,27 +68,27 @@ BASE_NAME=$(cat ${CONF} | jq -r '.PROJECT')
 
 DOCKER_IMAGE="${USER}/${BASE_NAME}"
 CONTAINER_NAME="${BASE_NAME}"
-# ---------------------------------------------------------
-echo "Setting IP of webapi."
-python3 ./docker/get_domain.py -p ${port}
+# # ---------------------------------------------------------
+# echo "Setting IP of webapi."
+# # python3 ./docker/get_domain.py -p ${port}
 
-echo "Open Nginx service."
-
-# ---------------------------------------------------------
-# start service
-COMMAND="service nginx start"
+# # ---------------------------------------------------------
+# echo "Open Nginx service."
+# # start service
+# COMMAND="service nginx start"
 
 # ---------------------------------------------------------
 # Run container
 DOCKER_CMD="docker run \
 --name ${CONTAINER_NAME} \
 --rm -it \
---ipc=host \
--p ${WEB_PORT}:80 \
+--net=host \
+-e API_PORT=${port} \
 -v `pwd`:${WORKSPACE} \
 -w ${WORKSPACE} \
 -v /etc/localtime:/etc/localtime:ro \
-${DOCKER_IMAGE}:${TAG_VER} \"${COMMAND} && bash \""
+${DOCKER_IMAGE}:${TAG_VER}"
+# \"${COMMAND} && bash \""
 
 echo ""
 echo -e "Command: ${DOCKER_CMD}"

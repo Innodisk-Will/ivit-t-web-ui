@@ -1,7 +1,9 @@
 // Web API IP
-const DOMAIN = '172.16.92.124';
-const port = '6550';
-var SCRIPT_ROOT = `http://${DOMAIN}:${port}`;
+// const DOMAIN = '172.16.92.124';
+// const port = '6550';
+// var SCRIPT_ROOT = `http://${DOMAIN}:${port}`;
+const HOST = window.location.host;
+var SCRIPT_ROOT = `http://${HOST}/ivit/`;
 
 ///////////////////////////////// MARQUEE /////////////////////////////////////
 ///////////////////////////////// MARQUEE /////////////////////////////////////

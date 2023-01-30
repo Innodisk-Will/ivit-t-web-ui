@@ -233,7 +233,7 @@
         var UPLOAD_TEMP = null;
         var SELECT_IMGS = [];
         var ALL_PAHT = [];
-        const socket = io.connect(`${SCRIPT_ROOT}/${MAIN_UUID}/log`);
+        const socket = io.connect(`${SOCKET_HOST}/${MAIN_UUID}/log`);
         // var SAVE_INFO={"image_size":{}, "save_rect":[]};
         $( document ).ready(function() {
             hover_marquee("prj_name");

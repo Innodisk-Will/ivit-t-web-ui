@@ -231,7 +231,7 @@
         var FILTER_RESULT = [];
         var IMAGE_SIZE = {};
         var COLOR_BAR = null;
-        const socket = io.connect(`${SCRIPT_ROOT}/${MAIN_UUID}/log`);
+        const socket = io.connect(`${SOCKET_HOST}/${MAIN_UUID}/log`);
         $( document ).ready(function() {
             hover_marquee("prj_name");
             load_exist_iter(MAIN_UUID);

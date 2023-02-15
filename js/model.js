@@ -597,6 +597,10 @@ function socket_export(){
 function change_export(){
     let front_param = {"iteration":ITER_NAME};
     let share_url = share_api(MAIN_UUID, front_param);
+    if (share_url.includes("127.0.0.1")){
+        DOMAIN = HOST.split(":")[0]
+        share_url = DOMAIN + share_url.split("127.0.0.1")[1]
+    };
 
     // Download button
     $("#export_convert_btn").text("Download");

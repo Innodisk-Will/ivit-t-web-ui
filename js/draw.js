@@ -228,7 +228,6 @@ function move(evt){
             move_rect(evt);
         }
         else if ($(SLELCTED_ELEMENT).is( "circle" )){
-            console.log(MOVE_X, MOVE_Y)
             move_point(evt, MOVE_X, MOVE_Y);
         };
         // Update new position
@@ -316,7 +315,7 @@ function rect_size(id_list, MOVE_X, MOVE_Y){
     let org_h = parseInt($(`#${rect_id}`).attr("height"));
     let org_x = parseInt($(`#${rect_id}`).attr("x"));
     let org_y = parseInt($(`#${rect_id}`).attr("y"));
-    
+
     // w,h,x,y
     let cn_list = [0, 0, 0, 0]
     if (num == "0"){
@@ -340,6 +339,26 @@ function rect_size(id_list, MOVE_X, MOVE_Y){
             org_x, org_y];
     };
 
+    // Move 4 point
+    org_style = $(`#${rect_id}`).attr("style");
+    let clr_list = org_style.split(";");
+    let color = clr_list.find(element => element.includes("stroke:")).split(":")[1];
+    let rect_num = $(`#${rect_id}`).attr("id");
+    point_rect(cn_list[2], cn_list[3], cn_list[0], cn_list[1], color, rect_num);
+
+    point_list = $(`#draw circle`)
+    axis_list = [[],[]]
+    for (let idx of point_list){
+        axis_list[0].push(parseInt($(idx).attr("cx")))
+        axis_list[1].push(parseInt($(idx).attr("cy")))
+    };
+
+    if (cn_list[0] <= 0 | cn_list[1] <= 0){
+        // console.log(axis_list)
+        cn_list = new_rect(axis_list)
+        // console.log(cn_list)
+    };
+
     // Change rect
     $(`#${rect_id}`).attr("width",  cn_list[0]);
     $(`#${rect_id}`).attr("height", cn_list[1]);
@@ -350,10 +369,12 @@ function rect_size(id_list, MOVE_X, MOVE_Y){
     RECTANGLES[RECT_IDX]["height"] = cn_list[1];
     RECTANGLES[RECT_IDX]["x"] = cn_list[2];
     RECTANGLES[RECT_IDX]["y"] = cn_list[3];
-    // Move 4 point
-    org_style = $(`#${rect_id}`).attr("style");
-    let clr_list = org_style.split(";");
-    let color = clr_list.find(element => element.includes("stroke:")).split(":")[1];
-    let rect_num = $(`#${rect_id}`).attr("id");
-    point_rect(cn_list[2], cn_list[3], cn_list[0], cn_list[1], color, rect_num);
+
+};
+
+function new_rect(axis_list){
+    let min = [ Math.min.apply(null, axis_list[0]), Math.min.apply(null, axis_list[1]) ]
+    let max = [ Math.max.apply(null, axis_list[0]), Math.max.apply(null, axis_list[1]) ]
+    // console.log(min, max)
+    return [parseInt(max[0]-min[0]), parseInt(max[1]-min[1]), parseInt(min[0]), parseInt(min[1])]
 };

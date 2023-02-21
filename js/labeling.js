@@ -637,26 +637,28 @@ function rectangle(){
         // Check is exist class
         if (class_size < 1){
             alert("Please select a class name!")
+            return
         }
         // Check is point color
         else if (Object.keys(POINTCOLOR).length < 1){
-            alert("Please select a class name!")
-        }
-        else{
-            press_action("square");
-            $("#draw").attr("style","pointer-events:none;")
-            document.getElementById("large_img").addEventListener('pointerdown', start_drag);
-            
-            // Append action of mouse 
-            $("#large_img").attr("style","cursor:crosshair;");
-            // Clean panel
-            $("circle").remove();
-            // Change rect remove old style
-            dasharray_list = Object.values($(`#boxes rect[style*='stroke-dasharray: 5px;']`));
-            if (dasharray_list.includes(SLELCTED_ELEMENT) && dasharray_list.length > 2){
-                remove_dash(dasharray_list);
-            };
+            POINTCOLOR[ALL_CLASSES["keys"][0]] = COLOR_BAR[1]
+            // alert("Please select a class name!")
+            $("#input_txt").val(ALL_CLASSES["keys"][0])
         };
+
+        press_action("square");
+        $("#draw").attr("style","pointer-events:none;")
+        document.getElementById("large_img").addEventListener('pointerdown', start_drag);
+        // Append action of mouse 
+        $("#large_img").attr("style","cursor:crosshair;");
+        // Clean panel
+        $("circle").remove();
+        // Change rect remove old style
+        dasharray_list = Object.values($(`#boxes rect[style*='stroke-dasharray: 5px;']`));
+        if (dasharray_list.includes(SLELCTED_ELEMENT) && dasharray_list.length > 2){
+            remove_dash(dasharray_list);
+        };
+
     };
 };
 

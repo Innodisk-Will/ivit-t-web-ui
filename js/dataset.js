@@ -25,9 +25,7 @@ function setting_dataset(){
             delete ALL_CLASSES_API["classes_num"]["_temp"]
         };
         // Set filter classes
-        filter_classes_btn(ALL_CLASSES_API["All"],
-                            ALL_CLASSES_API["classes_num"],
-                            ALL_CLASSES_API["Unlabeled"],);
+        filter_classes_btn(ALL_CLASSES_API);
         // Setting show dataset number
         // get_dataset_num(PRJ_INFO["effect_img_nums"], PRJ_INFO["total_img_nums"]);
     };
@@ -74,7 +72,11 @@ function close_deliter_mkpopup(){
 ///////////////////////////////// FILTER CLASSES BUTTON /////////////////////////////////////
 
 // Show filter classes btn
-function filter_classes_btn(all, classes, unlabeled){
+function filter_classes_btn(obj){
+    classes = obj["classes_num"]
+    unlabeled = obj["Unlabeled"]
+    all = obj["All"]
+    sorted_cls =  obj["sort_list"]
     // Append all btn
     DATASET_CLASSES["keys"].push("All");
     DATASET_CLASSES["values"].push(all);
@@ -84,7 +86,7 @@ function filter_classes_btn(all, classes, unlabeled){
         DATASET_CLASSES["values"].push(unlabeled);
     };
     // Append individual class
-    for (let cls_name of Object.keys(classes)){
+    for (let cls_name of sorted_cls){
         DATASET_CLASSES["keys"].push(cls_name);
         DATASET_CLASSES["values"].push(classes[cls_name]);
         ALL_CLASSES["keys"].push(cls_name);

@@ -231,6 +231,7 @@
         var FILTER_RESULT = [];
         var IMAGE_SIZE = {};
         var COLOR_BAR = null;
+        var ARCH = null;
         const socket = io.connect(`${SOCKET_HOST}/${MAIN_UUID}/log`);
         $( document ).ready(function() {
             hover_marquee("prj_name");

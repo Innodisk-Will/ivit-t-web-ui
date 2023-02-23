@@ -859,11 +859,11 @@ function evaluate_api(uuid, front_param){
 ///////////////////////////////// EXPORT /////////////////////////////////////
 
 // Get export platform -> GET
-function get_export_platform_api(uuid){
+function get_export_platform_api(uuid, arch){
     var result=null;
     $.ajax({
         dataType: "json",
-        url:`${SCRIPT_ROOT}/${uuid}/get_export_platform`,
+        url:`${SCRIPT_ROOT}/${uuid}/get_export_platform/${arch}`,
         method: "GET",
         contentType: "application/json",
         async : false,

@@ -305,6 +305,7 @@ function model_info_process(data){
     let sec = parseInt(data["spend_time"])%60;
     min_sec_text(min, sec);
     // Parameter
+    ARCH = data["model"];
     $("#model_val").text(data["model"]);
     $("#gpu_val").text(data["gpu"]).ready(function(){
         // Check project name overflow to marquee
@@ -552,7 +553,7 @@ function export_platform(){
     $('#ep_list').append(`<option disabled="disabled" selected="selected">Please select one</option>`);
 
     // Get export platform list
-    let ep_list = get_export_platform_api(MAIN_UUID);
+    let ep_list = get_export_platform_api(MAIN_UUID, ARCH);
     ep_list['export_platform'].forEach((val,i) => {
         $('#ep_list').append('<option class="text-capitalize" value="' + `${val}` + '">' + `${val}` + '</option>'); 
     });

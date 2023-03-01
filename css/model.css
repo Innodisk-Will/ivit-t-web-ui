@@ -338,3 +338,16 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+.export_progress{
+    z-index: 99999;
+    position: absolute;
+    text-align: center;
+    color: #000;
+    font: normal normal normal 16px/22px Roboto;
+    opacity: 1;
+    font-weight: 400 !important;
+    top: 47%;
+    left: 50%;
+    transform: translate(-45%, -54%);
+}

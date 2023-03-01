@@ -572,6 +572,7 @@ function start_export(){
                             <div style="margin-top: 10px;">
                                 Loading...
                             </div>
+                            <div id="export_progress" class="export_progress">0%</div>
                         </div>`
 
     $("#export_containter").append(loading_html);
@@ -583,7 +584,7 @@ function start_export(){
 // Socketio wait export success
 function socket_export(){
     // convert log
-    socket.on('convert_log', function(msg){  
+    socket.on('convert_log', function(msg){
         if (msg.includes("Success")){
             // Remove loading
             remove_loader("export_containter");
@@ -591,6 +592,10 @@ function socket_export(){
         }
         else if (msg.includes('Failure')){
             alert(msg);
+        }
+        else if (msg.includes("%")){
+            msg = msg.replace(/\"/g,'')
+            $("#export_progress").text(msg);
         };
     });
 };

@@ -362,7 +362,7 @@ function stop_training(){
         // Check best model
         let front_param = {"iteration":ITER_NAME};
         let exist_model = check_best_model_api(MAIN_UUID, front_param);
-        if (exist_model["EXIST"]){
+        if (exist_model["Exist"]){
             // Refresh variable
             refresh_variable();
             // Open evaluate/export

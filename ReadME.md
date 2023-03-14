@@ -14,7 +14,8 @@ A user interfaces to the training model. This UI is easy to operate for train mo
 
 # See What's New
 - [Release Notes](docs/release_notes.md)
-- added code for web API that has a database
+- Supported save the color of class
+- Support version-1.1.1 of ivit-t-webAPI
 
 # Getting Started
 

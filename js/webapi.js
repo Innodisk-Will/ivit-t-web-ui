@@ -14,7 +14,7 @@ function init_prj_api(){
         success: function (data, textStatus, xhr) {
             if (data != null){
                 console.log("init_prj_api:", data)
-                result=data;
+                result=data['data'];
             }
             else{
                 console.log("Project is null.")
@@ -40,7 +40,7 @@ function get_allprj_info_api(){
         async : false,
         success: function (data, textStatus, xhr) {
             if (data != null){
-                result=data;
+                result=data['data'];
             }
             else{
                 console.log("Project is null.")
@@ -67,7 +67,7 @@ function get_type_api(){
         success: function (data, textStatus, xhr) {
             if (data != null){
                 console.log("get_type:",data)
-                result=data;
+                result=data['data'];
             }
             else{
                 console.log("Type is null.")
@@ -94,7 +94,7 @@ function get_platform_api(){
         success: function (data, textStatus, xhr) {
             if (data != null){
                 console.log("get_platform:",data)
-                result=data;
+                result=data['data'];
             }
             else{
                 console.log("Platform is null.")
@@ -186,7 +186,7 @@ function get_dataset_api(uuid){
         async : false,
         success: function (data, textStatus, xhr) {
             if (data != null){
-                result=data;
+                result=data['data'];
             }
             else{
                 console.log("Dataset is null.")
@@ -214,7 +214,7 @@ function filter_dataset_api(uuid, front_param){
         success: function (data, textStatus, xhr) {
             if (data != null){
                 // console.log("Image:",data)
-                result=data;
+                result=data['data'];
             }
             else{
                 console.log("Image is null.")
@@ -240,7 +240,7 @@ function iter_cls_num_api(uuid, front_param){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data['data'];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -344,17 +344,17 @@ function delete_all_img_api(uuid){
 ///////////////////////////////// LABEL /////////////////////////////////////
 
 // Get classes of img -> GET
-function get_img_cls_api(type, path){
+function get_img_cls_api(uuid, path){
     var result=null;
     $.ajax({
         dataType: "json",
-        url:`${SCRIPT_ROOT}/get_img_cls_nums/${type}/${path}`,
+        url:`${SCRIPT_ROOT}/get_img_cls_nums/${uuid}/${path}`,
         method: "GET",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
             // console.log("get_img_cls:",data)
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -464,7 +464,7 @@ function get_bbox_api(uuid, front_param){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data['data'];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -502,12 +502,12 @@ function get_color_bar_api(){
     var result=null;
     $.ajax({
         dataType: "json",
-        url:`${SCRIPT_ROOT}/get_color_bar`,
+        url:`${SCRIPT_ROOT}/get_color_table`,
         method: "GET",
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -599,7 +599,7 @@ function check_best_model_api(uuid, front_param){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -624,7 +624,7 @@ function get_training_task_api(){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -645,7 +645,7 @@ function get_method_training_api(){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -666,7 +666,7 @@ function get_model_api(uuid){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -687,7 +687,7 @@ function get_batch_size_api(uuid){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -709,7 +709,7 @@ function get_default_param_api(uuid, front_param){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -731,7 +731,7 @@ function create_traing_iter_api(uuid, front_param){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -821,7 +821,7 @@ function upload_eval_img_api(uuid, formData){
         processData: false,
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -843,7 +843,7 @@ function evaluate_api(uuid, front_param){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -868,7 +868,7 @@ function get_export_platform_api(uuid, arch){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -912,7 +912,7 @@ function share_api(uuid, front_param){
         contentType: "application/json",
         async : false,
         success: function (data, textStatus, xhr) {
-            result=data;
+            result=data["data"];
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);

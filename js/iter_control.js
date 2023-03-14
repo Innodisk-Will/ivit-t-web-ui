@@ -322,7 +322,7 @@ function remove_iteration(key){
     let front_param = {"iteration":ITER_NAME};
     let msg = delete_iteration_api(MAIN_UUID, front_param);
     console.log(msg)
-    if (msg.includes("Delete")){
+    if (msg["status"] == 200){
         // Dataset
         if(key == "dataset"){
             refresh_variable();

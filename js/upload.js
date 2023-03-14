@@ -440,7 +440,7 @@ function upload(file, dir_idx, length){
     UPLOAD_COUNT += 1;
     let upload_info = upload_api(MAIN_UUID, formData);
 
-    if (upload_info.includes("Upload")){
+    if (upload_info["status"] == 200){
         // Progress bar add number
         $(`#progressbar_${dir_idx}`).val($(`#progressbar_${dir_idx}`).val()+1);
         console.log($(`#progressbar_${dir_idx}`).val())
@@ -462,7 +462,7 @@ function upload(file, dir_idx, length){
         $("#mkpop_upload_btn").removeAttr("disabled");
     }
     else{
-        alert(upload_info);
+        alert(upload_info["message"]);
     };
 };
 

@@ -80,7 +80,7 @@ function draw_eval_box(){
         let set_iter_name = (ITER_NAME == undefined) ? "workspace" : ITER_NAME
         let front_param = {"iteration":set_iter_name}
         ALL_CLASSES_API = iter_cls_num_api(MAIN_UUID, front_param);
-        let cls_idx = parseInt(Object.keys(ALL_CLASSES_API["classes_num"]).indexOf(FILTER_RESULT[index]["class"]));
+        let cls_idx = parseInt(Object.keys(ALL_CLASSES_API["classes_info"]).indexOf(FILTER_RESULT[index]["class"]));
 
         // Convert color
         let color = COLOR_BAR[parseInt(cls_idx)+1];
@@ -231,7 +231,7 @@ function add_annotation(class_name){
     COLOR_BAR = get_color_bar_api();
     // Get index of all classes
     cls_idx = ALL_CLASSES["keys"].indexOf(class_name);
-    cls_idx = parseInt(cls_idx+1);
+    cls_idx = parseInt(cls_idx);
     color = COLOR_BAR[parseInt(cls_idx)];
 
     let html = `
@@ -404,14 +404,15 @@ function create_new_class(id){
         $("#classes_list").removeAttr("style");
         // Append to Class list and backend
         if (! ALL_CLASSES["keys"].includes(input_val)){
+            ALL_CLASSES["keys"].push(input_val);
+            ALL_CLASSES["values"].push(0);
+            index = ALL_CLASSES["values"].length
             // Label-input_txt action
             if (id == "input_txt"){
                 // Front
                 $('#classes_list_main').append(`<span>${input_val}</span>`);
-                ALL_CLASSES["keys"].push(input_val);
-                ALL_CLASSES["values"].push(0);
                 // Backend
-                let front_param = {"class_name":input_val};
+                let front_param = {"class_name":input_val, "color_id":index-1};
                 add_class_api(MAIN_UUID, front_param);
                 // Change select color
                 change_class("input_txt");
@@ -422,7 +423,7 @@ function create_new_class(id){
             else{
                 $('#classes_list_main').append(`<span style="padding-left: 16px;">${input_val}</span>`);
                 // Backend
-                let front_param = {"class_name":input_val};
+                let front_param = {"class_name":input_val, "color_id":index-1};
                 add_class_api(MAIN_UUID, front_param);
                 // Updata globel variable
                 PRJ_INFO = get_uuid_prj_info(MAIN_UUID);
@@ -480,7 +481,7 @@ function cls_change_class(){
                     };
     let edit_result = edit_img_class_api(MAIN_UUID, front_param);
     // Change class
-    if (edit_result.includes("Change")){
+    if (edit_result["status"] == 200){
         // Save is finished 
         save_action("save");
         // Get new path
@@ -509,7 +510,7 @@ function cls_change_class(){
 };
 
 function change_src_cls_img(org_cls, new_cls){
-    console.log(org_cls, new_cls)
+    // console.log(org_cls, new_cls)
     // let small_list = $('#label_smallimg_container').children();
     let selector =  $("#label_smallimg_container div[style*='border: 2px solid rgb(230, 31, 35);']");
     let img = $(selector[0]).children()[0];
@@ -525,7 +526,7 @@ function obj_change_class(){
     let idx = ALL_CLASSES["keys"].indexOf(class_name);
     // Get class_name color(key not 0, required +1)
     // Select point color
-    let color = COLOR_BAR[idx+1];
+    let color = COLOR_BAR[idx];
     // POINTING COLOR
     POINTCOLOR={};
     POINTCOLOR[String(class_name)] = color;
@@ -548,7 +549,7 @@ function close_edit_mkpopup(){
     // Recovery delete classes
     let front_param = {"iteration":"workspace"}
     let cls_info = iter_cls_num_api(MAIN_UUID, front_param);
-    let classes = cls_info["classes_num"];
+    let classes = cls_info["classes_info"];
     // Clean container
     ALL_CLASSES["keys"]=[]
     ALL_CLASSES["values"]=[]
@@ -568,7 +569,7 @@ function init_all_classes(){
     // For loop in all classes and add html
     for (let class_name of ALL_CLASSES["keys"]){
         cls_idx = ALL_CLASSES["keys"].indexOf(class_name);
-        cls_idx = parseInt(cls_idx+1);
+        cls_idx = parseInt(cls_idx);
         color = COLOR_BAR[parseInt(cls_idx)];
         let html = `
                     <div id="lable_${class_name}" class="one_class_container margin_bottom_20">
@@ -742,7 +743,7 @@ function save_label(){
         // Send to backend
         let save_status = update_bbox_api(MAIN_UUID, front_param);
         // Delay close
-        if (save_status.includes("Update")){
+        if (save_status["status"] == 200){
             setTimeout('$("#save").removeAttr("style")',1000);
             save_action("save");
         };

@@ -21,9 +21,10 @@ function setting_dataset(){
     }
     else{
         // Remove if _temp problem
-        if (Object.keys(ALL_CLASSES_API["classes_num"]).includes("_temp")){
-            delete ALL_CLASSES_API["classes_num"]["_temp"]
-        };
+        // if (Object.keys(ALL_CLASSES_API["classes_num"]).includes("_temp")){
+        //     delete ALL_CLASSES_API["classes_num"]["_temp"]
+        // };
+        console.log(ALL_CLASSES_API)
         // Set filter classes
         filter_classes_btn(ALL_CLASSES_API);
         // Setting show dataset number
@@ -73,7 +74,7 @@ function close_deliter_mkpopup(){
 
 // Show filter classes btn
 function filter_classes_btn(obj){
-    classes = obj["classes_num"]
+    classes = obj["classes_info"]
     unlabeled = obj["Unlabeled"]
     all = obj["All"]
     sorted_cls =  obj["sort_list"]
@@ -88,9 +89,9 @@ function filter_classes_btn(obj){
     // Append individual class
     for (let cls_name of sorted_cls){
         DATASET_CLASSES["keys"].push(cls_name);
-        DATASET_CLASSES["values"].push(classes[cls_name]);
+        DATASET_CLASSES["values"].push(classes[cls_name]["nums"]);
         ALL_CLASSES["keys"].push(cls_name);
-        ALL_CLASSES["values"].push(classes[cls_name]);
+        ALL_CLASSES["values"].push(classes[cls_name]["nums"]);
     };
     // Get total of added div
     let total = DATASET_CLASSES["keys"].length;
@@ -718,14 +719,15 @@ function preview_expand_btn(key){
 // Every image show class
 function img_show_class(src){
     let path = src.split("display_img/")[1]
-    let cls_info = get_img_cls_api(TYPE_NAME, path);
+    let cls_info = get_img_cls_api(MAIN_UUID, path);
+    // console.log(cls_info)
     // Append html
     for (let class_name of Object.keys(cls_info)){
         // class_name != Unlabeled
         if (class_name != "Unlabeled" & class_name != ""){
             // Dataset Preview page
             if (!($("#label_div").children().length>0)){
-                append_img_show_cls(class_name, cls_info[class_name], "img_cls_show_container");
+                append_img_show_cls(class_name, cls_info[class_name]["nums"], "img_cls_show_container");
             }
             else{
                 // Label page
@@ -757,8 +759,8 @@ function append_img_show_cls(class_name, num, parent){
     if (TYPE_NAME == "object_detection"){
         COLOR_BAR = get_color_bar_api();
         // Get index of all classes
-        cls_idx = Object.keys(ALL_CLASSES_API["classes_num"]).indexOf(class_name);
-        cls_idx = parseInt(cls_idx+1);
+        cls_idx = Object.keys(ALL_CLASSES_API["classes_info"]).indexOf(class_name);
+        cls_idx = parseInt(cls_idx);
         color = COLOR_BAR[parseInt(cls_idx)]
         style = `border-left: 3px solid ${color};`;
     }

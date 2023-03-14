@@ -11,20 +11,20 @@ function init_model(){
     let model_info = get_model_info_api(MAIN_UUID, front_param);
     
     // Setting show metrics
-    if (!(typeof(metrics_data)=="string")){
+    if (metrics_data["status"] == 200){
         $("#metrics_container").css("display","flex");
-        metrics_data_process(metrics_data);
+        metrics_data_process(metrics_data["data"]);
     };
 
     // Evaluate/Export btn press   
     open_eval_export();
 
     // Setting show curve and log
-    if (!(typeof(curve_data)=="string")){
+    if (curve_data["status"] == 200){
         $("#train_data_container").css("display","flex");
-        dataset = curve_data_process(curve_data);
+        curve_data_process(curve_data["data"]);
         // Append log
-        log_process(curve_data);
+        log_process(curve_data["data"]);
     }
     else{
         // Initial curve
@@ -32,10 +32,10 @@ function init_model(){
     };
 
     // Setting model info
-    if (!(typeof(model_info)=="string")){
+    if (model_info["status"] == 200){
         $("#info_container").css("display","flex");
         // Split model info
-        model_info_process(model_info);
+        model_info_process(model_info["data"]);
     };
 };
 ///////////////////////////////// METIRCS CHART /////////////////////////////////////
@@ -143,6 +143,7 @@ function obj_curve_process(training_data){
 
 // Create curve
 function create_curve(id, train_data, key){
+    // console.log(train_data)
     var colorlist = ['#E61F23','#57B8FF'];
     var dataset = [];
     // Get status name
@@ -402,6 +403,7 @@ function upload_eval_img(files){
     };
     // Get image path
     EVAL_IMG_LIST = upload_eval_img_api(MAIN_UUID, formData);
+    // console.log(EVAL_IMG_LIST)
     // Get reslut and box
     if (EVAL_IMG_LIST["eval_img"].length>0){
         // Loading 
@@ -519,8 +521,11 @@ function eval_expand_btn(key){
 function open_eval_export(){
     let front_param = {"iteration":ITER_NAME};
     let exist_model = check_best_model_api(MAIN_UUID, front_param);
+    // console.log(exist_model)
 
-    if (typeof(exist_model) == "object"){
+    if (exist_model["Exist"]){
+        // console.log(exist_model)
+
         // Evaluate open funciton
         $("#evaluate_container").removeAttr("style");
         $("#eval_chose_file_2").removeAttr("disabled");
@@ -603,6 +608,7 @@ function socket_export(){
 function change_export(){
     let front_param = {"iteration":ITER_NAME};
     let share_url = share_api(MAIN_UUID, front_param);
+    share_url = share_url["url"]
     if (share_url.includes("127.0.0.1")){
         DOMAIN = HOST.split(":")[0]
         share_url = DOMAIN + share_url.split("127.0.0.1")[1]

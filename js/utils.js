@@ -113,7 +113,7 @@ function open_train_mkpopup(){
     let set_iter_name = (ITER_NAME == undefined) ? "workspace" : ITER_NAME
     let front_param = {"iteration":set_iter_name}
     ALL_CLASSES_API = iter_cls_num_api(MAIN_UUID, front_param);
-    let cls_num = ALL_CLASSES_API["classes_num"];
+    let cls_num = ALL_CLASSES_API["classes_info"];
     let cls_length = Object.keys(cls_num).length;
     let check_num = false;
     if (cls_length>0){
@@ -122,7 +122,7 @@ function open_train_mkpopup(){
         }
         else{
             for (let key of Object.keys(cls_num)){
-                if (cls_num[key]>=15){
+                if (cls_num[key]["nums"]>=15){
                     check_num = true;
                 }
                 else{
@@ -358,11 +358,11 @@ function check_training_stats(){
 // Stop training
 function stop_training(){
     let stop = stop_training_api(MAIN_UUID);
-    if (stop.includes("Stop")){
+    if (stop["massage"] == 200){
         // Check best model
         let front_param = {"iteration":ITER_NAME};
         let exist_model = check_best_model_api(MAIN_UUID, front_param);
-        if (typeof(exist_model) == "object"){
+        if (exist_model["EXIST"]){
             // Refresh variable
             refresh_variable();
             // Open evaluate/export

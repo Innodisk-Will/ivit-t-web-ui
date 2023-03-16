@@ -395,7 +395,7 @@ function show_small_img(img_path){
 function get_src_info(path_split){
     id_name = path_split[path_split.length-1].split(".")[0]
     org_name = path_split[path_split.length-1]
-    cls = path_split[path_split.length-2] != "" ? path_split[path_split.length-2] : "Unlabled";
+    cls = path_split[path_split.length-2] != "" ? path_split[path_split.length-2] : "Unlabeled";
     return [id_name, org_name, cls]
 }
 ///////////////////////////////// SELECT /////////////////////////////////////

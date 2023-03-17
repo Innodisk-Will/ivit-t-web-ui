@@ -722,16 +722,18 @@ function img_show_class(src){
     let cls_info = get_img_cls_api(MAIN_UUID, path);
     // console.log(cls_info)
     // Append html
-    for (let class_name of Object.keys(cls_info)){
-        // class_name != Unlabeled
-        if (class_name != "Unlabeled" & class_name != ""){
-            // Dataset Preview page
-            if (!($("#label_div").children().length>0)){
-                append_img_show_cls(class_name, cls_info[class_name]["nums"], "img_cls_show_container");
-            }
-            else{
-                // Label page
-                add_annotation(class_name);
+    if (cls_info["status"] == 200){
+        for (let class_name of Object.keys(cls_info["data"])){
+            // class_name != Unlabeled
+            if (class_name != "Unlabeled" & class_name != ""){
+                // Dataset Preview page
+                if (!($("#label_div").children().length>0)){
+                    append_img_show_cls(class_name, cls_info["data"][class_name]["nums"], "img_cls_show_container");
+                }
+                else{
+                    // Label page
+                    add_annotation(class_name);
+                };
             };
         };
     };

@@ -111,6 +111,7 @@ function get_platform_api(){
 
 // Create project -> POST
 function create_project_api(front_param){
+    var result=null;
     $.ajax({
         data: JSON.stringify(front_param),
         dataType: "json",
@@ -120,6 +121,7 @@ function create_project_api(front_param){
         async : false,
         success: function (data, textStatus, xhr) {
             console.log(data);
+            result = data;
         },
         error: function (jqXHR, exception) {
             console.log(jqXHR["responseJSON"]);
@@ -127,7 +129,7 @@ function create_project_api(front_param){
             result=jqXHR["responseJSON"];
         }
     });
-    setTimeout('myrefresh()',500);
+    return result;
 };
 
 // Edit project name -> PUT

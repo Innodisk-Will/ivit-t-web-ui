@@ -22,7 +22,7 @@ function init_draw_box(bbox){
         // Get box
         let box = bbox[index]["bbox"]
         // Get class index in all_class
-        let cls_idx = parseInt(bbox[index]["class_id"])+1;
+        let cls_idx = parseInt(bbox[index]["class_id"]);
         // Convert color
         let color = COLOR_BAR[parseInt(cls_idx)]
         // Create bbox Object
@@ -83,7 +83,7 @@ function draw_eval_box(){
         let cls_idx = parseInt(Object.keys(ALL_CLASSES_API["classes_info"]).indexOf(FILTER_RESULT[index]["class"]));
 
         // Convert color
-        let color = COLOR_BAR[parseInt(cls_idx)+1];
+        let color = COLOR_BAR[parseInt(cls_idx)];
         // Create bbox Object
         let bbox_obj = {
                         x: box[0]*x_rate,
